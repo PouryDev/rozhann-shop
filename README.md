@@ -1,6 +1,6 @@
-# JemehShop
+# Rozhann (روژان)
 
-A minimal, modern e‑commerce (Laravel 12 + Tailwind) showcasing products, cart, checkout, and a lightweight admin panel. Persian (fa) localization is enabled by default.
+A minimal, modern e‑commerce (Laravel 12 + Tailwind) showcasing products, cart, checkout, and a lightweight admin panel. Persian (fa) localization is enabled by default for روژان.
 
 ## Features
 

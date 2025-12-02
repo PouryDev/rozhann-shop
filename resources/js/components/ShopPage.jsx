@@ -26,9 +26,9 @@ function ShopPage() {
 
     // SEO
     useSeo({
-        title: 'فروشگاه آنلاین لباس جمه - خرید لباس با کیفیت و استایل مینیمال',
-        description: 'فروشگاه آنلاین لباس جمه با تمرکز روی کیفیت، طراحی مینیمال و تجربه خرید آسان. تیشرت، هودی، شلوار و لباس‌های کاربردی با قیمت مناسب.',
-        keywords: 'فروشگاه لباس, خرید آنلاین لباس, تیشرت, هودی, شلوار, لباس مردانه, لباس زنانه, جمه',
+        title: 'فروشگاه آنلاین لباس روژان - خرید لباس با کیفیت و استایل مینیمال',
+        description: 'فروشگاه آنلاین لباس روژان با تمرکز روی کیفیت، طراحی مینیمال و تجربه خرید آسان. تیشرت، هودی، شلوار و لباس‌های کاربردی با قیمت مناسب.',
+        keywords: 'فروشگاه لباس, خرید آنلاین لباس, تیشرت, هودی, شلوار, لباس مردانه, لباس زنانه, روژان',
         image: '/images/logo.png',
         canonical: window.location.origin + '/products'
     });
@@ -204,7 +204,7 @@ function ShopPage() {
     }, [loading, hasMorePages, loadMore]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text)]">
             {/* Hero Slider */}
             <HeroSlider />
             
@@ -212,16 +212,16 @@ function ShopPage() {
             {categories.length > 0 && (
                 <section className="px-4 py-4">
                     <div className="max-w-7xl mx-auto">
-                        <div ref={categoriesCarouselRef} className="flex gap-2 overflow-x-auto overflow-y-hidden pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-x] touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+                        <div ref={categoriesCarouselRef} className="flex gap-2 overflow-x-auto overflow-y-hidden pb-2 [-ms-overflow-style:none] [scrollbar-width:none]" style={{ WebkitOverflowScrolling: 'touch' }}>
                             {categories.map((category) => (
                                 <Link
                                     key={category.id}
                                     to={`/category/${category.id}`}
                                     className="shrink-0 flex-none"
                                 >
-                                    <div className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-full px-4 py-2 transition-all duration-200 min-w-fit">
+                                    <div className="flex items-center gap-2 bg-white hover:bg-[var(--color-surface)] border rounded-full px-4 py-2 transition-all duration-200 min-w-fit" style={{ borderColor: "var(--color-border-subtle)", boxShadow: "0 8px 20px rgba(15,23,42,0.08)" }}>
                                         <span className="text-lg">{getCategoryEmoji(category.name)}</span>
-                                        <span className="text-white text-sm font-medium whitespace-nowrap">{category.name}</span>
+                                        <span className="text-sm font-medium whitespace-nowrap text-[var(--color-text)]">{category.name}</span>
                                     </div>
                                 </Link>
                             ))}
@@ -242,8 +242,8 @@ function ShopPage() {
             {bestSellers.length > 0 && (
                 <section className="px-4 mb-8">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-white font-bold text-lg mb-4">محبوب‌ترین‌ها</h2>
-                        <div ref={bestSellersCarouselRef} className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-x] touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+                        <h2 className="text-[var(--color-text)] font-bold text-lg mb-4">محبوب‌ترین‌ها</h2>
+                        <div ref={bestSellersCarouselRef} className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 [-ms-overflow-style:none] [scrollbar-width:none]" style={{ WebkitOverflowScrolling: 'touch' }}>
                             {bestSellers.map((p, i) => (
                                 <div key={p.id} className="w-[200px] sm:w-72 shrink-0 flex-none">
                                     <ProductCard product={p} index={i} />
@@ -258,45 +258,46 @@ function ShopPage() {
             <section className="px-4 mb-8">
                 <div className="max-w-7xl mx-auto">
                     <a 
-                        href="https://instagram.com/jemehshopp" 
+                        href="https://instagram.com/rozhan_shopp" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="block group"
                     >
-                        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 p-1 shadow-2xl">
-                            <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-xl p-6">
+                        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-100 via-white to-emerald-100 p-[1px] shadow-xl">
+                            <div className="bg-white rounded-xl p-6">
                                 <div className="flex items-center justify-between">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-3">
-                                            <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center">
-                                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-inner" style={{ background: 'var(--color-surface-alt)' }}>
+                                                <svg className="w-6 h-6 text-[var(--color-primary-strong)]" fill="currentColor" viewBox="0 0 24 24">
                                                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h3 className="text-white font-bold text-lg">jemehshopp</h3>
-                                                <p className="text-gray-300 text-sm">اینستاگرام رسمی</p>
+                                                <h3 className="font-bold text-lg text-[var(--color-text)]">rozhann</h3>
+                                                <p className="text-sm text-[var(--color-text-muted)]">اینستاگرام رسمی</p>
                                             </div>
                                         </div>
-                                        <h2 className="text-white font-bold text-xl mb-2">
+                                        <h2 className="font-bold text-xl mb-2 text-[var(--color-text)]">
                                             🎉 جدیدترین محصولات و تخفیف‌های ویژه
                                         </h2>
-                                        <p className="text-gray-300 text-sm mb-4">
+                                        <p className="text-sm mb-4 text-[var(--color-text-muted)]">
                                             برای دیدن آخرین محصولات، استایل‌های جدید و تخفیف‌های ویژه ما را در اینستاگرام دنبال کنید
                                         </p>
-                                        <div className="flex items-center gap-2 text-pink-400 font-semibold text-sm group-hover:text-pink-300 transition-colors">
+                                        <div className="flex items-center gap-2 font-semibold text-sm text-[var(--color-primary-strong)] transition-colors">
                                             <span>فالو کنید</span>
-                                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                                             </svg>
                                         </div>
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="relative">
-                                            <div className="w-24 h-24 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full flex items-center justify-center">
+                                            <div className="w-24 h-24 rounded-full flex items-center justify-center" style={{ background: 'rgba(255, 238, 217, 0.7)' }}>
                                                 <div className="text-4xl">📱</div>
                                             </div>
-                                            <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center animate-pulse">
+                                            <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center animate-pulse"
+                                                style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
                                                 <span className="text-white text-xs font-bold">+</span>
                                             </div>
                                         </div>
@@ -313,10 +314,10 @@ function ShopPage() {
                 <section key={cat.id} className="px-4 mb-8">
                     <div className="max-w-7xl mx-auto">
                         <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-white font-bold text-lg">{cat.name}</h2>
+                            <h2 className="text-[var(--color-text)] font-bold text-lg">{cat.name}</h2>
                             <Link 
                                 to={`/category/${cat.id}`} 
-                                className="text-sm text-cherry-400 hover:text-cherry-300 transition-colors"
+                                className="text-sm text-[var(--color-primary-strong)] hover:opacity-80 transition-colors"
                             >
                                 مشاهده همه
                             </Link>
@@ -330,8 +331,8 @@ function ShopPage() {
             {campaigns.length > 0 && (
                 <section className="px-4 mb-10">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-white font-bold text-lg mb-4">کمپین‌ها</h2>
-                        <div ref={campaignsCarouselRef} className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-x] touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+                        <h2 className="text-[var(--color-text)] font-bold text-lg mb-4">کمپین‌ها</h2>
+                        <div ref={campaignsCarouselRef} className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 [-ms-overflow-style:none] [scrollbar-width:none]" style={{ WebkitOverflowScrolling: 'touch' }}>
                             {campaigns.map((campaign) => (
                                 <div key={campaign.id} className="w-[320px] sm:w-96 shrink-0 flex-none">
                                     <BannerCard campaign={campaign} />
@@ -352,8 +353,8 @@ function ShopPage() {
                     ) : products.length === 0 ? (
                         <div className="text-center py-12">
                             <div className="text-6xl mb-4">🔍</div>
-                            <h3 className="text-xl font-semibold text-white mb-2">محصولی یافت نشد</h3>
-                            <p className="text-gray-400 mb-4">
+                            <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">محصولی یافت نشد</h3>
+                            <p className="text-[var(--color-text-muted)] mb-4">
                                 متأسفانه محصولی با این کلمات پیدا نشد
                             </p>
                             <button
@@ -365,7 +366,7 @@ function ShopPage() {
                                     setSearchParams(newSearchParams);
                                     fetchProducts(1, '');
                                 }}
-                                className="bg-cherry-600 hover:bg-cherry-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                                className="text-white px-4 py-2 rounded-lg text-sm transition-all" style={{ background: "linear-gradient(120deg, var(--color-primary), var(--color-accent))", boxShadow: "0 10px 25px rgba(244,172,63,0.35)" }}
                             >
                                 پاک کردن جستجو
                             </button>
@@ -389,7 +390,7 @@ function ShopPage() {
                                         id="load-more-btn"
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="bg-cherry-600 hover:bg-cherry-700 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+                                        className="text-white px-6 py-3 rounded-lg font-semibold transition-transform duration-200 disabled:opacity-50" style={{ background: "linear-gradient(120deg, var(--color-primary), var(--color-accent))" }}
                                     >
                                         {loading ? (
                                             <span className="flex items-center gap-2">
@@ -414,17 +415,17 @@ function ShopPage() {
 // Campaign Card Component
 function CampaignCard({ campaign }) {
     return (
-        <div className="bg-gradient-to-r from-cherry-600/20 to-pink-600/20 border border-cherry-500/30 rounded-xl p-6 backdrop-blur-sm">
+        <div className="rounded-xl p-6 bg-white shadow-lg" style={{ border: "1px solid var(--color-border-subtle)" }}>
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">{campaign.name}</h3>
-                <span className="bg-cherry-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <h3 className="text-xl font-bold text-[var(--color-text)]">{campaign.name}</h3>
+                <span className="px-3 py-1 rounded-full text-sm font-semibold text-white" style={{ background: "linear-gradient(120deg, var(--color-primary), var(--color-accent))" }}>
                     {campaign.discount_percentage}% تخفیف
                 </span>
             </div>
             {campaign.description && (
-                <p className="text-gray-300 text-sm mb-4">{campaign.description}</p>
+                <p className="text-sm mb-4 text-[var(--color-text-muted)]">{campaign.description}</p>
             )}
-            <div className="text-xs text-gray-400">
+            <div className="text-xs text-[var(--color-text-muted)]">
                 تا {new Date(campaign.ends_at).toLocaleDateString('fa-IR')}
             </div>
         </div>
@@ -451,7 +452,7 @@ function CategoryCarousel({ categoryId }) {
     
 
     return (
-        <div ref={containerRef} className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-x] touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div ref={containerRef} className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 [-ms-overflow-style:none] [scrollbar-width:none]" style={{ WebkitOverflowScrolling: 'touch' }}>
             {items.map((p, i) => (
                 <div key={p.id} className="w-[200px] sm:w-72 shrink-0 flex-none">
                     <ProductCard product={p} index={i} />
@@ -463,12 +464,12 @@ function CategoryCarousel({ categoryId }) {
 
 function BannerCard({ campaign }) {
     return (
-        <div className="rounded-2xl overflow-hidden glass-card soft-shadow border border-white/10">
-            <div className="h-36 bg-gradient-to-r from-cherry-600/30 to-pink-600/30 flex items-center justify-center text-white font-bold text-center px-4">
+        <div className="rounded-2xl overflow-hidden bg-white shadow-xl" style={{ border: "1px solid var(--color-border-subtle)" }}>
+            <div className="h-36 flex items-center justify-center font-bold text-center px-4" style={{ background: "linear-gradient(120deg, rgba(255,238,209,0.9), rgba(232,246,238,0.9))", color: "var(--color-text)" }}>
                 {campaign.name}
             </div>
             {campaign.description && (
-                <div className="p-3 text-gray-300 text-sm">{campaign.description}</div>
+                <div className="p-3 text-sm text-[var(--color-text-muted)]">{campaign.description}</div>
             )}
         </div>
     );

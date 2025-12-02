@@ -5,9 +5,9 @@ function ShippingPage() {
     return (
         <>
             <Helmet>
-                <title>ارسال و تحویل | جمه - فروشگاه آنلاین لباس</title>
-                <meta name="description" content="اطلاعات کامل درباره روش‌های ارسال، هزینه ارسال، زمان تحویل و شرایط ارسال در فروشگاه جمه. ارسال سریع و مطمئن به سراسر کشور." />
-                <meta name="keywords" content="ارسال, تحویل, پست, پیک, هزینه ارسال, زمان تحویل, جمه" />
+                <title>ارسال و تحویل | روژان - فروشگاه آنلاین لباس</title>
+                <meta name="description" content="اطلاعات کامل درباره روش‌های ارسال، هزینه ارسال، زمان تحویل و شرایط ارسال در فروشگاه روژان. ارسال سریع و مطمئن به سراسر کشور." />
+                <meta name="keywords" content="ارسال, تحویل, پست, پیک, هزینه ارسال, زمان تحویل, روژان" />
                 <link rel="canonical" href={`${window.location.origin}/shipping`} />
             </Helmet>
 
@@ -65,7 +65,7 @@ function ShippingPage() {
                                         </tr>
                                         <tr>
                                             <td className="py-3 text-gray-300">بالای 1 میلیون تومان</td>
-                                            <td className="py-3 text-green-400 font-medium">رایگان</td>
+                                            <td className="py-3 text-green-400 font-medium">پس‌پرداخت</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -125,10 +125,10 @@ function ShippingPage() {
                                 برای اطلاعات بیشتر درباره ارسال و تحویل، با ما تماس بگیرید
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <a href="https://instagram.com/jemehshopp" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
+                                <a href="https://instagram.com/rozhan_shopp" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
                                     اینستاگرام
                                 </a>
-                                <a href="https://t.me/jemeh_shop" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
+                                <a href="https://t.me/rozhann" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
                                     تلگرام
                                 </a>
                     </div>

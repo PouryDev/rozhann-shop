@@ -150,8 +150,8 @@ function AdminCategoryForm() {
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center justify-center min-h-96">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400">در حال بارگذاری...</p>
+                        <div className="w-12 h-12 border-4 border-[var(--color-primary)]/30 border-t-[var(--color-primary)] rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-[var(--color-text-muted)]">در حال بارگذاری...</p>
                     </div>
                 </div>
             </div>
@@ -162,60 +162,60 @@ function AdminCategoryForm() {
         <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
                     {isEdit ? 'ویرایش دسته‌بندی' : 'دسته‌بندی جدید'}
                 </h1>
-                <p className="text-gray-400">
+                <p className="text-[var(--color-text-muted)]">
                     {isEdit ? 'اطلاعات دسته‌بندی را ویرایش کنید' : 'اطلاعات دسته‌بندی جدید را وارد کنید'}
                 </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
                 {/* Basic Information */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-4 sm:p-6">
-                    <h2 className="text-xl font-bold text-white mb-6">اطلاعات پایه</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-4 sm:p-6">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">اطلاعات پایه</h2>
                     
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-white font-medium mb-2">نام دسته‌بندی *</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">نام دسته‌بندی *</label>
                             <input
                                 type="text"
                                 name="name"
                                 value={form.name}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 min-h-[44px]"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200 min-h-[44px]"
                                 placeholder="مثال: لباس زنانه"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">Slug</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">Slug</label>
                             <input
                                 type="text"
                                 name="slug"
                                 value={form.slug}
                                 onChange={handleSlugChange}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 min-h-[44px]"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200 min-h-[44px]"
                                 placeholder="به صورت خودکار از نام تولید می‌شود"
                             />
-                            <p className="text-gray-400 text-sm mt-2">
+                            <p className="text-[var(--color-text-muted)] text-sm mt-2">
                                 اگر خالی بگذارید، به صورت خودکار از نام تولید می‌شود
                             </p>
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">توضیحات</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">توضیحات</label>
                             <textarea
                                 name="description"
                                 value={form.description}
                                 onChange={handleInputChange}
                                 rows="4"
                                 maxLength="1000"
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 resize-none"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200 resize-none"
                                 placeholder="توضیحات دسته‌بندی (اختیاری)"
                             />
-                            <p className="text-gray-400 text-sm mt-2">
+                            <p className="text-[var(--color-text-muted)] text-sm mt-2">
                                 {form.description.length}/1000 کاراکتر
                             </p>
                         </div>
@@ -231,18 +231,18 @@ function AdminCategoryForm() {
                 </div>
 
                 {/* Preview */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-4 sm:p-6">
-                    <h2 className="text-xl font-bold text-white mb-6">پیش‌نمایش</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-4 sm:p-6">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">پیش‌نمایش</h2>
                     
-                    <div className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-xl p-4 sm:p-6 border border-purple-500/30">
+                    <div className="bg-[var(--color-primary)]/10 rounded-xl p-4 sm:p-6 border border-[var(--color-primary)]/30">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
-                            <h3 className="text-white font-bold text-lg sm:text-xl">
+                            <h3 className="text-[var(--color-text)] font-bold text-lg sm:text-xl">
                                 {form.name || 'نام دسته‌بندی'}
                             </h3>
                             <span className={`px-3 py-1 rounded-full text-sm font-medium self-start ${
                                 form.is_active 
-                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                                    : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                                    ? 'bg-green-50 text-green-600 border border-green-500/30' 
+                                    : 'bg-red-500/20 text-red-600 border border-red-500/30'
                             }`}>
                                 {form.is_active ? 'فعال' : 'غیرفعال'}
                             </span>
@@ -250,15 +250,15 @@ function AdminCategoryForm() {
 
                         <div className="space-y-3 text-sm">
                             <div>
-                                <p className="text-gray-400">Slug:</p>
-                                <p className="text-white font-medium break-all">
+                                <p className="text-[var(--color-text-muted)]">Slug:</p>
+                                <p className="text-[var(--color-text)] font-medium break-all">
                                     {form.slug || '(خودکار تولید می‌شود)'}
                                 </p>
                             </div>
                             {form.description && (
                                 <div>
-                                    <p className="text-gray-400">توضیحات:</p>
-                                    <p className="text-white">{form.description}</p>
+                                    <p className="text-[var(--color-text-muted)]">توضیحات:</p>
+                                    <p className="text-[var(--color-text)]">{form.description}</p>
                                 </div>
                             )}
                         </div>
@@ -273,14 +273,15 @@ function AdminCategoryForm() {
                             navigate('/admin/categories');
                             window.scrollTo(0, 0);
                         }}
-                        className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 min-h-[44px]"
+                        className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt-hover)] text-[var(--color-text)] font-semibold py-4 px-6 rounded-xl transition-all duration-200 min-h-[44px] border border-[var(--color-border-subtle)]"
                     >
                         انصراف
                     </button>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 min-h-[44px]"
+                        className="flex-1 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 min-h-[44px]"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         {loading ? (
                             <div className="flex items-center justify-center space-x-2 space-x-reverse">

@@ -262,16 +262,16 @@ const PersianDatePicker = ({
             {/* Input */}
             <div
                 onClick={() => !disabled && setIsOpen(!isOpen)}
-                className={`w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 cursor-pointer ${
+                className={`w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200 cursor-pointer ${
                     disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/15'
                 }`}
             >
                 <div className="flex items-center justify-between">
-                    <span className={displayValue ? 'text-white' : 'text-gray-400'}>
+                    <span className={displayValue ? 'text-[var(--color-text)]' : 'text-[var(--color-text-muted)]'}>
                         {displayValue || placeholder}
                     </span>
                     <svg 
-                        className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+                        className={`w-5 h-5 text-[var(--color-text-muted)] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
@@ -295,7 +295,7 @@ const PersianDatePicker = ({
                     {/* Date Picker */}
                     <div 
                         data-datepicker-dropdown
-                        className={`fixed bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl z-[99999] overflow-hidden ${
+                        className={`fixed bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl z-[99999] overflow-hidden ${
                             isMobile ? 'inset-x-4 top-1/2 -translate-y-1/2' : ''
                         }`}
                         style={isMobile ? {
@@ -310,25 +310,25 @@ const PersianDatePicker = ({
                         }}
                     >
                     {/* Header */}
-                    <div className="flex items-center justify-between p-4 border-b border-white/10">
+                    <div className="flex items-center justify-between p-4 border-b border-[var(--color-border-subtle)]">
                         <button
                             type="button"
                             onClick={(e) => {
                                 e.preventDefault();
                                 navigateMonth(1);
                             }}
-                            className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                            className="p-2 hover:bg-[var(--color-surface-alt)] rounded-lg transition-colors duration-200"
                         >
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
                         
                         <div className="text-center">
-                            <div className="text-white font-bold text-lg">
+                            <div className="text-[var(--color-text)] font-bold text-lg">
                                 {persianMonths[currentMonth - 1]}
                             </div>
-                            <div className="text-gray-400 text-sm">
+                            <div className="text-[var(--color-text-muted)] text-sm">
                                 {currentYear}
                             </div>
                         </div>
@@ -339,9 +339,9 @@ const PersianDatePicker = ({
                                 e.preventDefault();
                                 navigateMonth(-1);
                             }}
-                            className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                            className="p-2 hover:bg-[var(--color-surface-alt)] rounded-lg transition-colors duration-200"
                         >
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
@@ -350,7 +350,7 @@ const PersianDatePicker = ({
                     {/* Week days */}
                     <div className="grid grid-cols-7 gap-1 p-2">
                         {persianWeekDays.map((day, index) => (
-                            <div key={index} className="text-center text-gray-400 text-sm font-medium py-2">
+                            <div key={index} className="text-center text-[var(--color-text-muted)] text-sm font-medium py-2">
                                 {day}
                             </div>
                         ))}
@@ -368,13 +368,14 @@ const PersianDatePicker = ({
                                 }}
                                 className={`aspect-square flex items-center justify-center text-sm rounded-lg transition-all duration-200 ${
                                     dayInfo.isSelected
-                                        ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white font-bold'
+                                        ? 'text-white font-bold'
                                         : dayInfo.isToday
-                                        ? 'bg-purple-500/20 text-purple-400 font-semibold'
+                                        ? 'bg-[var(--color-primary)]/5 text-[var(--color-primary-strong)] font-semibold'
                                         : dayInfo.isCurrentMonth
-                                        ? 'text-white hover:bg-white/10'
-                                        : 'text-gray-500 hover:bg-white/5'
+                                        ? 'text-[var(--color-text)] hover:bg-[var(--color-surface-alt)]'
+                                        : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface-alt)]'
                                 }`}
+                                style={dayInfo.isSelected ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
                             >
                                 {dayInfo.day}
                             </button>
@@ -382,7 +383,7 @@ const PersianDatePicker = ({
                     </div>
 
                     {/* Footer */}
-                    <div className="p-3 border-t border-white/10">
+                    <div className="p-3 border-t border-[var(--color-border-subtle)]">
                         <div className="flex gap-2">
                             <button
                                 type="button"
@@ -416,7 +417,7 @@ const PersianDatePicker = ({
                                     
                                     onChange(gregorianString);
                                 }}
-                                className="flex-1 bg-gradient-to-r from-purple-500/20 to-purple-600/20 hover:from-purple-500/30 hover:to-purple-600/30 text-purple-400 font-medium py-2 px-3 rounded-lg transition-all duration-200 text-sm"
+                                className="flex-1 bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)]/20 text-[var(--color-primary-strong)] font-medium py-2 px-3 rounded-lg transition-all duration-200 text-sm"
                             >
                                 امروز
                             </button>
@@ -429,7 +430,7 @@ const PersianDatePicker = ({
                                     setIsOpen(false);
                                     onChange('');
                                 }}
-                                className="flex-1 bg-gradient-to-r from-gray-500/20 to-gray-600/20 hover:from-gray-500/30 hover:to-gray-600/30 text-gray-400 font-medium py-2 px-3 rounded-lg transition-all duration-200 text-sm"
+                                className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt-hover)] text-[var(--color-text-muted)] font-medium py-2 px-3 rounded-lg transition-all duration-200 text-sm"
                             >
                                 پاک کردن
                             </button>

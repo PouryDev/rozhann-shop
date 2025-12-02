@@ -106,23 +106,23 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
             />
             
             {/* Modal */}
-            <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-t-3xl md:rounded-2xl w-full md:max-w-md mx-auto shadow-2xl border border-white/10 max-h-[90vh] md:max-h-[80vh] flex flex-col">
+            <div className="relative bg-white rounded-t-3xl md:rounded-2xl w-full md:max-w-md mx-auto shadow-2xl border border-[var(--color-border-subtle)] max-h-[90vh] md:max-h-[80vh] flex flex-col">
                 {/* Header */}
-                <div className="px-4 py-4 border-b border-white/10 flex-shrink-0">
+                <div className="px-4 py-4 border-b border-[var(--color-border-subtle)] flex-shrink-0">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h2 className="text-lg font-bold text-white">
+                            <h2 className="text-lg font-bold text-[var(--color-text)]">
                                 {address ? 'ویرایش آدرس' : 'افزودن آدرس جدید'}
                             </h2>
-                            <p className="text-xs text-gray-400 mt-1">
+                            <p className="text-xs text-[var(--color-text-muted)] mt-1">
                                 آدرس خود را برای استفاده در سفارشات ذخیره کنید
                             </p>
                         </div>
                         <button
                             onClick={onClose}
-                            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                            className="p-2 rounded-full bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt)]/80 transition-colors"
                         >
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 text-[var(--color-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
@@ -133,7 +133,7 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                 <form onSubmit={handleSubmit} className="px-4 py-4 space-y-4 overflow-y-auto flex-1">
                     {/* Title */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                             نام آدرس (اختیاری)
                         </label>
                         <input
@@ -142,13 +142,13 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                             value={form.title}
                             onChange={handleChange}
                             placeholder="مثل: خانه، محل کار"
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-500/50 focus:border-transparent text-sm"
+                            className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-sm"
                         />
                     </div>
 
                     {/* Address */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                             آدرس کامل *
                         </label>
                         <textarea
@@ -158,14 +158,14 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                             rows={3}
                             required
                             placeholder="آدرس کامل خود را وارد کنید..."
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-500/50 focus:border-transparent resize-none text-sm"
+                            className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent resize-none text-sm"
                         />
                     </div>
 
                     {/* City and Province */}
                     <div className="grid grid-cols-2 gap-3">
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                                 شهر
                             </label>
                             <input
@@ -174,11 +174,11 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                                 value={form.city}
                                 onChange={handleChange}
                                 placeholder="تهران"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-500/50 focus:border-transparent text-sm"
+                                className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-3 py-2.5 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-sm"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                                 استان
                             </label>
                             <input
@@ -187,7 +187,7 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                                 value={form.province}
                                 onChange={handleChange}
                                 placeholder="تهران"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-500/50 focus:border-transparent text-sm"
+                                className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-3 py-2.5 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-sm"
                             />
                         </div>
                     </div>
@@ -195,7 +195,7 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                     {/* Recipient Name and Phone */}
                     <div className="grid grid-cols-2 gap-3">
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                                 نام گیرنده
                             </label>
                             <input
@@ -204,11 +204,11 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                                 value={form.recipient_name}
                                 onChange={handleChange}
                                 placeholder={user?.name ? `نام شما: ${user.name}` : "نام گیرنده"}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-500/50 focus:border-transparent text-sm"
+                                className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-3 py-2.5 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-sm"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                                 شماره گیرنده
                             </label>
                             <input
@@ -217,14 +217,14 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                                 value={form.recipient_phone}
                                 onChange={handleChange}
                                 placeholder={user?.phone ? `شماره شما: ${user.phone}` : "09123456789"}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-500/50 focus:border-transparent text-sm"
+                                className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-3 py-2.5 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-sm"
                             />
                         </div>
                     </div>
 
                     {/* Postal Code */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                             کد پستی
                         </label>
                         <input
@@ -233,12 +233,12 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                             value={form.postal_code}
                             onChange={handleChange}
                             placeholder="1234567890"
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-500/50 focus:border-transparent text-sm"
+                            className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent text-sm"
                         />
                     </div>
 
                     {/* Default Address - Custom Checkbox */}
-                    <div className="flex items-start gap-3 p-3 bg-white/5 rounded-xl border border-white/10">
+                    <div className="flex items-start gap-3 p-3 bg-[var(--color-surface-alt)] rounded-xl border border-[var(--color-border-subtle)]">
                         <div className="relative flex-shrink-0 mt-1">
                             <input
                                 type="checkbox"
@@ -252,9 +252,10 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                                 htmlFor="is_default"
                                 className={`w-6 h-6 rounded-lg border-2 cursor-pointer transition-all duration-200 flex items-center justify-center ${
                                     form.is_default 
-                                        ? 'bg-gradient-to-r from-cherry-600 to-pink-600 border-cherry-600 shadow-lg shadow-cherry-600/30' 
-                                        : 'bg-white/10 border-white/20 hover:border-white/40'
+                                        ? 'border-[var(--color-primary)] shadow-lg' 
+                                        : 'bg-[var(--color-surface)] border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/50'
                                 }`}
+                                style={form.is_default ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
                             >
                                 {form.is_default && (
                                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -264,10 +265,10 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                             </label>
                         </div>
                         <div className="flex-1">
-                            <label htmlFor="is_default" className="text-sm font-medium text-white cursor-pointer">
+                            <label htmlFor="is_default" className="text-sm font-medium text-[var(--color-text)] cursor-pointer">
                                 تنظیم به عنوان آدرس پیش‌فرض
                             </label>
-                            <p className="text-xs text-gray-400 mt-1">
+                            <p className="text-xs text-[var(--color-text-muted)] mt-1">
                                 این آدرس به عنوان آدرس پیش‌فرض برای سفارشات استفاده خواهد شد
                             </p>
                         </div>
@@ -275,12 +276,12 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                 </form>
 
                 {/* Actions - Fixed at bottom */}
-                <div className="px-4 py-4 border-t border-white/10 flex-shrink-0 bg-gradient-to-t from-gray-900/90 to-transparent">
+                <div className="px-4 py-4 border-t border-[var(--color-border-subtle)] flex-shrink-0 bg-white">
                     <div className="flex gap-3">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="flex-1 py-3 px-4 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-colors text-sm font-medium"
+                            className="flex-1 py-3 px-4 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt)]/80 text-[var(--color-text)] rounded-xl transition-colors text-sm font-medium border border-[var(--color-border-subtle)]"
                         >
                             انصراف
                         </button>
@@ -288,7 +289,7 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                             type="submit"
                             disabled={loading || !form.address.trim()}
                             onClick={handleSubmit}
-                            className="flex-1 py-3 px-4 bg-gradient-to-r from-cherry-600 to-pink-600 hover:from-cherry-500 hover:to-pink-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl transition-all duration-200 text-sm font-medium shadow-lg"
+                            className="flex-1 py-3 px-4 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl transition-all duration-200 text-sm font-medium shadow-lg" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                         >
                             {loading ? (
                                 <span className="flex items-center justify-center gap-2">

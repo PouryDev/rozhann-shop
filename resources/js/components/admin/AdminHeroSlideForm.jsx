@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ModernCheckbox from './ModernCheckbox';
+import ModernSelect from './ModernSelect';
 import { adminApiRequest } from '../../utils/adminApi';
 import { showToast } from '../../utils/toast';
 import { scrollToTop } from '../../utils/scrollToTop';
@@ -153,6 +154,13 @@ function AdminHeroSlideForm() {
         return '';
     };
 
+    const getLinkableSelectOptions = () => {
+        return getLinkableOptions().map(item => ({
+            value: String(item.id),
+            label: getLinkableLabel(item)
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -235,8 +243,8 @@ function AdminHeroSlideForm() {
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center justify-center min-h-96">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400">در حال بارگذاری...</p>
+                        <div className="w-12 h-12 border-4 border-[var(--color-primary)]/30 border-t-[var(--color-primary)] rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-[var(--color-text-muted)]">در حال بارگذاری...</p>
                     </div>
                 </div>
             </div>
@@ -247,64 +255,64 @@ function AdminHeroSlideForm() {
         <div className="max-w-4xl mx-auto relative">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
                     {isEdit ? 'ویرایش اسلاید' : 'اسلاید جدید'}
                 </h1>
-                <p className="text-gray-400">
+                <p className="text-[var(--color-text-muted)]">
                     {isEdit ? 'اطلاعات اسلاید را ویرایش کنید' : 'اطلاعات اسلاید جدید را وارد کنید'}
                 </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Basic Information */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 relative z-10">
-                    <h2 className="text-xl font-bold text-white mb-6">اطلاعات پایه</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6 relative z-10">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">اطلاعات پایه</h2>
                     
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-white font-medium mb-2">عنوان</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">عنوان</label>
                             <input
                                 type="text"
                                 name="title"
                                 value={form.title}
                                 onChange={handleInputChange}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="عنوان اسلاید (اختیاری)"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">زیرعنوان</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">زیرعنوان</label>
                             <input
                                 type="text"
                                 name="subtitle"
                                 value={form.subtitle}
                                 onChange={handleInputChange}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="زیرعنوان اسلاید (اختیاری)"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">توضیحات</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">توضیحات</label>
                             <textarea
                                 name="description"
                                 value={form.description}
                                 onChange={handleInputChange}
                                 rows="3"
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="توضیحات اسلاید (اختیاری)"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">تصویر اسلاید *</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">تصویر اسلاید *</label>
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={handleImageChange}
                                 required={!isEdit || !imagePreview}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-500 file:text-white hover:file:bg-purple-600 transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-purple-500 file:text-[var(--color-text)] hover:file:bg-purple-600 transition-all duration-200"
                             />
                             {imagePreview && (
                                 <div className="mt-4">
@@ -320,69 +328,75 @@ function AdminHeroSlideForm() {
                 </div>
 
                 {/* Link Configuration */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 relative z-10">
-                    <h2 className="text-xl font-bold text-white mb-6">تنظیمات لینک</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6 relative z-10">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">تنظیمات لینک</h2>
                     
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-white font-medium mb-2">نوع لینک</label>
-                            <select
+                            <label className="block text-[var(--color-text)] font-medium mb-2">نوع لینک</label>
+                            <ModernSelect
                                 name="link_type"
                                 value={form.link_type}
-                                onChange={handleInputChange}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                            >
-                                <option value="custom">URL سفارشی</option>
-                                <option value="product">محصول</option>
-                                <option value="category">دسته‌بندی</option>
-                                <option value="campaign">کمپین</option>
-                            </select>
+                                onChange={(value) => {
+                                    setForm(prev => ({
+                                        ...prev,
+                                        link_type: value,
+                                        linkable_id: '',
+                                        custom_url: ''
+                                    }));
+                                }}
+                                options={[
+                                    { value: 'custom', label: 'URL سفارشی' },
+                                    { value: 'product', label: 'محصول' },
+                                    { value: 'category', label: 'دسته‌بندی' },
+                                    { value: 'campaign', label: 'کمپین' }
+                                ]}
+                                placeholder="نوع لینک را انتخاب کنید"
+                            />
                         </div>
 
                         {form.link_type === 'custom' ? (
                             <div>
-                                <label className="block text-white font-medium mb-2">URL سفارشی</label>
+                                <label className="block text-[var(--color-text)] font-medium mb-2">URL سفارشی</label>
                                 <input
                                     type="url"
                                     name="custom_url"
                                     value={form.custom_url}
                                     onChange={handleInputChange}
                                     required
-                                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                     placeholder="https://example.com"
                                 />
                             </div>
                         ) : (
                             <div>
-                                <label className="block text-white font-medium mb-2">
+                                <label className="block text-[var(--color-text)] font-medium mb-2">
                                     {form.link_type === 'product' ? 'محصول' :
                                      form.link_type === 'category' ? 'دسته‌بندی' : 'کمپین'}
                                 </label>
-                                <select
+                                <ModernSelect
                                     name="linkable_id"
-                                    value={form.linkable_id}
-                                    onChange={handleInputChange}
-                                    required
-                                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                                >
-                                    <option value="">انتخاب کنید...</option>
-                                    {getLinkableOptions().map((item) => (
-                                        <option key={item.id} value={item.id}>
-                                            {getLinkableLabel(item)}
-                                        </option>
-                                    ))}
-                                </select>
+                                    value={String(form.linkable_id || '')}
+                                    onChange={(value) => {
+                                        setForm(prev => ({
+                                            ...prev,
+                                            linkable_id: value
+                                        }));
+                                    }}
+                                    options={getLinkableSelectOptions()}
+                                    placeholder="انتخاب کنید..."
+                                />
                             </div>
                         )}
 
                         <div>
-                            <label className="block text-white font-medium mb-2">متن دکمه</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">متن دکمه</label>
                             <input
                                 type="text"
                                 name="button_text"
                                 value={form.button_text}
                                 onChange={handleInputChange}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="متن دکمه (اختیاری)"
                             />
                         </div>
@@ -390,8 +404,8 @@ function AdminHeroSlideForm() {
                 </div>
 
                 {/* Settings */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 relative z-10">
-                    <h2 className="text-xl font-bold text-white mb-6">تنظیمات</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6 relative z-10">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">تنظیمات</h2>
                     
                     <div className="space-y-6">
                         <div className="flex items-center">
@@ -403,14 +417,14 @@ function AdminHeroSlideForm() {
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">ترتیب نمایش</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">ترتیب نمایش</label>
                             <input
                                 type="number"
                                 name="sort_order"
                                 value={form.sort_order}
                                 onChange={handleInputChange}
                                 min="0"
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="0"
                             />
                         </div>
@@ -425,14 +439,15 @@ function AdminHeroSlideForm() {
                             navigate('/admin/hero-slides');
                             scrollToTop();
                         }}
-                        className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200"
+                        className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt-hover)] text-[var(--color-text)] font-semibold py-4 px-6 rounded-xl transition-all duration-200 border border-[var(--color-border-subtle)]"
                     >
                         انصراف
                     </button>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        className="flex-1 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         {loading ? (
                             <div className="flex items-center justify-center space-x-2 space-x-reverse">

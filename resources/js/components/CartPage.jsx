@@ -53,7 +53,6 @@ function CartPage() {
             setCount(data.count || 0);
             window.dispatchEvent(new Event('cart:update'));
         } catch (e) {
-            // noop: keep current state, could show toast
         } finally {
             setRemovingKey(null);
         }
@@ -104,7 +103,6 @@ function CartPage() {
             
             if (!res.ok) {
                 const errorData = await res.json();
-                // If it's a variant selection error, open variant modal
                 if (res.status === 400 && errorData.message?.includes('رنگ و سایز')) {
                     setVariantModal({
                         isOpen: true,
@@ -136,97 +134,96 @@ function CartPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-            {/* Header */}
-            <div className="sticky top-0 z-30 bg-black/20 backdrop-blur-md border-b border-white/10">
+        <div className="min-h-screen bg-[var(--color-surface)]">
+            <div
+                className="sticky top-0 z-30 bg-white/90 backdrop-blur"
+                style={{ borderBottom: '1px solid var(--color-border-subtle)', boxShadow: '0 10px 25px rgba(15,23,42,0.06)' }}
+            >
                 <div className="max-w-md mx-auto px-4 py-4">
-                    <h1 className="text-xl font-bold text-white text-center">سبد خرید</h1>
+                    <h1 className="text-xl font-bold text-[var(--color-text)] text-center">سبد خرید</h1>
                 </div>
             </div>
 
-            {/* Content */}
-            <div className="max-w-md mx-auto px-4 py-6">
+            <div className="max-w-md mx-auto px-4 py-6 text-[var(--color-text)]">
                 {loading ? (
                     <div className="flex items-center justify-center py-12">
-                        <div className="w-8 h-8 border-2 border-cherry-500 border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: 'var(--color-primary)', borderTopColor: 'transparent' }}></div>
                     </div>
                 ) : error ? (
                     <div className="text-center py-12">
                         <div className="text-red-400 mb-2">⚠️</div>
-                        <div className="text-red-400">{error}</div>
+                        <div className="text-red-500">{error}</div>
                     </div>
                 ) : count === 0 ? (
                     <div className="text-center py-16">
                         <div className="text-6xl mb-4">🛒</div>
-                        <div className="text-gray-400 text-lg">سبد خرید خالی است</div>
-                        <Link to="/" className="inline-block mt-4 bg-cherry-600 hover:bg-cherry-500 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors">
+                        <div className="text-lg text-[var(--color-text-muted)]">سبد خرید خالی است</div>
+                        <Link to="/" className="inline-block mt-4 text-white px-6 py-2 rounded-full text-sm font-medium transition-all"
+                            style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))', boxShadow: '0 12px 30px rgba(244,172,63,0.3)' }}>
                             شروع خرید
                         </Link>
                     </div>
                 ) : (
                     <div className="space-y-3">
                         {items.map((item) => (
-                            <div key={item.key} className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                            <div key={item.key} className="rounded-2xl p-4 bg-white shadow border" style={{ borderColor: 'var(--color-border-subtle)' }}>
                                 <div className="flex items-center gap-3">
-                                    {/* Product Image */}
-                                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cherry-500/20 to-pink-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+                                    <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
+                                        style={{ background: 'var(--color-surface-alt)' }}>
                                         🛍️
                                     </div>
 
-                                    {/* Product Info */}
                                     <div className="flex-1 min-w-0">
-                                        <h3 className="font-semibold text-white text-sm leading-tight truncate">{item.title}</h3>
+                                        <h3 className="font-semibold text-sm leading-tight truncate">{item.title}</h3>
                                         {item.variant_display_name && (
-                                            <div className="text-xs text-gray-400 mt-0.5">{item.variant_display_name}</div>
+                                            <div className="text-xs text-[var(--color-text-muted)] mt-0.5">{item.variant_display_name}</div>
                                         )}
                                         {item.campaign && (
-                                            <div className="text-xs text-green-400 mt-0.5">🎉 {item.campaign.name}</div>
+                                            <div className="text-xs text-[var(--color-accent)] mt-0.5">🎉 {item.campaign.name}</div>
                                         )}
-                                        <div className="flex items-center gap-2 mt-1">
+                                        <div className="flex items-center gap-2 mt-1 text-xs">
                                             {item.original_price && item.original_price !== item.price && (
-                                                <span className="text-xs text-gray-500 line-through">{formatPrice(item.original_price)}</span>
+                                                <span className="text-[var(--color-text-muted)] line-through">{formatPrice(item.original_price)}</span>
                                             )}
-                                            <span className="text-xs text-cherry-400">{formatPrice(item.price)} تومان</span>
+                                            <span style={{ color: 'var(--color-primary-strong)' }}>{formatPrice(item.price)} تومان</span>
                                         </div>
                                     </div>
 
-                                    {/* Price */}
                                     <div className="text-right">
-                                        <div className="font-bold text-white text-sm">{formatPrice(item.total)} تومان</div>
+                                        <div className="font-bold text-sm">{formatPrice(item.total)} تومان</div>
                                         {item.total_discount > 0 && (
-                                            <div className="text-xs text-green-400">صرفه‌جویی: {formatPrice(item.total_discount)}</div>
+                                            <div className="text-xs text-[var(--color-accent)]">صرفه‌جویی: {formatPrice(item.total_discount)}</div>
                                         )}
                                     </div>
                                 </div>
 
-                                {/* Controls */}
                                 <div className="flex items-center justify-between mt-3">
-                                    {/* Quantity Controls */}
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => decrementItem(item)}
                                             disabled={removingKey === item.key}
-                                            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm disabled:opacity-50 flex items-center justify-center"
+                                            className="w-8 h-8 rounded-full bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface)] text-sm disabled:opacity-50 flex items-center justify-center"
                                         >
                                             −
                                         </button>
-                                        <div className="w-8 text-center text-white text-sm font-medium">
+                                        <div className="w-8 text-center text-sm font-medium">
                                             {item.quantity}
                                         </div>
                                         <button
                                             onClick={() => incrementItem(item)}
                                             disabled={removingKey === item.key}
-                                            className="w-8 h-8 rounded-full bg-cherry-600 hover:bg-cherry-500 text-white text-sm disabled:opacity-50 flex items-center justify-center"
+                                            className="w-8 h-8 rounded-full text-white text-sm disabled:opacity-50 flex items-center justify-center"
+                                            style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                                         >
                                             +
                                         </button>
                                     </div>
 
-                                    {/* Remove Button */}
                                     <button
                                         onClick={() => handleRemove(item.key)}
                                         disabled={removingKey === item.key}
-                                        className="text-red-400 hover:text-red-300 disabled:opacity-50 text-xs px-2 py-1 rounded-full hover:bg-red-400/10 transition-colors"
+                                        className="text-xs px-3 py-1 rounded-full transition-colors disabled:opacity-50"
+                                        style={{ color: '#f87171', background: 'rgba(248,113,113,0.08)' }}
                                     >
                                         {removingKey === item.key ? 'حذف...' : 'حذف'}
                                     </button>
@@ -234,15 +231,14 @@ function CartPage() {
                             </div>
                         ))}
 
-                        {/* Campaign Discount Summary */}
                         {totalDiscount > 0 && (
-                            <div className="bg-green-500/10 backdrop-blur-sm rounded-2xl p-4 border border-green-500/20">
+                            <div className="rounded-2xl p-4 border" style={{ borderColor: 'var(--color-border-subtle)', background: 'var(--color-surface-alt)' }}>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-green-400 text-lg">🎉</span>
-                                        <span className="text-green-400 font-medium">تخفیف کمپین</span>
+                                        <span className="text-lg">🎉</span>
+                                        <span className="font-medium">تخفیف کمپین</span>
                                     </div>
-                                    <div className="text-green-400 font-bold">{formatPrice(totalDiscount)} تومان</div>
+                                    <div className="font-bold" style={{ color: 'var(--color-accent)' }}>{formatPrice(totalDiscount)} تومان</div>
                                 </div>
                             </div>
                         )}
@@ -250,25 +246,28 @@ function CartPage() {
                 )}
             </div>
 
-            {/* Mobile Checkout Bar */}
             {count > 0 && (
-                <div className="fixed bottom-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-md border-t border-white/10">
+                <div
+                    className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur"
+                    style={{ borderTop: '1px solid var(--color-border-subtle)', boxShadow: '0 -10px 30px rgba(15,23,42,0.08)' }}
+                >
                     <div className="max-w-md mx-auto px-4 py-4">
                         <div className="space-y-2">
                             {totalDiscount > 0 && (
-                                <div className="flex items-center justify-between text-sm">
-                                    <span className="text-gray-400">قیمت اصلی:</span>
-                                    <span className="text-gray-400 line-through">{formatPrice(originalTotal)} تومان</span>
+                                <div className="flex items-center justify-between text-sm text-[var(--color-text-muted)]">
+                                    <span>قیمت اصلی:</span>
+                                    <span className="line-through">{formatPrice(originalTotal)} تومان</span>
                                 </div>
                             )}
                             <div className="flex items-center justify-between gap-4">
                                 <div>
-                                    <div className="text-xs text-gray-400">جمع کل</div>
-                                    <div className="text-white font-bold text-lg">{formatPrice(total)} تومان</div>
+                                    <div className="text-xs text-[var(--color-text-muted)]">جمع کل</div>
+                                    <div className="font-bold text-lg">{formatPrice(total)} تومان</div>
                                 </div>
                                 <Link
                                     to="/checkout"
-                                    className="bg-cherry-600 hover:bg-cherry-500 text-white rounded-2xl py-3 px-8 font-semibold transition-colors shadow-lg"
+                                    className="rounded-2xl py-3 px-8 font-semibold text-white transition-transform"
+                                    style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))', boxShadow: '0 15px 30px rgba(244,172,63,0.3)' }}
                                 >
                                     ادامه خرید
                                 </Link>
@@ -278,13 +277,12 @@ function CartPage() {
                 </div>
             )}
             
-            {/* Variant Selector Modal */}
             <VariantSelectorModal
                 product={variantModal.product}
                 isOpen={variantModal.isOpen}
                 onClose={() => setVariantModal({ isOpen: false, product: null, quantity: 1 })}
                 onSuccess={() => {
-                    fetchCart(); // Refresh cart after successful addition
+                    fetchCart();
                 }}
                 currentQuantity={variantModal.quantity}
             />

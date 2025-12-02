@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiRequest } from '../../utils/sanctumAuth';
 import { showToast } from '../../utils/toast';
+import ModernSelect from './ModernSelect';
 
 function AdminPaymentGateways() {
     const [gateways, setGateways] = useState([]);
@@ -171,8 +172,8 @@ function AdminPaymentGateways() {
         return (
             <div className="flex items-center justify-center min-h-96">
                 <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-gray-400">در حال بارگذاری...</p>
+                    <div className="w-12 h-12 border-4 border-[var(--color-primary)]/30 border-t-[var(--color-primary)] rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-[var(--color-text-muted)]">در حال بارگذاری...</p>
                 </div>
             </div>
         );
@@ -184,8 +185,8 @@ function AdminPaymentGateways() {
             <div className="mb-6 lg:mb-8">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">مدیریت درگاه‌های پرداخت</h1>
-                        <p className="text-gray-400 text-sm lg:text-base">مدیریت و تنظیم درگاه‌های پرداخت فروشگاه</p>
+                        <h1 className="text-2xl lg:text-3xl font-bold text-[var(--color-text)] mb-2">مدیریت درگاه‌های پرداخت</h1>
+                        <p className="text-[var(--color-text-muted)] text-sm lg:text-base">مدیریت و تنظیم درگاه‌های پرداخت فروشگاه</p>
                     </div>
                     <button
                         onClick={() => {
@@ -200,7 +201,8 @@ function AdminPaymentGateways() {
                             });
                             setShowForm(true);
                         }}
-                        className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white px-4 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2 font-medium"
+                        className="text-white px-4 py-2.5 rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center gap-2 font-medium"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -211,61 +213,61 @@ function AdminPaymentGateways() {
             </div>
 
             {error && (
-                <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400 backdrop-blur-xl">
+                <div className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4 text-red-600">
                     {error}
                 </div>
             )}
 
             {/* Desktop Table View */}
-            <div className="hidden lg:block bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-xl border border-white/10 overflow-hidden shadow-2xl">
+            <div className="hidden lg:block bg-white rounded-xl border border-[var(--color-border-subtle)] overflow-hidden shadow-2xl">
                 <table className="w-full">
-                    <thead className="bg-white/5">
+                    <thead className="bg-[var(--color-surface-alt)]">
                         <tr>
-                            <th className="px-6 py-4 text-right text-sm font-semibold text-white">نام</th>
-                            <th className="px-6 py-4 text-right text-sm font-semibold text-white">نوع</th>
-                            <th className="px-6 py-4 text-right text-sm font-semibold text-white">وضعیت</th>
-                            <th className="px-6 py-4 text-right text-sm font-semibold text-white">ترتیب</th>
-                            <th className="px-6 py-4 text-right text-sm font-semibold text-white">عملیات</th>
+                            <th className="px-6 py-4 text-right text-sm font-semibold text-[var(--color-text)]">نام</th>
+                            <th className="px-6 py-4 text-right text-sm font-semibold text-[var(--color-text)]">نوع</th>
+                            <th className="px-6 py-4 text-right text-sm font-semibold text-[var(--color-text)]">وضعیت</th>
+                            <th className="px-6 py-4 text-right text-sm font-semibold text-[var(--color-text)]">ترتیب</th>
+                            <th className="px-6 py-4 text-right text-sm font-semibold text-[var(--color-text)]">عملیات</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/10">
+                    <tbody className="divide-y divide-[var(--color-border-subtle)]">
                         {gateways.map((gateway) => (
-                            <tr key={gateway.id} className="hover:bg-white/5 transition-colors">
-                                <td className="px-6 py-4 text-white font-medium">{gateway.display_name}</td>
-                                <td className="px-6 py-4 text-gray-300">{gateway.type}</td>
+                            <tr key={gateway.id} className="hover:bg-[var(--color-surface-alt)] transition-colors">
+                                <td className="px-6 py-4 text-[var(--color-text)] font-medium">{gateway.display_name}</td>
+                                <td className="px-6 py-4 text-[var(--color-text-muted)]">{gateway.type}</td>
                                 <td className="px-6 py-4">
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
                                         gateway.is_active 
-                                            ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                                            : 'bg-red-500/20 text-red-400 border-red-500/30'
+                                            ? 'bg-green-50 text-green-600 border-green-500/30' 
+                                            : 'bg-red-500/20 text-red-600 border-red-500/30'
                                     }`}>
                                         {gateway.is_active ? 'فعال' : 'غیرفعال'}
                                     </span>
                                 </td>
-                                <td className="px-6 py-4 text-gray-300">{gateway.sort_order}</td>
+                                <td className="px-6 py-4 text-[var(--color-text-muted)]">{gateway.sort_order}</td>
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => handleToggle(gateway)}
-                                            className="text-blue-400 hover:text-blue-300 text-sm px-3 py-1.5 rounded-lg hover:bg-blue-500/10 transition-colors"
+                                            className="text-blue-600 hover:text-blue-700 text-sm px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors"
                                         >
                                             {gateway.is_active ? 'غیرفعال' : 'فعال'}
                                         </button>
                                         <button
                                             onClick={() => handleConfig(gateway)}
-                                            className="text-yellow-400 hover:text-yellow-300 text-sm px-3 py-1.5 rounded-lg hover:bg-yellow-500/10 transition-colors"
+                                            className="text-yellow-600 hover:text-yellow-700 text-sm px-3 py-1.5 rounded-lg hover:bg-yellow-50 transition-colors"
                                         >
                                             تنظیمات
                                         </button>
                                         <button
                                             onClick={() => handleEdit(gateway)}
-                                            className="text-green-400 hover:text-green-300 text-sm px-3 py-1.5 rounded-lg hover:bg-green-500/10 transition-colors"
+                                            className="text-green-600 hover:text-green-700 text-sm px-3 py-1.5 rounded-lg hover:bg-green-50 transition-colors"
                                         >
                                             ویرایش
                                         </button>
                                         <button
                                             onClick={() => handleDelete(gateway.id)}
-                                            className="text-red-400 hover:text-red-300 text-sm px-3 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors"
+                                            className="text-red-600 hover:text-red-700 text-sm px-3 py-1.5 rounded-lg hover:bg-red-50 transition-colors"
                                         >
                                             حذف
                                         </button>
@@ -282,26 +284,26 @@ function AdminPaymentGateways() {
                 {gateways.map((gateway) => (
                     <div 
                         key={gateway.id} 
-                        className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl overflow-hidden"
+                        className="bg-white rounded-xl border border-[var(--color-border-subtle)] shadow-2xl overflow-hidden"
                     >
                         <div className="p-4 space-y-3">
                             {/* Header */}
                             <div className="flex items-start justify-between">
                                 <div className="flex-1">
-                                    <h3 className="text-white font-semibold text-lg mb-1">{gateway.display_name}</h3>
-                                    <p className="text-gray-400 text-sm">{gateway.type}</p>
+                                    <h3 className="text-[var(--color-text)] font-semibold text-lg mb-1">{gateway.display_name}</h3>
+                                    <p className="text-[var(--color-text-muted)] text-sm">{gateway.type}</p>
                                 </div>
                                 <span className={`px-3 py-1 rounded-full text-xs font-medium border shrink-0 ${
                                     gateway.is_active 
-                                        ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                                        : 'bg-red-500/20 text-red-400 border-red-500/30'
+                                        ? 'bg-green-50 text-green-600 border-green-500/30' 
+                                        : 'bg-red-500/20 text-red-600 border-red-500/30'
                                 }`}>
                                     {gateway.is_active ? 'فعال' : 'غیرفعال'}
                                 </span>
                             </div>
 
                             {/* Details */}
-                            <div className="flex items-center gap-4 text-sm text-gray-300">
+                            <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
                                 <div className="flex items-center gap-1">
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -311,10 +313,10 @@ function AdminPaymentGateways() {
                             </div>
 
                             {/* Actions */}
-                            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10">
+                            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[var(--color-border-subtle)]">
                                 <button
                                     onClick={() => handleToggle(gateway)}
-                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 active:scale-95"
+                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 active:scale-95"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -323,7 +325,7 @@ function AdminPaymentGateways() {
                                 </button>
                                 <button
                                     onClick={() => handleConfig(gateway)}
-                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 hover:bg-yellow-500/20 active:scale-95"
+                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-yellow-50 text-yellow-600 border border-yellow-200 hover:bg-yellow-100 active:scale-95"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -333,7 +335,7 @@ function AdminPaymentGateways() {
                                 </button>
                                 <button
                                     onClick={() => handleEdit(gateway)}
-                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 active:scale-95"
+                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-green-50 text-green-600 border border-green-200 hover:bg-green-100 active:scale-95"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -342,7 +344,7 @@ function AdminPaymentGateways() {
                                 </button>
                                 <button
                                     onClick={() => handleDelete(gateway.id)}
-                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 active:scale-95"
+                                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 active:scale-95"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -358,9 +360,9 @@ function AdminPaymentGateways() {
             {/* Gateway Form Modal */}
             {showForm && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-white/10 shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-                        <div className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-900 border-b border-white/10 px-6 py-4 flex items-center justify-between">
-                            <h2 className="text-xl font-bold text-white">
+                    <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                        <div className="sticky top-0 bg-white border-b border-[var(--color-border-subtle)] px-6 py-4 flex items-center justify-between">
+                            <h2 className="text-xl font-bold text-[var(--color-text)]">
                                 {editingGateway ? 'ویرایش درگاه پرداخت' : 'افزودن درگاه پرداخت'}
                             </h2>
                             <button
@@ -368,7 +370,7 @@ function AdminPaymentGateways() {
                                     setShowForm(false);
                                     setEditingGateway(null);
                                 }}
-                                className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+                                className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors p-1 rounded-lg hover:bg-[var(--color-surface-alt)]"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -377,72 +379,71 @@ function AdminPaymentGateways() {
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2 font-medium">نام</label>
+                                <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">نام</label>
                                 <input
                                     type="text"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all"
                                     required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2 font-medium">نوع (type)</label>
-                                <select
+                                <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">نوع (type)</label>
+                                <ModernSelect
                                     value={formData.type}
-                                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                                    required
+                                    onChange={(value) => setFormData({ ...formData, type: value })}
+                                    options={[
+                                        { value: 'zarinpal', label: 'زرین‌پال' },
+                                        { value: 'card_to_card', label: 'کارت به کارت' },
+                                        { value: 'zibal', label: 'زیبال' }
+                                    ]}
+                                    placeholder="انتخاب کنید"
                                     disabled={!!editingGateway}
-                                    style={{ colorScheme: 'dark' }}
-                                >
-                                    <option value="">انتخاب کنید</option>
-                                    <option value="zarinpal">زرین‌پال</option>
-                                    <option value="card_to_card">کارت به کارت</option>
-                                    <option value="zibal">زیبال</option>
-                                </select>
+                                />
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2 font-medium">نام نمایشی</label>
+                                <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">نام نمایشی</label>
                                 <input
                                     type="text"
                                     value={formData.display_name}
                                     onChange={(e) => setFormData({ ...formData, display_name: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all"
                                     required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2 font-medium">توضیحات</label>
+                                <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">توضیحات</label>
                                 <textarea
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all resize-none"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all resize-none"
                                     rows="3"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2 font-medium">ترتیب نمایش</label>
+                                <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">ترتیب نمایش</label>
                                 <input
                                     type="number"
                                     value={formData.sort_order}
                                     onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) || 0 })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all"
                                 />
                             </div>
-                            <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                            <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-alt)] rounded-xl border border-[var(--color-border-subtle)]">
                                 <input
                                     type="checkbox"
                                     checked={formData.is_active}
                                     onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                                    className="w-5 h-5 rounded border-white/20 bg-white/5 text-purple-600 focus:ring-purple-500 focus:ring-offset-0"
+                                    className="w-5 h-5 rounded border-[var(--color-border-subtle)] bg-[var(--color-surface-alt)] text-[var(--color-primary-strong)] focus:ring-[var(--color-primary)] focus:ring-offset-0"
                                 />
-                                <label className="text-sm text-gray-300 font-medium">فعال</label>
+                                <label className="text-sm text-[var(--color-text-muted)] font-medium">فعال</label>
                             </div>
                             <div className="flex gap-3 pt-2">
                                 <button
                                     type="submit"
-                                    className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white px-4 py-3 rounded-xl transition-all duration-200 font-medium shadow-lg shadow-purple-500/20"
+                                    className="flex-1 text-white px-4 py-3 rounded-xl transition-all duration-200 font-medium shadow-lg"
+                                    style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                                 >
                                     ذخیره
                                 </button>
@@ -452,7 +453,7 @@ function AdminPaymentGateways() {
                                         setShowForm(false);
                                         setEditingGateway(null);
                                     }}
-                                    className="flex-1 bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-xl transition-all duration-200 font-medium border border-white/10"
+                                    className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt)] text-[var(--color-text)] px-4 py-3 rounded-xl transition-all duration-200 font-medium border border-[var(--color-border-subtle)]"
                                 >
                                     انصراف
                                 </button>
@@ -465,9 +466,9 @@ function AdminPaymentGateways() {
             {/* Config Form Modal */}
             {showConfigForm && configGateway && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-white/10 shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-                        <div className="sticky top-0 bg-gradient-to-br from-gray-800 to-gray-900 border-b border-white/10 px-6 py-4 flex items-center justify-between">
-                            <h2 className="text-xl font-bold text-white">
+                    <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                        <div className="sticky top-0 bg-white border-b border-[var(--color-border-subtle)] px-6 py-4 flex items-center justify-between">
+                            <h2 className="text-xl font-bold text-[var(--color-text)]">
                                 تنظیمات {configGateway.display_name}
                             </h2>
                             <button
@@ -475,7 +476,7 @@ function AdminPaymentGateways() {
                                     setShowConfigForm(false);
                                     setConfigGateway(null);
                                 }}
-                                className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+                                className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors p-1 rounded-lg hover:bg-[var(--color-surface-alt)]"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -486,45 +487,45 @@ function AdminPaymentGateways() {
                             {configGateway.type === 'zarinpal' && (
                                 <>
                                     <div>
-                                        <label className="block text-sm text-gray-300 mb-2 font-medium">Merchant ID</label>
+                                        <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">Merchant ID</label>
                                         <input
                                             type="text"
                                             value={configData.merchant_id || ''}
                                             onChange={(e) => setConfigData({ ...configData, merchant_id: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all"
                                             placeholder="مرچنت کد زرین‌پال"
                                         />
                                     </div>
-                                    <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-alt)] rounded-xl border border-[var(--color-border-subtle)]">
                                         <input
                                             type="checkbox"
                                             checked={configData.sandbox || false}
                                             onChange={(e) => setConfigData({ ...configData, sandbox: e.target.checked })}
-                                            className="w-5 h-5 rounded border-white/20 bg-white/5 text-purple-600 focus:ring-purple-500 focus:ring-offset-0"
+                                            className="w-5 h-5 rounded border-[var(--color-border-subtle)] bg-[var(--color-surface-alt)] text-[var(--color-primary-strong)] focus:ring-[var(--color-primary)] focus:ring-offset-0"
                                         />
-                                        <label className="text-sm text-gray-300 font-medium">Sandbox Mode</label>
+                                        <label className="text-sm text-[var(--color-text-muted)] font-medium">Sandbox Mode</label>
                                     </div>
                                 </>
                             )}
                             {configGateway.type === 'card_to_card' && (
                                 <>
                                     <div>
-                                        <label className="block text-sm text-gray-300 mb-2 font-medium">شماره کارت</label>
+                                        <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">شماره کارت</label>
                                         <input
                                             type="text"
                                             value={configData.card_number || ''}
                                             onChange={(e) => setConfigData({ ...configData, card_number: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all"
                                             placeholder="6037991553211859"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm text-gray-300 mb-2 font-medium">نام دارنده کارت</label>
+                                        <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">نام دارنده کارت</label>
                                         <input
                                             type="text"
                                             value={configData.card_holder || ''}
                                             onChange={(e) => setConfigData({ ...configData, card_holder: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all"
                                             placeholder="نام دارنده کارت"
                                         />
                                     </div>
@@ -533,30 +534,31 @@ function AdminPaymentGateways() {
                             {configGateway.type === 'zibal' && (
                                 <>
                                     <div>
-                                        <label className="block text-sm text-gray-300 mb-2 font-medium">Merchant ID</label>
+                                        <label className="block text-sm text-[var(--color-text-muted)] mb-2 font-medium">Merchant ID</label>
                                         <input
                                             type="text"
                                             value={configData.merchant_id || ''}
                                             onChange={(e) => setConfigData({ ...configData, merchant_id: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20/50 transition-all"
                                             placeholder="مرچنت کد زیبال"
                                         />
                                     </div>
-                                    <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                                    <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-alt)] rounded-xl border border-[var(--color-border-subtle)]">
                                         <input
                                             type="checkbox"
                                             checked={configData.sandbox || false}
                                             onChange={(e) => setConfigData({ ...configData, sandbox: e.target.checked })}
-                                            className="w-5 h-5 rounded border-white/20 bg-white/5 text-purple-600 focus:ring-purple-500 focus:ring-offset-0"
+                                            className="w-5 h-5 rounded border-[var(--color-border-subtle)] bg-[var(--color-surface-alt)] text-[var(--color-primary-strong)] focus:ring-[var(--color-primary)] focus:ring-offset-0"
                                         />
-                                        <label className="text-sm text-gray-300 font-medium">Sandbox Mode</label>
+                                        <label className="text-sm text-[var(--color-text-muted)] font-medium">Sandbox Mode</label>
                                     </div>
                                 </>
                             )}
                             <div className="flex gap-3 pt-2">
                                 <button
                                     type="submit"
-                                    className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white px-4 py-3 rounded-xl transition-all duration-200 font-medium shadow-lg shadow-purple-500/20"
+                                    className="flex-1 text-white px-4 py-3 rounded-xl transition-all duration-200 font-medium shadow-lg"
+                                    style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                                 >
                                     ذخیره تنظیمات
                                 </button>
@@ -566,7 +568,7 @@ function AdminPaymentGateways() {
                                         setShowConfigForm(false);
                                         setConfigGateway(null);
                                     }}
-                                    className="flex-1 bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-xl transition-all duration-200 font-medium border border-white/10"
+                                    className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt)] text-[var(--color-text)] px-4 py-3 rounded-xl transition-all duration-200 font-medium border border-[var(--color-border-subtle)]"
                                 >
                                     انصراف
                                 </button>

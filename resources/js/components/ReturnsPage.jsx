@@ -5,9 +5,9 @@ function ReturnsPage() {
     return (
         <>
             <Helmet>
-                <title>بازگردانی و مرجوعی | جمه - سیاست بازگشت کالا</title>
-                <meta name="description" content="شرایط و قوانین بازگردانی کالا در فروشگاه جمه. اطلاعات کامل درباره مراحل مرجوعی، شرایط بازگشت و استرداد وجه." />
-                <meta name="keywords" content="بازگردانی, مرجوعی, استرداد وجه, بازگشت کالا, جمه" />
+                <title>بازگردانی و مرجوعی | روژان - سیاست بازگشت کالا</title>
+                <meta name="description" content="شرایط و قوانین بازگردانی کالا در فروشگاه روژان. اطلاعات کامل درباره مراحل مرجوعی، شرایط بازگشت و استرداد وجه." />
+                <meta name="keywords" content="بازگردانی, مرجوعی, استرداد وجه, بازگشت کالا, روژان" />
                 <link rel="canonical" href={`${window.location.origin}/returns`} />
             </Helmet>
 
@@ -27,7 +27,7 @@ function ReturnsPage() {
                             <h2 className="text-xl font-bold text-white mb-4">سیاست بازگشت کالا</h2>
                             <div className="space-y-4 text-gray-300">
                                 <p>
-                                    در فروشگاه جمه، رضایت مشتریان اولویت اول ماست. به همین دلیل امکان بازگردانی کالا 
+                                    در فروشگاه روژان، رضایت مشتریان اولویت اول ماست. به همین دلیل امکان بازگردانی کالا 
                                     در شرایط خاص برای شما فراهم شده است.
                                 </p>
                                 <p>
@@ -166,10 +166,10 @@ function ReturnsPage() {
                                 تیم پشتیبانی ما آماده پاسخگویی به سوالات شما درباره بازگشت کالا است
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <a href="https://instagram.com/jemehshopp" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
+                                <a href="https://instagram.com/rozhan_shopp" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
                                     اینستاگرام
                                 </a>
-                                <a href="https://t.me/jemeh_shop" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
+                                <a href="https://t.me/rozhann" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors">
                                     تلگرام
                                 </a>
                             </div>

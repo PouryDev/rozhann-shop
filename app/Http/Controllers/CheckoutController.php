@@ -305,6 +305,8 @@ class CheckoutController extends Controller
             'status' => 'unpaid',
         ]);
 
+        // Notification will be sent from Thanks page when user visits it
+
         // Don't clear cart here - it will be cleared after successful payment initiation
         // This prevents cart loss if payment gateway is unavailable
         

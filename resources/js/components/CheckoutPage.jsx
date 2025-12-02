@@ -420,52 +420,52 @@ function CheckoutPage() {
     }, [cart.total, selectedDeliveryMethod, discountInfo]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text)]">
             {/* Mobile Header */}
-            <div className="sticky top-0 z-30 bg-black/20 backdrop-blur-md border-b border-white/10 lg:hidden">
+            <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-[var(--color-border-subtle)] lg:hidden shadow-sm">
                 <div className="max-w-md mx-auto px-4 py-4">
-                    <h1 className="text-xl font-bold text-white text-center">تسویه حساب</h1>
+                    <h1 className="text-xl font-bold text-[var(--color-text)] text-center">تسویه حساب</h1>
                 </div>
             </div>
 
             {/* Desktop Header */}
             <div className="hidden lg:block pt-6 md:pt-8">
             <div className="max-w-7xl mx-auto px-4">
-                <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-4 md:mb-6">تسویه حساب</h1>
+                <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--color-text)] mb-4 md:mb-6">تسویه حساب</h1>
                 </div>
             </div>
 
                 {loading ? (
                 <div className="flex items-center justify-center py-12">
-                    <div className="w-8 h-8 border-2 border-cherry-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-8 h-8 border-2 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
                 </div>
             ) : (
                 <div className="max-w-md mx-auto lg:max-w-7xl px-4 py-6 lg:py-8">
                     {/* Mobile Layout */}
                     <div className="lg:hidden space-y-4">
                         {/* Order Summary Card */}
-                        <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
-                            <div className="bg-gradient-to-r from-white/10 to-white/0 px-4 py-3">
+                        <div className="bg-white shadow-lg rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl overflow-hidden">
+                            <div className="bg-[var(--color-surface-alt)] px-4 py-3">
                                 <div className="flex items-center justify-between">
-                                    <h2 className="text-white font-bold text-lg">جزئیات سفارش</h2>
-                                    <div className="text-xs text-gray-300 bg-white/10 px-2 py-1 rounded-full">{cart.count} قلم</div>
+                                    <h2 className="text-[var(--color-text)] font-bold text-lg">جزئیات سفارش</h2>
+                                    <div className="text-xs text-[var(--color-text)] bg-[var(--color-surface-alt)] px-2 py-1 rounded-full">{cart.count} قلم</div>
                                 </div>
                             </div>
                             
                             <div className="p-4 space-y-3">
                                 {cart.items.map((item) => (
-                                    <div key={item.key} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl">
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cherry-500/20 to-pink-500/20 flex items-center justify-center text-lg flex-shrink-0">
+                                    <div key={item.key} className="flex items-center gap-3 p-3 bg-[var(--color-surface-alt)] rounded-xl">
+                                        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-lg flex-shrink-0" style={{ background: 'rgba(244, 172, 63, 0.1)' }}>
                                             🛍️
                                         </div>
                                         
                                         <div className="flex-1 min-w-0">
-                                            <h3 className="text-white font-semibold text-sm leading-tight truncate">{item.title}</h3>
+                                            <h3 className="text-[var(--color-text)] font-semibold text-sm leading-tight truncate">{item.title}</h3>
                                             {item.variant_display_name && (
-                                                <div className="text-xs text-gray-400 mt-0.5">{item.variant_display_name}</div>
+                                                <div className="text-xs text-[var(--color-text)] mt-0.5">{item.variant_display_name}</div>
                                             )}
                                             {item.campaign && (
-                                                <div className="text-xs text-green-400 mt-0.5 flex items-center gap-1">
+                                                <div className="text-xs text-green-600 mt-0.5 flex items-center gap-1">
                                                     <span>🎉</span>
                                                     <span>{item.campaign.name}</span>
                                                 </div>
@@ -474,14 +474,14 @@ function CheckoutPage() {
                                                 {item.original_price && item.original_price !== item.price && (
                                                     <span className="text-xs text-gray-500 line-through">{formatPrice(item.original_price)}</span>
                                                 )}
-                                                <span className="text-xs text-gray-400">{item.quantity} × {formatPrice(item.price)}</span>
+                                                <span className="text-xs text-[var(--color-text)]">{item.quantity} × {formatPrice(item.price)}</span>
                                             </div>
                                         </div>
                                         
                                         <div className="text-right">
-                                            <div className="text-white font-bold text-sm">{formatPrice(item.total)}</div>
+                                            <div className="text-[var(--color-text)] font-bold text-sm">{formatPrice(item.total)}</div>
                                             {item.total_discount > 0 && (
-                                                <div className="text-xs text-green-400">صرفه‌جویی: {formatPrice(item.total_discount)}</div>
+                                                <div className="text-xs text-green-600">صرفه‌جویی: {formatPrice(item.total_discount)}</div>
                                             )}
                                         </div>
                                     </div>
@@ -491,16 +491,16 @@ function CheckoutPage() {
                             {/* Campaign Discount Summary */}
                             {cart.totalDiscount > 0 && (
                                 <div className="mx-4 mb-4">
-                                    <div className="bg-green-500/10 backdrop-blur-sm rounded-xl p-3 border border-green-500/20">
+                                    <div className="bg-green-50 backdrop-blur-sm rounded-xl p-3 border border-green-500/20">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <span className="text-green-400 text-lg">🎉</span>
+                                                <span className="text-green-600 text-lg">🎉</span>
                                                 <div>
-                                                    <div className="text-green-400 font-medium text-sm">تخفیف کمپین</div>
+                                                    <div className="text-green-600 font-medium text-sm">تخفیف کمپین</div>
                                                     <div className="text-green-300 text-xs">صرفه‌جویی از کمپین‌های فعال</div>
                                                 </div>
                                             </div>
-                                            <div className="text-green-400 font-bold">{formatPrice(cart.totalDiscount)}</div>
+                                            <div className="text-green-600 font-bold">{formatPrice(cart.totalDiscount)}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -509,7 +509,7 @@ function CheckoutPage() {
                             {/* Price Summary */}
                             <div className="px-4 pb-4 space-y-2">
                                 {cart.totalDiscount > 0 && (
-                                    <div className="flex items-center justify-between text-green-400 text-sm">
+                                    <div className="flex items-center justify-between text-green-600 text-sm">
                                         <span className="flex items-center gap-1">
                                             <span>🎉</span>
                                             <span>تخفیف کمپین</span>
@@ -518,65 +518,65 @@ function CheckoutPage() {
                                     </div>
                                 )}
                                 
-                                <div className="flex items-center justify-between text-white">
-                                    <span className="text-sm text-gray-300">
+                                <div className="flex items-center justify-between text-[var(--color-text)]">
+                                    <span className="text-sm text-[var(--color-text)]">
                                         {cart.totalDiscount > 0 ? 'جمع کل (پس از تخفیف)' : 'جمع کل'}
                                     </span>
                                     <span className="font-bold">{formatPrice(cart.total)}</span>
                                 </div>
                                 
                                 {selectedDeliveryMethod && (
-                                    <div className="flex items-center justify-between text-white">
-                                        <span className="text-sm text-gray-300">هزینه ارسال</span>
+                                    <div className="flex items-center justify-between text-[var(--color-text)]">
+                                        <span className="text-sm text-[var(--color-text)]">هزینه ارسال</span>
                                         <span className={`font-bold ${
                                             selectedDeliveryMethod.fee === 0 
-                                                ? 'text-green-400' 
-                                                : 'text-white'
+                                                ? 'text-green-600' 
+                                                : 'text-[var(--color-text)]'
                                         }`}>
-                                            {selectedDeliveryMethod.fee === 0 ? 'رایگان' : formatPrice(selectedDeliveryMethod.fee)}
+                                            {selectedDeliveryMethod.fee === 0 ? 'پس‌پرداخت' : formatPrice(selectedDeliveryMethod.fee)}
                                         </span>
                                     </div>
                                 )}
                                 
                                 {discountInfo && (
-                                    <div className="flex items-center justify-between text-green-400 text-sm">
+                                    <div className="flex items-center justify-between text-green-600 text-sm">
                                         <span>تخفیف ({discountInfo.code})</span>
                                         <span>-{formatPrice(discountInfo.amount)}</span>
                                     </div>
                                 )}
                                 
-                                <div className="border-t border-white/10 pt-2">
-                                    <div className="flex items-center justify-between text-white">
+                                <div className="border-t border-[var(--color-border-subtle)] pt-2">
+                                    <div className="flex items-center justify-between text-[var(--color-text)]">
                                         <span className="font-semibold">مبلغ نهایی</span>
-                                        <span className="font-extrabold text-cherry-400 text-lg">{formatPrice(finalAmount)}</span>
+                                        <span className="font-extrabold text-[var(--color-primary-strong)] text-lg">{formatPrice(finalAmount)}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Form Card */}
-                        <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-4 space-y-4">
-                            <h2 className="text-white font-bold text-lg mb-4">اطلاعات سفارش</h2>
+                        <div className="bg-white shadow-lg rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-4 space-y-4">
+                            <h2 className="text-[var(--color-text)] font-bold text-lg mb-4">اطلاعات سفارش</h2>
                             
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2">نام و نام خانوادگی</label>
+                                <label className="block text-sm text-[var(--color-text)] mb-2">نام و نام خانوادگی</label>
                                 <input 
                                     name="name" 
                                     value={form.name} 
                                     onChange={handleChange} 
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-1 focus:border-cherry-500 focus:ring-cherry-500 transition-colors"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:ring-1 focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] transition-colors"
                                     required 
                                 />
                             </div>
                             
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2">شماره تماس</label>
+                                <label className="block text-sm text-[var(--color-text)] mb-2">شماره تماس</label>
                                 <input 
                                     name="phone" 
                                     value={form.phone} 
                                     onChange={handleChange} 
                                     placeholder="09123456789" 
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-1 focus:border-cherry-500 focus:ring-cherry-500 transition-colors"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:ring-1 focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] transition-colors"
                                     required 
                                 />
                             </div>
@@ -584,7 +584,7 @@ function CheckoutPage() {
                             {/* Address Selection */}
                             {authUser && (
                                 <div>
-                                    <label className="block text-sm text-gray-300 mb-2">
+                                    <label className="block text-sm text-[var(--color-text)] mb-2">
                                         {addresses.length > 0 ? 'انتخاب آدرس ذخیره شده' : 'آدرس ارسال'}
                                     </label>
                                     <AddressDropdown
@@ -597,19 +597,19 @@ function CheckoutPage() {
                                 </div>
                             )}
                             {!authUser && (
-                                <div className="text-sm text-gray-400">
+                                <div className="text-sm text-[var(--color-text)]">
                                     برای افزودن آدرس، ابتدا وارد حساب کاربری خود شوید
                                 </div>
                             )}
 
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2">آدرس کامل</label>
+                                <label className="block text-sm text-[var(--color-text)] mb-2">آدرس کامل</label>
                                 <textarea 
                                     name="address" 
                                     value={form.address} 
                                     onChange={handleChange} 
                                     rows={4} 
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-1 focus:border-cherry-500 focus:ring-cherry-500 transition-colors resize-none"
+                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:ring-1 focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] transition-colors resize-none"
                                     required 
                                     placeholder="آدرس کامل خود را وارد کنید..."
                                 />
@@ -617,10 +617,10 @@ function CheckoutPage() {
 
                             {/* Delivery Method Selection */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-3">روش ارسال *</label>
+                                <label className="block text-sm font-medium text-[var(--color-text)] mb-3">روش ارسال *</label>
                                 {deliveryMethods.length === 0 && !authUser ? (
-                                    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-3 text-center">
-                                        <div className="text-yellow-400 text-sm">
+                                    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-center">
+                                        <div className="text-yellow-600 text-sm">
                                             برای مشاهده روش‌های ارسال، ابتدا وارد حساب کاربری خود شوید
                                         </div>
                                     </div>
@@ -632,30 +632,33 @@ function CheckoutPage() {
                                             className={`relative cursor-pointer transition-all duration-200`}
                                             onClick={() => handleDeliveryMethodChange(method.id)}
                                         >
-                                            <div className={`bg-white/5 rounded-xl p-3 border transition-all duration-200 ${
+                                            <div className={`bg-[var(--color-surface-alt)] rounded-xl p-3 border transition-all duration-200 ${
                                                 form.delivery_method_id === method.id
-                                                    ? 'border-cherry-500/50 bg-cherry-500/5'
-                                                    : 'border-white/10 hover:border-cherry-400/30'
+                                                    ? 'border-[var(--color-primary)]/50 bg-[var(--color-primary)]/5'
+                                                    : 'border-[var(--color-border-subtle)] hover:border-cherry-400/30'
                                             }`}>
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-3">
-                                                        <div className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${
-                                                            form.delivery_method_id === method.id
-                                                                ? 'border-cherry-500 bg-cherry-500'
-                                                                : 'border-white/40 bg-white/5'
-                                                        }`}>
+                                                        <div 
+                                                            className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${
+                                                                form.delivery_method_id === method.id
+                                                                    ? 'border-[var(--color-primary)]'
+                                                                    : 'border-[var(--color-border-subtle)] bg-[var(--color-surface)]'
+                                                            }`}
+                                                            style={form.delivery_method_id === method.id ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
+                                                        >
                                                             {form.delivery_method_id === method.id && (
                                                                 <div className="w-1.5 h-1.5 rounded-full bg-white mx-auto mt-0.5"></div>
                                                             )}
                                                         </div>
-                                                        <span className="text-white font-medium text-sm">{method.title}</span>
+                                                        <span className="text-[var(--color-text)] font-medium text-sm">{method.title}</span>
                                                     </div>
                                                     <span className={`text-xs font-bold px-2 py-1 rounded-full ${
                                                         method.fee === 0 
-                                                            ? 'text-green-400 bg-green-500/10' 
-                                                            : 'text-cherry-400 bg-cherry-500/10'
+                                                            ? 'text-green-600 bg-green-50' 
+                                                            : 'text-[var(--color-primary-strong)] bg-[var(--color-primary)]/10'
                                                     }`}>
-                                                        {method.fee === 0 ? 'رایگان' : formatPrice(method.fee)}
+                                                        {method.fee === 0 ? 'پس‌پرداخت' : formatPrice(method.fee)}
                                                     </span>
                                                 </div>
                                             </div>
@@ -667,10 +670,10 @@ function CheckoutPage() {
 
                             {/* Payment Gateway Selection */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-3">روش پرداخت *</label>
+                                <label className="block text-sm font-medium text-[var(--color-text)] mb-3">روش پرداخت *</label>
                                 {paymentGateways.length === 0 ? (
-                                    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-3 text-center">
-                                        <div className="text-yellow-400 text-sm">
+                                    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-center">
+                                        <div className="text-yellow-600 text-sm">
                                             در حال بارگذاری روش‌های پرداخت...
                                         </div>
                                     </div>
@@ -682,27 +685,30 @@ function CheckoutPage() {
                                                 className={`relative cursor-pointer transition-all duration-200`}
                                                 onClick={() => handlePaymentGatewayChange(gateway.id)}
                                             >
-                                                <div className={`bg-white/5 rounded-xl p-3 border transition-all duration-200 ${
+                                                <div className={`bg-[var(--color-surface-alt)] rounded-xl p-3 border transition-all duration-200 ${
                                                     form.payment_gateway_id === gateway.id
-                                                        ? 'border-cherry-500/50 bg-cherry-500/5'
-                                                        : 'border-white/10 hover:border-cherry-400/30'
+                                                        ? 'border-[var(--color-primary)]/50 bg-[var(--color-primary)]/5'
+                                                        : 'border-[var(--color-border-subtle)] hover:border-cherry-400/30'
                                                 }`}>
                                                     <div className="flex items-center justify-between">
                                                         <div className="flex items-center gap-3">
-                                                            <div className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${
-                                                                form.payment_gateway_id === gateway.id
-                                                                    ? 'border-cherry-500 bg-cherry-500'
-                                                                    : 'border-white/40 bg-white/5'
-                                                            }`}>
+                                                            <div 
+                                                                className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${
+                                                                    form.payment_gateway_id === gateway.id
+                                                                        ? 'border-[var(--color-primary)]'
+                                                                        : 'border-[var(--color-border-subtle)] bg-[var(--color-surface)]'
+                                                                }`}
+                                                                style={form.payment_gateway_id === gateway.id ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
+                                                            >
                                                                 {form.payment_gateway_id === gateway.id && (
                                                                     <div className="w-1.5 h-1.5 rounded-full bg-white mx-auto mt-0.5"></div>
                                                                 )}
                                                             </div>
-                                                            <span className="text-white font-medium text-sm">{gateway.display_name}</span>
+                                                            <span className="text-[var(--color-text)] font-medium text-sm">{gateway.display_name}</span>
                                                         </div>
                                                     </div>
                                                     {gateway.description && (
-                                                        <div className="text-xs text-gray-400 mt-2 pr-7">
+                                                        <div className="text-xs text-[var(--color-text)] mt-2 pr-7">
                                                             {gateway.description}
                                                         </div>
                                                     )}
@@ -714,25 +720,25 @@ function CheckoutPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2">کد تخفیف</label>
+                                <label className="block text-sm text-[var(--color-text)] mb-2">کد تخفیف</label>
                                 <div className="flex gap-2">
                                     <input 
                                         name="discount_code" 
                                         value={form.discount_code} 
                                         onChange={handleChange} 
                                         placeholder="کد تخفیف را وارد کنید" 
-                                        className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-1 focus:border-cherry-500 focus:ring-cherry-500 transition-colors"
+                                        className="flex-1 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:ring-1 focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] transition-colors"
                                     />
                                     <button 
                                         type="button" 
                                         onClick={applyDiscount} 
-                                        className="bg-gray-600 hover:bg-gray-700 text-white rounded-xl px-4 py-3 whitespace-nowrap transition-colors"
+                                        className="bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt)]/80 border border-[var(--color-border-subtle)] text-[var(--color-text)] rounded-xl px-4 py-3 whitespace-nowrap transition-colors"
                                     >
                                         اعمال
                                     </button>
                                 </div>
                                 {discountInfo && (
-                                    <div className="text-xs text-green-400 mt-2 flex items-center gap-1">
+                                    <div className="text-xs text-green-600 mt-2 flex items-center gap-1">
                                         <span>✅</span>
                                         <span>کد {discountInfo.code} اعمال شد ({formatPrice(discountInfo.amount)} تخفیف)</span>
                                     </div>
@@ -742,16 +748,16 @@ function CheckoutPage() {
                             {/* Card-to-Card Payment Info - Only show when card-to-card gateway is selected */}
                             {selectedGateway && selectedGateway.type === 'card_to_card' && selectedGateway.config && (
                                 <>
-                                    <div className="bg-gradient-to-br from-indigo-500/15 via-purple-500/15 to-cherry-500/25 relative overflow-hidden rounded-2xl border border-white/10 px-4 py-5">
+                                    <div className="bg-gradient-to-br from-indigo-500/15 via-purple-500/15 to-cherry-500/25 relative overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] px-4 py-5">
                                         <div className="absolute inset-0 pointer-events-none">
-                                            <div className="absolute -right-10 -top-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
-                                            <div className="absolute -left-10 bottom-0 w-40 h-40 bg-cherry-500/20 rounded-full blur-3xl"></div>
+                                            <div className="absolute -right-10 -top-10 w-32 h-32 bg-[var(--color-surface-alt)] rounded-full blur-2xl"></div>
+                                            <div className="absolute -left-10 bottom-0 w-40 h-40 bg-[var(--color-primary)]/20 rounded-full blur-3xl"></div>
                                         </div>
 
                                         <div className="relative flex items-center justify-between gap-4">
                                             <div className="space-y-2">
-                                                <div className="text-xs text-gray-300 tracking-[0.3em] uppercase">شماره کارت</div>
-                                                <div className="text-white text-xl font-semibold tracking-[0.2em] sm:tracking-[0.25em] whitespace-nowrap" style={{ direction: 'ltr' }}>
+                                                <div className="text-xs text-[var(--color-text)] tracking-[0.3em] uppercase">شماره کارت</div>
+                                                <div className="text-[var(--color-text)] text-xl font-semibold tracking-[0.2em] sm:tracking-[0.25em] whitespace-nowrap" style={{ direction: 'ltr' }}>
                                                     {(() => {
                                                         const cardNumber = selectedGateway.config.card_number || PAYMENT_CARD.number;
                                                         const formatted = cardNumber.replace(/(.{4})/g, '$1 ').trim();
@@ -788,7 +794,7 @@ function CheckoutPage() {
                                                     }
                                                 }}
                                                 disabled={copyingCard}
-                                                className="shrink-0 rounded-xl bg-white/15 hover:bg-white/25 text-white text-sm font-medium px-3 py-2 backdrop-blur flex items-center gap-2 transition-all duration-200 disabled:opacity-60"
+                                                className="shrink-0 rounded-xl bg-white/15 hover:bg-white/25 text-[var(--color-text)] text-sm font-medium px-3 py-2 backdrop-blur flex items-center gap-2 transition-all duration-200 disabled:opacity-60"
                                             >
                                                 <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
                                                     📋
@@ -799,8 +805,8 @@ function CheckoutPage() {
 
                                         <div className="relative mt-6 flex flex-wrap items-center gap-4">
                                             <div>
-                                                <div className="text-xs text-gray-300">به نام</div>
-                                                <div className="text-sm font-semibold text-white">{selectedGateway.config.card_holder || PAYMENT_CARD.holder}</div>
+                                                <div className="text-xs text-[var(--color-text)]">به نام</div>
+                                                <div className="text-sm font-semibold text-[var(--color-text)]">{selectedGateway.config.card_holder || PAYMENT_CARD.holder}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -822,7 +828,7 @@ function CheckoutPage() {
                                 type="submit" 
                                 onClick={handleSubmit}
                                 disabled={submitting} 
-                                className="w-full bg-gradient-to-r from-cherry-600 to-cherry-500 hover:from-cherry-500 hover:to-cherry-400 disabled:opacity-60 text-white rounded-xl px-4 py-4 font-semibold text-lg transition-all duration-200 shadow-lg"
+                                className="w-full disabled:opacity-60 text-white rounded-xl px-4 py-4 font-semibold text-lg transition-all duration-200 shadow-lg"
                             >
                                 {submitting ? 'در حال ثبت...' : 'ثبت سفارش'}
                             </button>
@@ -833,24 +839,24 @@ function CheckoutPage() {
                     <div className="hidden lg:grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Summary / Invoice */}
                         <div className="lg:col-span-2">
-                            <div className="bg-white/5 glass-card rounded-xl overflow-hidden soft-shadow">
-                                <div className="bg-gradient-to-r from-white/10 to-white/0 px-4 py-3 flex items-center justify-between">
-                                    <div className="text-white font-bold">جزئیات سفارش</div>
-                                    <div className="text-xs text-gray-300">{cart.count} قلم</div>
+                            <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+                                <div className="bg-[var(--color-surface-alt)] px-4 py-3 flex items-center justify-between border-b border-[var(--color-border-subtle)]">
+                                    <div className="text-[var(--color-text)] font-bold">جزئیات سفارش</div>
+                                    <div className="text-xs text-[var(--color-text-muted)]">{cart.count} قلم</div>
                                 </div>
-                                <div className="divide-y divide-white/10">
+                                <div className="divide-y divide-[var(--color-border-subtle)]">
                                     {cart.items.map((item) => (
                                         <div key={item.key} className="p-3 md:p-4 flex items-start gap-3 md:gap-4">
-                                            <div className="w-14 h-14 rounded bg-white/10 flex items-center justify-center">🧾</div>
+                                            <div className="w-14 h-14 rounded bg-[var(--color-surface-alt)] flex items-center justify-center">🧾</div>
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex items-start justify-between gap-2">
                                                     <div>
-                                                        <div className="text-white font-semibold truncate max-w-[200px] md:max-w-none">{item.product?.title}</div>
+                                                        <div className="text-[var(--color-text)] font-semibold truncate max-w-[200px] md:max-w-none">{item.product?.title}</div>
                                                         {item.color_id && item.size_id && (
-                                                            <div className="text-xs text-gray-300 mt-0.5">رنگ: {item.color_id}, سایز: {item.size_id}</div>
+                                                            <div className="text-xs text-[var(--color-text-muted)] mt-0.5">رنگ: {item.color_id}, سایز: {item.size_id}</div>
                                                         )}
                                                         {item.product?.campaign && (
-                                                            <div className="text-xs text-green-400 mt-0.5 flex items-center gap-1">
+                                                            <div className="text-xs text-green-600 mt-0.5 flex items-center gap-1">
                                                                 <span>🎉</span>
                                                                 <span>{item.product.campaign.name}</span>
                                                             </div>
@@ -859,13 +865,13 @@ function CheckoutPage() {
                                                             {item.product?.original_price && item.product.original_price !== item.product?.price && (
                                                                 <span className="text-xs text-gray-500 line-through">{formatPrice(item.product.original_price)}</span>
                                                             )}
-                                                            <span className="text-xs text-gray-400">{item.quantity} × {formatPrice(item.product?.price)}</span>
+                                                            <span className="text-xs text-[var(--color-text-muted)]">{item.quantity} × {formatPrice(item.product?.price)}</span>
                                                         </div>
                                                     </div>
                                                     <div className="text-right">
-                                                    <div className="text-white font-bold text-sm md:text-base">{formatPrice(item.quantity * item.product?.price)} تومان</div>
+                                                    <div className="text-[var(--color-text)] font-bold text-sm md:text-base">{formatPrice(item.quantity * item.product?.price)} تومان</div>
                                                         {item.total_discount > 0 && (
-                                                            <div className="text-xs text-green-400">صرفه‌جویی: {formatPrice(item.total_discount)}</div>
+                                                            <div className="text-xs text-green-600">صرفه‌جویی: {formatPrice(item.total_discount)}</div>
                                                         )}
                                                     </div>
                                                 </div>
@@ -875,7 +881,7 @@ function CheckoutPage() {
                                 </div>
                                 <div className="p-4">
                                     {cart.totalDiscount > 0 && (
-                                        <div className="flex items-center justify-between text-green-400 mb-2">
+                                        <div className="flex items-center justify-between text-green-600 mb-2">
                                             <span className="text-sm flex items-center gap-1">
                                                 <span>🎉</span>
                                                 <span>تخفیف کمپین</span>
@@ -883,48 +889,48 @@ function CheckoutPage() {
                                             <span className="font-bold">-{formatPrice(cart.totalDiscount)} تومان</span>
                                         </div>
                                     )}
-                                    <div className="flex items-center justify-between text-white mb-1">
-                                        <span className="text-sm text-gray-300">
+                                    <div className="flex items-center justify-between text-[var(--color-text)] mb-1">
+                                        <span className="text-sm text-[var(--color-text-muted)]">
                                             {cart.totalDiscount > 0 ? 'جمع کل (پس از تخفیف کمپین)' : 'جمع کل'}
                                         </span>
                                         <span className="font-extrabold">{formatPrice(cart.total)} تومان</span>
                                     </div>
                                     {selectedDeliveryMethod && (
-                                        <div className="flex items-center justify-between text-white mb-1">
-                                            <span className="text-sm text-gray-300">هزینه ارسال ({selectedDeliveryMethod.title})</span>
+                                        <div className="flex items-center justify-between text-[var(--color-text)] mb-1">
+                                            <span className="text-sm text-[var(--color-text-muted)]">هزینه ارسال ({selectedDeliveryMethod.title})</span>
                                             <span className={`font-bold ${
                                                 selectedDeliveryMethod.fee === 0 
-                                                    ? 'text-green-400' 
-                                                    : 'text-white'
+                                                    ? 'text-green-600' 
+                                                    : 'text-[var(--color-text)]'
                                             }`}>
-                                                {selectedDeliveryMethod.fee === 0 ? 'رایگان' : `${formatPrice(selectedDeliveryMethod.fee)} تومان`}
+                                                {selectedDeliveryMethod.fee === 0 ? 'پس‌پرداخت' : `${formatPrice(selectedDeliveryMethod.fee)} تومان`}
                                             </span>
                                         </div>
                                     )}
                                     {discountInfo && (
-                                        <div className="flex items-center justify-between text-green-400 text-sm mb-1">
+                                        <div className="flex items-center justify-between text-green-600 text-sm mb-1">
                                             <span>تخفیف ({discountInfo.code})</span>
                                             <span>-{formatPrice(discountInfo.amount)} تومان</span>
                                         </div>
                                     )}
-                                    <div className="flex items-center justify-between text-white mt-2">
+                                    <div className="flex items-center justify-between text-[var(--color-text)] mt-2">
                                         <span className="font-semibold">مبلغ نهایی</span>
-                                        <span className="font-extrabold text-cherry-400">{formatPrice(finalAmount)} تومان</span>
+                                        <span className="font-extrabold text-[var(--color-primary-strong)]">{formatPrice(finalAmount)} تومان</span>
                                     </div>
                                 </div>
                                 
                                 {/* Campaign Discount Summary */}
                                 {cart.totalDiscount > 0 && (
-                                    <div className="bg-green-500/10 backdrop-blur-sm rounded-xl p-4 border border-green-500/20 mx-4 mb-4">
+                                    <div className="bg-green-50 backdrop-blur-sm rounded-xl p-4 border border-green-500/20 mx-4 mb-4">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <span className="text-green-400 text-lg">🎉</span>
+                                                <span className="text-green-600 text-lg">🎉</span>
                                                 <div>
-                                                    <div className="text-green-400 font-medium text-sm">تخفیف کمپین</div>
-                                                    <div className="text-green-300 text-xs">شما از کمپین‌های فعال صرفه‌جویی کرده‌اید</div>
+                                                    <div className="text-green-600 font-medium text-sm">تخفیف کمپین</div>
+                                                    <div className="text-green-700 text-xs">شما از کمپین‌های فعال صرفه‌جویی کرده‌اید</div>
                                                 </div>
                                             </div>
-                                            <div className="text-green-400 font-bold text-lg">{formatPrice(cart.totalDiscount)} تومان</div>
+                                            <div className="text-green-600 font-bold text-lg">{formatPrice(cart.totalDiscount)} تومان</div>
                                         </div>
                                     </div>
                                 )}
@@ -933,32 +939,32 @@ function CheckoutPage() {
 
                         {/* Form */}
                         <div>
-                            <form onSubmit={handleSubmit} className="bg-white/5 glass-card rounded-xl p-4 space-y-3 soft-shadow">
+                            <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-xl p-4 space-y-3">
                                 <div>
-                                    <label className="block text-sm text-gray-300 mb-1">نام و نام خانوادگی</label>
+                                    <label className="block text-sm text-[var(--color-text)] mb-1">نام و نام خانوادگی</label>
                                     <input 
                                         name="name" 
                                         value={form.name} 
                                         onChange={handleChange} 
-                                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white"
+                                        className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-[var(--color-text)] placeholder-[var(--color-text-muted)]"
                                         required 
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm text-gray-300 mb-1">شماره تماس</label>
+                                    <label className="block text-sm text-[var(--color-text)] mb-1">شماره تماس</label>
                                     <input 
                                         name="phone" 
                                         value={form.phone} 
                                         onChange={handleChange} 
                                         placeholder="09123456789" 
-                                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white"
+                                        className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-[var(--color-text)] placeholder-[var(--color-text-muted)]"
                                         required 
                                     />
                                 </div>
                                 {/* Address Selection */}
                                 {authUser && (
                                     <div>
-                                        <label className="block text-sm text-gray-300 mb-2">
+                                        <label className="block text-sm text-[var(--color-text)] mb-2">
                                             {addresses.length > 0 ? 'انتخاب آدرس ذخیره شده' : 'آدرس ارسال'}
                                         </label>
                                         <AddressDropdown
@@ -971,19 +977,19 @@ function CheckoutPage() {
                                     </div>
                                 )}
                                 {!authUser && (
-                                    <div className="text-sm text-gray-400">
+                                    <div className="text-sm text-[var(--color-text)]">
                                         برای افزودن آدرس، ابتدا وارد حساب کاربری خود شوید
                                     </div>
                                 )}
 
                                 <div>
-                                    <label className="block text-sm text-gray-300 mb-1">آدرس کامل</label>
+                                    <label className="block text-sm text-[var(--color-text)] mb-1">آدرس کامل</label>
                                     <textarea 
                                         name="address" 
                                         value={form.address} 
                                         onChange={handleChange} 
                                         rows={4} 
-                                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white" 
+                                        className="w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-[var(--color-text)] placeholder-[var(--color-text-muted)]" 
                                         required 
                                         placeholder="آدرس کامل خود را وارد کنید..."
                                     />
@@ -991,10 +997,10 @@ function CheckoutPage() {
 
                                 {/* Delivery Method Selection */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-3">روش ارسال *</label>
+                                    <label className="block text-sm font-medium text-[var(--color-text)] mb-3">روش ارسال *</label>
                                     {deliveryMethods.length === 0 && !authUser ? (
-                                        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-3 text-center">
-                                            <div className="text-yellow-400 text-sm">
+                                        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-center">
+                                            <div className="text-yellow-600 text-sm">
                                                 برای مشاهده روش‌های ارسال، ابتدا وارد حساب کاربری خود شوید
                                             </div>
                                         </div>
@@ -1017,18 +1023,21 @@ function CheckoutPage() {
                                                 />
                                                 
                                                 {/* Card Container */}
-                                                <div className={`bg-white/5 rounded-2xl p-4 border transition-all duration-200 ${
+                                                <div className={`bg-[var(--color-surface-alt)] rounded-2xl p-4 border transition-all duration-200 ${
                                                     form.delivery_method_id === method.id
-                                                        ? 'border-cherry-500/50 bg-cherry-500/5'
-                                                        : 'border-white/10 hover:border-cherry-400/30 hover:bg-white/10'
+                                                        ? 'border-[var(--color-primary)]/50 bg-[var(--color-primary)]/5'
+                                                        : 'border-[var(--color-border-subtle)] hover:border-cherry-400/30 hover:bg-[var(--color-surface-alt)]'
                                                 }`}>
                                                     <div className="flex items-start gap-3">
                                                         {/* Radio Button */}
-                                                        <div className={`w-5 h-5 rounded-full border-2 transition-all duration-200 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                                            form.delivery_method_id === method.id
-                                                                ? 'border-cherry-500 bg-cherry-500'
-                                                                : 'border-white/40 bg-white/5'
-                                                        }`}>
+                                                        <div 
+                                                            className={`w-5 h-5 rounded-full border-2 transition-all duration-200 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                                                                form.delivery_method_id === method.id
+                                                                    ? 'border-[var(--color-primary)]'
+                                                                    : 'border-[var(--color-border-subtle)] bg-[var(--color-surface)]'
+                                                            }`}
+                                                            style={form.delivery_method_id === method.id ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
+                                                        >
                                                             {form.delivery_method_id === method.id && (
                                                                 <div className="w-2 h-2 rounded-full bg-white"></div>
                                                             )}
@@ -1038,17 +1047,17 @@ function CheckoutPage() {
                                                         <div className="flex-1 min-w-0">
                                                             <div className="flex items-center justify-between gap-2">
                                                                 {/* Method Title */}
-                                                                <h3 className="text-white font-medium text-sm leading-tight">
+                                                                <h3 className="text-[var(--color-text)] font-medium text-sm leading-tight">
                                                                     {method.title}
                                                                 </h3>
                                                                 
                                                                 {/* Price Badge */}
                                                                 <span className={`text-xs font-bold px-2 py-1 rounded-full flex-shrink-0 ${
                                                                     method.fee === 0 
-                                                                        ? 'text-green-400 bg-green-500/10' 
-                                                                        : 'text-cherry-400 bg-cherry-500/10'
+                                                                        ? 'text-green-600 bg-green-50' 
+                                                                        : 'text-[var(--color-primary-strong)] bg-[var(--color-primary)]/10'
                                                                 }`}>
-                                                                    {method.fee === 0 ? 'رایگان' : `${formatPrice(method.fee)} تومان`}
+                                                                    {method.fee === 0 ? 'پس‌پرداخت' : `${formatPrice(method.fee)} تومان`}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -1062,10 +1071,10 @@ function CheckoutPage() {
 
                                 {/* Payment Gateway Selection */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-3">روش پرداخت *</label>
+                                    <label className="block text-sm font-medium text-[var(--color-text)] mb-3">روش پرداخت *</label>
                                     {paymentGateways.length === 0 ? (
-                                        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-3 text-center">
-                                            <div className="text-yellow-400 text-sm">
+                                        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-center">
+                                            <div className="text-yellow-600 text-sm">
                                                 در حال بارگذاری روش‌های پرداخت...
                                             </div>
                                         </div>
@@ -1077,27 +1086,30 @@ function CheckoutPage() {
                                                     className={`relative cursor-pointer transition-all duration-200`}
                                                     onClick={() => handlePaymentGatewayChange(gateway.id)}
                                                 >
-                                                    <div className={`bg-white/5 rounded-2xl p-4 border transition-all duration-200 ${
+                                                    <div className={`bg-[var(--color-surface-alt)] rounded-2xl p-4 border transition-all duration-200 ${
                                                         form.payment_gateway_id === gateway.id
-                                                            ? 'border-cherry-500/50 bg-cherry-500/5'
-                                                            : 'border-white/10 hover:border-cherry-400/30 hover:bg-white/10'
+                                                            ? 'border-[var(--color-primary)]/50 bg-[var(--color-primary)]/5'
+                                                            : 'border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/30 hover:bg-[var(--color-surface-alt)]'
                                                     }`}>
                                                         <div className="flex items-start gap-3">
-                                                            <div className={`w-5 h-5 rounded-full border-2 transition-all duration-200 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                                                form.payment_gateway_id === gateway.id
-                                                                    ? 'border-cherry-500 bg-cherry-500'
-                                                                    : 'border-white/40 bg-white/5'
-                                                            }`}>
+                                                            <div 
+                                                                className={`w-5 h-5 rounded-full border-2 transition-all duration-200 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                                                                    form.payment_gateway_id === gateway.id
+                                                                        ? 'border-[var(--color-primary)]'
+                                                                        : 'border-[var(--color-border-subtle)] bg-[var(--color-surface)]'
+                                                                }`}
+                                                                style={form.payment_gateway_id === gateway.id ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
+                                                            >
                                                                 {form.payment_gateway_id === gateway.id && (
                                                                     <div className="w-2 h-2 rounded-full bg-white"></div>
                                                                 )}
                                                             </div>
                                                             <div className="flex-1 min-w-0">
-                                                                <h3 className="text-white font-medium text-sm leading-tight">
+                                                                <h3 className="text-[var(--color-text)] font-medium text-sm leading-tight">
                                                                     {gateway.display_name}
                                                                 </h3>
                                                                 {gateway.description && (
-                                                                    <div className="text-xs text-gray-400 mt-1">
+                                                                    <div className="text-xs text-[var(--color-text-muted)] mt-1">
                                                                         {gateway.description}
                                                                     </div>
                                                                 )}
@@ -1111,35 +1123,35 @@ function CheckoutPage() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm text-gray-300 mb-1">کد تخفیف</label>
+                                    <label className="block text-sm text-[var(--color-text)] mb-1">کد تخفیف</label>
                                     <div className="flex gap-2">
                                         <input 
                                             name="discount_code" 
                                             value={form.discount_code} 
                                             onChange={handleChange} 
                                             placeholder="کد تخفیف را وارد کنید" 
-                                            className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white"
+                                            className="flex-1 bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-[var(--color-text)] placeholder-[var(--color-text-muted)]"
                                         />
-                                        <button type="button" onClick={applyDiscount} className="bg-gray-600 hover:bg-gray-700 text-white rounded-lg px-4 py-2 whitespace-nowrap">اعمال</button>
+                                        <button type="button" onClick={applyDiscount} className="bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt)]/80 border border-[var(--color-border-subtle)] text-[var(--color-text)] rounded-lg px-4 py-2 whitespace-nowrap">اعمال</button>
                                     </div>
                                     {discountInfo && (
-                                        <div className="text-xs text-green-400 mt-2">✅ کد {discountInfo.code} اعمال شد ({formatPrice(discountInfo.amount)} تومان تخفیف)</div>
+                                        <div className="text-xs text-green-600 mt-2">✅ کد {discountInfo.code} اعمال شد ({formatPrice(discountInfo.amount)} تومان تخفیف)</div>
                                     )}
                                 </div>
 
                                 {/* Card-to-Card Payment Info - Only show when card-to-card gateway is selected */}
                                 {selectedGateway && selectedGateway.type === 'card_to_card' && selectedGateway.config && (
                                     <>
-                                        <div className="bg-gradient-to-br from-indigo-500/15 via-purple-500/15 to-cherry-500/25 relative overflow-hidden rounded-2xl border border-white/10 px-4 py-5">
+                                        <div className="bg-gradient-to-br from-indigo-500/15 via-purple-500/15 to-cherry-500/25 relative overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] px-4 py-5">
                                             <div className="absolute inset-0 pointer-events-none">
-                                                <div className="absolute -right-10 -top-12 w-44 h-44 bg-white/10 rounded-full blur-3xl"></div>
-                                                <div className="absolute -left-10 bottom-0 w-56 h-56 bg-cherry-500/20 rounded-full blur-[70px]"></div>
+                                                <div className="absolute -right-10 -top-12 w-44 h-44 bg-[var(--color-surface-alt)] rounded-full blur-3xl"></div>
+                                                <div className="absolute -left-10 bottom-0 w-56 h-56 bg-[var(--color-primary)]/20 rounded-full blur-[70px]"></div>
                                             </div>
 
                                             <div className="relative flex items-start justify-between gap-6">
                                                 <div className="space-y-2">
-                                                    <div className="text-xs text-gray-300 tracking-[0.3em] uppercase">شماره کارت</div>
-                                                    <div className="text-white text-2xl font-semibold tracking-[0.22em] sm:tracking-[0.3em] whitespace-nowrap" style={{ direction: 'ltr' }}>
+                                                    <div className="text-xs text-[var(--color-text)] tracking-[0.3em] uppercase">شماره کارت</div>
+                                                    <div className="text-[var(--color-text)] text-2xl font-semibold tracking-[0.22em] sm:tracking-[0.3em] whitespace-nowrap" style={{ direction: 'ltr' }}>
                                                         {(() => {
                                                             const cardNumber = selectedGateway.config.card_number || PAYMENT_CARD.number;
                                                             const formatted = cardNumber.replace(/(.{4})/g, '$1 ').trim();
@@ -1176,7 +1188,7 @@ function CheckoutPage() {
                                                         }
                                                     }}
                                                     disabled={copyingCard}
-                                                    className="shrink-0 rounded-2xl bg-white/15 hover:bg-white/25 text-white text-sm font-medium px-3 py-2.5 backdrop-blur flex items-center gap-2 transition-all duration-200 disabled:opacity-60"
+                                                    className="shrink-0 rounded-2xl bg-white/15 hover:bg-white/25 text-[var(--color-text)] text-sm font-medium px-3 py-2.5 backdrop-blur flex items-center gap-2 transition-all duration-200 disabled:opacity-60"
                                                 >
                                                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
                                                         📋
@@ -1187,10 +1199,10 @@ function CheckoutPage() {
 
                                             <div className="relative mt-6 flex items-center gap-4">
                                                 <div>
-                                                    <div className="text-xs text-gray-300">به نام</div>
-                                                    <div className="text-sm md:text-base font-semibold text-white">{selectedGateway.config.card_holder || PAYMENT_CARD.holder}</div>
+                                                    <div className="text-xs text-[var(--color-text)]">به نام</div>
+                                                    <div className="text-sm md:text-base font-semibold text-[var(--color-text)]">{selectedGateway.config.card_holder || PAYMENT_CARD.holder}</div>
                                                 </div>
-                                                <div className="ml-auto text-xs text-gray-300 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur">
+                                                <div className="ml-auto text-xs text-[var(--color-text)] bg-[var(--color-surface-alt)] px-3 py-1.5 rounded-full backdrop-blur">
                                                     لطفاً پس از پرداخت، فیش واریزی را بارگذاری کنید
                                                 </div>
                                             </div>
@@ -1209,7 +1221,7 @@ function CheckoutPage() {
                                     </>
                                 )}
 
-                                <button type="submit" disabled={submitting} className="w-full bg-cherry-600 hover:bg-cherry-500 disabled:opacity-60 text-white rounded-lg px-4 py-2.5">
+                                <button type="submit" disabled={submitting} className="w-full disabled:opacity-60 text-white rounded-lg px-4 py-2.5" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
                                     {submitting ? 'در حال ثبت...' : 'ثبت سفارش'}
                                 </button>
                             </form>

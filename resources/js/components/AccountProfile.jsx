@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSeo } from '../hooks/useSeo';
+import React, { useState, useEffect } from "react";
+import { useSeo } from "../hooks/useSeo";
 
 function AccountProfile() {
     const [user, setUser] = useState(null);
@@ -7,10 +7,10 @@ function AccountProfile() {
     const [saving, setSaving] = useState(false);
     const [errors, setErrors] = useState({});
     const [form, setForm] = useState({
-        name: '',
-        phone: '',
-        instagram_id: '',
-        address: '',
+        name: "",
+        phone: "",
+        instagram_id: "",
+        address: "",
     });
 
     useEffect(() => {
@@ -18,56 +18,78 @@ function AccountProfile() {
         if (currentUser) {
             setUser(currentUser);
             setForm({
-                name: currentUser.name || '',
-                phone: currentUser.phone || '',
-                instagram_id: currentUser.instagram_id || '',
-                address: currentUser.address || '',
+                name: currentUser.name || "",
+                phone: currentUser.phone || "",
+                instagram_id: currentUser.instagram_id || "",
+                address: currentUser.address || "",
             });
         }
     }, []);
 
     useSeo({
-        title: 'پروفایل - فروشگاه جمه',
-        description: 'مدیریت اطلاعات حساب کاربری',
-        canonical: window.location.origin + '/account'
+        title: "پروفایل - فروشگاه روژان",
+        description: "مدیریت اطلاعات حساب کاربری",
+        canonical: window.location.origin + "/account",
     });
 
     const handleSave = async () => {
         setSaving(true);
         setErrors({});
-        
+
         try {
-            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const res = await fetch('/account/profile', {
-                method: 'POST',
+            const token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            const res = await fetch("/account/profile", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': token
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "X-CSRF-TOKEN": token,
                 },
                 body: JSON.stringify(form),
-                credentials: 'same-origin'
+                credentials: "same-origin",
             });
-            
+
             const data = await res.json();
-            
+
             if (res.ok) {
                 if (data.success) {
                     setUser(data.user);
                     window.__USER__ = data.user;
-                    window.dispatchEvent(new CustomEvent('user:updated', { detail: data.user }));
+                    window.dispatchEvent(
+                        new CustomEvent("user:updated", { detail: data.user })
+                    );
                     setEditing(false);
-                    window.dispatchEvent(new CustomEvent('toast:show', { detail: { type: 'success', message: 'اطلاعات با موفقیت ذخیره شد' } }));
+                    window.dispatchEvent(
+                        new CustomEvent("toast:show", {
+                            detail: {
+                                type: "success",
+                                message: "اطلاعات با موفقیت ذخیره شد",
+                            },
+                        })
+                    );
                 }
             } else if (res.status === 422) {
                 // Validation errors
                 setErrors(data.errors || {});
-                window.dispatchEvent(new CustomEvent('toast:show', { detail: { type: 'error', message: 'لطفا فیلدها را بررسی کنید' } }));
+                window.dispatchEvent(
+                    new CustomEvent("toast:show", {
+                        detail: {
+                            type: "error",
+                            message: "لطفا فیلدها را بررسی کنید",
+                        },
+                    })
+                );
             } else {
-                throw new Error('failed');
+                throw new Error("failed");
             }
         } catch (e) {
-            window.dispatchEvent(new CustomEvent('toast:show', { detail: { type: 'error', message: 'خطا در ذخیره اطلاعات' } }));
+            window.dispatchEvent(
+                new CustomEvent("toast:show", {
+                    detail: { type: "error", message: "خطا در ذخیره اطلاعات" },
+                })
+            );
         } finally {
             setSaving(false);
         }
@@ -84,14 +106,16 @@ function AccountProfile() {
     return (
         <div className="space-y-6">
             {/* Profile Header */}
-            <div className="glass-card rounded-2xl p-6 border border-white/10">
+            <div className="rounded-2xl p-6 bg-white shadow-lg border border-[var(--color-border-subtle)]">
                 <div className="flex items-center gap-4 mb-6">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cherry-600 to-pink-600 flex items-center justify-center text-white text-3xl font-bold">
-                        {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-3xl font-bold" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
+                        {user.name ? user.name.charAt(0).toUpperCase() : "U"}
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold text-white">{user.name}</h2>
-                        <p className="text-gray-400 text-sm">{user.phone}</p>
+                        <h2 className="text-2xl font-bold text-[var(--color-text)]">
+                            {user.name}
+                        </h2>
+                        <p className="text-[var(--color-text-muted)] text-sm">{user.phone}</p>
                     </div>
                 </div>
 
@@ -100,7 +124,7 @@ function AccountProfile() {
                     {!editing ? (
                         <button
                             onClick={() => setEditing(true)}
-                            className="px-4 py-2 rounded-lg bg-cherry-600 hover:bg-cherry-700 text-white text-sm font-semibold transition"
+                            className="px-4 py-2 rounded-lg text-white text-sm font-semibold transition" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                         >
                             ویرایش اطلاعات
                         </button>
@@ -109,22 +133,22 @@ function AccountProfile() {
                             <button
                                 onClick={handleSave}
                                 disabled={saving}
-                                className="px-4 py-2 rounded-lg bg-cherry-600 hover:bg-cherry-700 disabled:opacity-50 text-white text-sm font-semibold transition"
+                                className="px-4 py-2 rounded-lg disabled:opacity-50 text-white text-sm font-semibold transition" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                             >
-                                {saving ? 'در حال ذخیره...' : 'ذخیره'}
+                                {saving ? "در حال ذخیره..." : "ذخیره"}
                             </button>
                             <button
                                 onClick={() => {
                                     setEditing(false);
                                     setErrors({});
                                     setForm({
-                                        name: user.name || '',
-                                        phone: user.phone || '',
-                                        instagram_id: user.instagram_id || '',
-                                        address: user.address || '',
+                                        name: user.name || "",
+                                        phone: user.phone || "",
+                                        instagram_id: user.instagram_id || "",
+                                        address: user.address || "",
                                     });
                                 }}
-                                className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition"
+                                className="px-4 py-2 rounded-lg bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt)]/80 text-[var(--color-text)] text-sm font-semibold transition border border-[var(--color-border-subtle)]"
                             >
                                 انصراف
                             </button>
@@ -134,73 +158,139 @@ function AccountProfile() {
             </div>
 
             {/* Profile Info */}
-            <div className="glass-card rounded-2xl p-6 border border-white/10">
-                <h3 className="text-lg font-bold text-white mb-4">اطلاعات حساب کاربری</h3>
+            <div className="rounded-2xl p-6 bg-white shadow-lg border border-[var(--color-border-subtle)]">
+                <h3 className="text-lg font-bold text-[var(--color-text)] mb-4">
+                    اطلاعات حساب کاربری
+                </h3>
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm text-gray-400 mb-1">نام</label>
+                        <label className="block text-sm text-[var(--color-text-muted)] mb-1">
+                            نام
+                        </label>
                         {editing ? (
                             <>
                                 <input
                                     type="text"
                                     value={form.name}
-                                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                    className={`w-full bg-white/5 border ${errors.name ? 'border-red-500' : 'border-white/10'} rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-cherry-600`}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            name: e.target.value,
+                                        })
+                                    }
+                                    className={`w-full bg-[var(--color-surface)] border ${
+                                        errors.name
+                                            ? "border-red-500"
+                                            : "border-[var(--color-border-subtle)]"
+                                    } rounded-lg py-2 px-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]`}
                                 />
-                                {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name[0]}</p>}
+                                {errors.name && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.name[0]}
+                                    </p>
+                                )}
                             </>
                         ) : (
-                            <div className="text-white">{user.name}</div>
+                            <div className="text-[var(--color-text)]">{user.name}</div>
                         )}
                     </div>
                     <div>
-                        <label className="block text-sm text-gray-400 mb-1">شماره تلفن</label>
+                        <label className="block text-sm text-[var(--color-text-muted)] mb-1">
+                            شماره تلفن
+                        </label>
                         {editing ? (
                             <>
                                 <input
                                     type="text"
                                     value={form.phone}
-                                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                                    className={`w-full bg-white/5 border ${errors.phone ? 'border-red-500' : 'border-white/10'} rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-cherry-600`}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            phone: e.target.value,
+                                        })
+                                    }
+                                    className={`w-full bg-[var(--color-surface)] border ${
+                                        errors.phone
+                                            ? "border-red-500"
+                                            : "border-[var(--color-border-subtle)]"
+                                    } rounded-lg py-2 px-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]`}
                                 />
-                                {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone[0]}</p>}
+                                {errors.phone && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.phone[0]}
+                                    </p>
+                                )}
                             </>
                         ) : (
-                            <div className="text-white">{user.phone}</div>
+                            <div className="text-[var(--color-text)]">{user.phone}</div>
                         )}
                     </div>
                     <div>
-                        <label className="block text-sm text-gray-400 mb-1">آیدی اینستاگرام</label>
+                        <label className="block text-sm text-[var(--color-text-muted)] mb-1">
+                            آیدی اینستاگرام
+                        </label>
                         {editing ? (
                             <>
                                 <input
                                     type="text"
                                     value={form.instagram_id}
-                                    onChange={(e) => setForm({ ...form, instagram_id: e.target.value })}
-                                    className={`w-full bg-white/5 border ${errors.instagram_id ? 'border-red-500' : 'border-white/10'} rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-cherry-600`}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            instagram_id: e.target.value,
+                                        })
+                                    }
+                                    className={`w-full bg-[var(--color-surface)] border ${
+                                        errors.instagram_id
+                                            ? "border-red-500"
+                                            : "border-[var(--color-border-subtle)]"
+                                    } rounded-lg py-2 px-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]`}
                                     placeholder="@username"
                                 />
-                                {errors.instagram_id && <p className="text-red-400 text-xs mt-1">{errors.instagram_id[0]}</p>}
+                                {errors.instagram_id && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.instagram_id[0]}
+                                    </p>
+                                )}
                             </>
                         ) : (
-                            <div className="text-white">{user.instagram_id || '-'}</div>
+                            <div className="text-[var(--color-text)]">
+                                {user.instagram_id || "-"}
+                            </div>
                         )}
                     </div>
                     <div>
-                        <label className="block text-sm text-gray-400 mb-1">آدرس</label>
+                        <label className="block text-sm text-[var(--color-text-muted)] mb-1">
+                            آدرس
+                        </label>
                         {editing ? (
                             <>
                                 <textarea
                                     value={form.address}
-                                    onChange={(e) => setForm({ ...form, address: e.target.value })}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            address: e.target.value,
+                                        })
+                                    }
                                     rows="3"
-                                    className={`w-full bg-white/5 border ${errors.address ? 'border-red-500' : 'border-white/10'} rounded-lg py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-cherry-600`}
+                                    className={`w-full bg-[var(--color-surface)] border ${
+                                        errors.address
+                                            ? "border-red-500"
+                                            : "border-[var(--color-border-subtle)]"
+                                    } rounded-lg py-2 px-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]`}
                                     placeholder="آدرس پستی خود را وارد کنید"
                                 />
-                                {errors.address && <p className="text-red-400 text-xs mt-1">{errors.address[0]}</p>}
+                                {errors.address && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.address[0]}
+                                    </p>
+                                )}
                             </>
                         ) : (
-                            <div className="text-white">{user.address || 'آدرسی ثبت نشده'}</div>
+                            <div className="text-[var(--color-text)]">
+                                {user.address || "آدرسی ثبت نشده"}
+                            </div>
                         )}
                     </div>
                 </div>
@@ -210,4 +300,3 @@ function AccountProfile() {
 }
 
 export default AccountProfile;
-

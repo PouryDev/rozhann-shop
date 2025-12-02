@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { apiRequest } from '../utils/sanctumAuth';
-import ProductCard from './ProductCard';
-import LoadingSpinner from './LoadingSpinner';
-import { useSeo } from '../hooks/useSeo';
+import React, { useState, useEffect, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { apiRequest } from "../utils/sanctumAuth";
+import ProductCard from "./ProductCard";
+import LoadingSpinner from "./LoadingSpinner";
+import { useSeo } from "../hooks/useSeo";
 
 function CampaignPage() {
     const { id } = useParams();
@@ -14,39 +14,44 @@ function CampaignPage() {
     const [hasMorePages, setHasMorePages] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const fetchCampaignProducts = useCallback(async (page = 1, append = false) => {
-        setLoading(true);
-        try {
-            const params = new URLSearchParams();
-            if (page > 1) params.set('page', page);
-            
-            const res = await apiRequest(`/api/campaigns/${id}/products?${params.toString()}`);
-            
-            if (!res.ok) {
-                if (res.status === 404) {
-                    navigate('/404', { replace: true });
+    const fetchCampaignProducts = useCallback(
+        async (page = 1, append = false) => {
+            setLoading(true);
+            try {
+                const params = new URLSearchParams();
+                if (page > 1) params.set("page", page);
+
+                const res = await apiRequest(
+                    `/api/campaigns/${id}/products?${params.toString()}`
+                );
+
+                if (!res.ok) {
+                    if (res.status === 404) {
+                        navigate("/404", { replace: true });
+                    }
+                    throw new Error("failed");
                 }
-                throw new Error('failed');
-            }
-            
-            const data = await res.json();
-            
-            if (data.success) {
-                setCampaign(data.campaign);
-                if (append) {
-                    setProducts(prev => [...prev, ...data.data]);
-                } else {
-                    setProducts(data.data);
+
+                const data = await res.json();
+
+                if (data.success) {
+                    setCampaign(data.campaign);
+                    if (append) {
+                        setProducts((prev) => [...prev, ...data.data]);
+                    } else {
+                        setProducts(data.data);
+                    }
+                    setHasMorePages(data.pagination.has_more_pages);
+                    setCurrentPage(page);
                 }
-                setHasMorePages(data.pagination.has_more_pages);
-                setCurrentPage(page);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setLoading(false);
             }
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setLoading(false);
-        }
-    }, [id, navigate]);
+        },
+        [id, navigate]
+    );
 
     useEffect(() => {
         fetchCampaignProducts(1);
@@ -59,14 +64,18 @@ function CampaignPage() {
     };
 
     const formatPrice = (v) => {
-        try { return Number(v || 0).toLocaleString('fa-IR'); } catch { return v; }
+        try {
+            return Number(v || 0).toLocaleString("fa-IR");
+        } catch {
+            return v;
+        }
     };
 
     useSeo({
-        title: campaign ? `${campaign.name} - فروشگاه جمه` : 'کمپین - جمه',
-        description: campaign?.description || 'مشاهده محصولات کمپین',
-        keywords: campaign ? `${campaign.name}, تخفیف, خرید آنلاین` : '',
-        canonical: window.location.origin + window.location.pathname
+        title: campaign ? `${campaign.name} - فروشگاه روژان` : "کمپین - روژان",
+        description: campaign?.description || "مشاهده محصولات کمپین",
+        keywords: campaign ? `${campaign.name}, تخفیف, خرید آنلاین` : "",
+        canonical: window.location.origin + window.location.pathname,
     });
 
     return (
@@ -74,8 +83,23 @@ function CampaignPage() {
             {/* Header */}
             <section className="relative py-6 md:py-10 px-4">
                 <div className="max-w-7xl mx-auto">
-                    <button onClick={() => navigate(-1)} className="text-cherry-400 hover:text-cherry-300 text-sm mb-3 flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="text-cherry-400 hover:text-cherry-300 text-sm mb-3 flex items-center gap-1"
+                    >
+                        <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15 19l-7-7 7-7"
+                            />
+                        </svg>
                         بازگشت
                     </button>
                     {campaign ? (
@@ -84,8 +108,10 @@ function CampaignPage() {
                                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30" />
                                 <div className="absolute inset-0 flex items-center justify-center text-center px-4 z-10">
                                     <div>
-                                        <h1 className="text-xl md:text-3xl font-extrabold text-white mb-2">{campaign.name}</h1>
-                                        {campaign.type === 'percentage' && (
+                                        <h1 className="text-xl md:text-3xl font-extrabold text-white mb-2">
+                                            {campaign.name}
+                                        </h1>
+                                        {campaign.type === "percentage" && (
                                             <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur text-white text-sm font-bold">
                                                 {campaign.discount_value}% تخفیف
                                             </div>
@@ -96,16 +122,23 @@ function CampaignPage() {
                             </div>
                             {campaign.description && (
                                 <div className="p-4 md:p-5 bg-white/5">
-                                    <p className="text-gray-300 text-sm">{campaign.description}</p>
+                                    <p className="text-gray-300 text-sm">
+                                        {campaign.description}
+                                    </p>
                                     <div className="text-xs text-gray-400 mt-2">
-                                        تا {new Date(campaign.ends_at).toLocaleDateString('fa-IR')}
+                                        تا{" "}
+                                        {new Date(
+                                            campaign.ends_at
+                                        ).toLocaleDateString("fa-IR")}
                                     </div>
                                 </div>
                             )}
                         </div>
                     ) : (
                         <div className="rounded-2xl glass-card soft-shadow p-5 border border-white/10">
-                            <div className="text-gray-300">در حال بارگذاری...</div>
+                            <div className="text-gray-300">
+                                در حال بارگذاری...
+                            </div>
                         </div>
                     )}
                 </div>
@@ -121,14 +154,22 @@ function CampaignPage() {
                     ) : products.length === 0 ? (
                         <div className="text-center py-12">
                             <div className="text-6xl mb-4">🎯</div>
-                            <h3 className="text-xl font-semibold text-white mb-2">محصولی یافت نشد</h3>
-                            <p className="text-gray-400">در این کمپین محصولی وجود ندارد</p>
+                            <h3 className="text-xl font-semibold text-white mb-2">
+                                محصولی یافت نشد
+                            </h3>
+                            <p className="text-gray-400">
+                                در این کمپین محصولی وجود ندارد
+                            </p>
                         </div>
                     ) : (
                         <>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
                                 {products.map((product, index) => (
-                                    <ProductCard key={product.id} product={product} index={index} />
+                                    <ProductCard
+                                        key={product.id}
+                                        product={product}
+                                        index={index}
+                                    />
                                 ))}
                             </div>
 
@@ -145,7 +186,7 @@ function CampaignPage() {
                                                 <span>در حال بارگذاری...</span>
                                             </span>
                                         ) : (
-                                            'مشاهده بیشتر'
+                                            "مشاهده بیشتر"
                                         )}
                                     </button>
                                 </div>
@@ -159,4 +200,3 @@ function CampaignPage() {
 }
 
 export default CampaignPage;
-

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ModernCheckbox from './ModernCheckbox';
+import ModernSelect from './ModernSelect';
 import PersianDatePicker from './PersianDatePicker';
 import { apiRequest } from '../../utils/sanctumAuth';
 import { adminApiRequest } from '../../utils/adminApi';
@@ -153,8 +154,8 @@ function AdminCampaignForm() {
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center justify-center min-h-96">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400">در حال بارگذاری...</p>
+                        <div className="w-12 h-12 border-4 border-[var(--color-primary)]/30 border-t-[var(--color-primary)] rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-[var(--color-text-muted)]">در حال بارگذاری...</p>
                     </div>
                 </div>
             </div>
@@ -165,48 +166,54 @@ function AdminCampaignForm() {
         <div className="max-w-4xl mx-auto relative">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
                     {isEdit ? 'ویرایش کمپین' : 'کمپین جدید'}
                 </h1>
-                <p className="text-gray-400">
+                <p className="text-[var(--color-text-muted)]">
                     {isEdit ? 'اطلاعات کمپین را ویرایش کنید' : 'اطلاعات کمپین جدید را وارد کنید'}
                 </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Basic Information */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 relative z-10">
-                    <h2 className="text-xl font-bold text-white mb-6">اطلاعات پایه</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6 relative z-10">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">اطلاعات پایه</h2>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-white font-medium mb-2">عنوان کمپین</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">عنوان کمپین</label>
                             <input
                                 type="text"
                                 name="title"
                                 value={form.title}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="عنوان کمپین را وارد کنید"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">نوع تخفیف</label>
-                            <select
+                            <label className="block text-[var(--color-text)] font-medium mb-2">نوع تخفیف</label>
+                            <ModernSelect
                                 name="discount_type"
                                 value={form.discount_type}
-                                onChange={handleInputChange}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
-                            >
-                                <option value="percentage">درصدی</option>
-                                <option value="fixed">مبلغی</option>
-                            </select>
+                                onChange={(value) => {
+                                    setForm(prev => ({
+                                        ...prev,
+                                        discount_type: value
+                                    }));
+                                }}
+                                options={[
+                                    { value: 'percentage', label: 'درصدی' },
+                                    { value: 'fixed', label: 'مبلغی' }
+                                ]}
+                                placeholder="نوع تخفیف را انتخاب کنید"
+                            />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">
+                            <label className="block text-[var(--color-text)] font-medium mb-2">
                                 مقدار تخفیف {form.discount_type === 'percentage' ? '(درصد)' : '(تومان)'}
                             </label>
                             <input
@@ -217,7 +224,7 @@ function AdminCampaignForm() {
                                 required
                                 min="0"
                                 max={form.discount_type === 'percentage' ? 100 : undefined}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder={form.discount_type === 'percentage' ? '20' : '50000'}
                             />
                         </div>
@@ -231,7 +238,7 @@ function AdminCampaignForm() {
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">تاریخ شروع</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">تاریخ شروع</label>
                             <PersianDatePicker
                                 value={form.starts_at}
                                 onChange={(value) => setForm(prev => ({ ...prev, starts_at: value }))}
@@ -240,7 +247,7 @@ function AdminCampaignForm() {
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">تاریخ انقضا</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">تاریخ انقضا</label>
                             <PersianDatePicker
                                 value={form.expires_at}
                                 onChange={(value) => setForm(prev => ({ ...prev, expires_at: value }))}
@@ -250,21 +257,21 @@ function AdminCampaignForm() {
                     </div>
 
                     <div className="mt-6">
-                        <label className="block text-white font-medium mb-2">توضیحات</label>
+                        <label className="block text-[var(--color-text)] font-medium mb-2">توضیحات</label>
                         <textarea
                             name="description"
                             value={form.description}
                             onChange={handleInputChange}
                             rows="3"
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                             placeholder="توضیحات کمپین (اختیاری)"
                         />
                     </div>
                 </div>
 
                 {/* Product Selection */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 relative z-10">
-                    <h2 className="text-xl font-bold text-white mb-6">انتخاب محصولات</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6 relative z-10">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">انتخاب محصولات</h2>
                     
                     {/* Search */}
                     <div className="mb-6">
@@ -273,17 +280,17 @@ function AdminCampaignForm() {
                             placeholder="جستجو در محصولات..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                         />
                     </div>
 
                     {/* Selected Products */}
                     {selectedProducts.length > 0 && (
                         <div className="mb-6">
-                            <h3 className="text-white font-medium mb-3">محصولات انتخاب شده ({selectedProducts.length})</h3>
+                            <h3 className="text-[var(--color-text)] font-medium mb-3">محصولات انتخاب شده ({selectedProducts.length})</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                 {selectedProducts.map((product) => (
-                                    <div key={product.id} className="bg-purple-500/20 border border-purple-500/30 rounded-lg p-3 flex items-center justify-between">
+                                    <div key={product.id} className="bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/30 rounded-lg p-3 flex items-center justify-between">
                                         <div className="flex items-center space-x-3 space-x-reverse">
                                             {product.images && product.images.length > 0 ? (
                                                 <img 
@@ -294,12 +301,12 @@ function AdminCampaignForm() {
                                             ) : (
                                                 <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs">📦</div>
                                             )}
-                                            <span className="text-white text-sm font-medium truncate">{product.title}</span>
+                                            <span className="text-[var(--color-text)] text-sm font-medium truncate">{product.title}</span>
                                         </div>
                                         <button
                                             type="button"
                                             onClick={() => removeProduct(product.id)}
-                                            className="text-red-400 hover:text-red-300 p-1"
+                                            className="text-red-600 hover:text-red-600 p-1"
                                         >
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -314,10 +321,10 @@ function AdminCampaignForm() {
                     {/* Available Products */}
                     {searchTerm && (
                         <div>
-                            <h3 className="text-white font-medium mb-3">محصولات موجود</h3>
+                            <h3 className="text-[var(--color-text)] font-medium mb-3">محصولات موجود</h3>
                             <div className="max-h-60 overflow-y-auto space-y-2 relative z-0">
                                 {filteredProducts.map((product) => (
-                                    <div key={product.id} className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-center justify-between hover:bg-white/10 transition-colors">
+                                    <div key={product.id} className="bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-lg p-3 flex items-center justify-between hover:bg-[var(--color-surface-alt)] transition-colors">
                                         <div className="flex items-center space-x-3 space-x-reverse">
                                             {product.images && product.images.length > 0 ? (
                                                 <img 
@@ -329,14 +336,14 @@ function AdminCampaignForm() {
                                                 <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs">📦</div>
                                             )}
                                             <div>
-                                                <span className="text-white text-sm font-medium">{product.title}</span>
-                                                <p className="text-gray-400 text-xs">{Number(product.price).toLocaleString('fa-IR')} تومان</p>
+                                                <span className="text-[var(--color-text)] text-sm font-medium">{product.title}</span>
+                                                <p className="text-[var(--color-text-muted)] text-xs">{Number(product.price).toLocaleString('fa-IR')} تومان</p>
                                             </div>
                                         </div>
                                         <button
                                             type="button"
                                             onClick={() => addProduct(product)}
-                                            className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                                            className="bg-purple-500 hover:bg-purple-600 text-[var(--color-text)] px-3 py-1 rounded text-sm transition-colors"
                                         >
                                             افزودن
                                         </button>
@@ -349,11 +356,11 @@ function AdminCampaignForm() {
                     {!searchTerm && (
                         <div className="text-center py-8">
                             <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-8 h-8 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </div>
-                            <p className="text-gray-400">برای انتخاب محصولات، نام محصول را جستجو کنید</p>
+                            <p className="text-[var(--color-text-muted)]">برای انتخاب محصولات، نام محصول را جستجو کنید</p>
                         </div>
                     )}
                 </div>
@@ -366,14 +373,15 @@ function AdminCampaignForm() {
                             navigate('/admin/campaigns');
                             scrollToTop();
                         }}
-                        className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200"
+                        className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt-hover)] text-[var(--color-text)] font-semibold py-4 px-6 rounded-xl transition-all duration-200 border border-[var(--color-border-subtle)]"
                     >
                         انصراف
                     </button>
                     <button
                         type="submit"
                         disabled={loading || selectedProducts.length === 0}
-                        className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        className="flex-1 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         {loading ? (
                             <div className="flex items-center justify-center space-x-2 space-x-reverse">

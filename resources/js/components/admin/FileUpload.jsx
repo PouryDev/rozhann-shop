@@ -116,8 +116,8 @@ function FileUpload({
             <div
                 className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 cursor-pointer ${
                     dragActive
-                        ? 'border-purple-500 bg-purple-500/10'
-                        : 'border-white/20 hover:border-purple-400 hover:bg-white/5'
+                        ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/10'
+                        : 'border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-surface-alt)]'
                 }`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
@@ -135,17 +135,17 @@ function FileUpload({
                 />
                 
                 <div className="space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-full flex items-center justify-center">
-                        <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-16 h-16 mx-auto bg-[var(--color-primary)]/10 rounded-full flex items-center justify-center">
+                        <svg className="w-8 h-8 text-[var(--color-primary-strong)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
                     </div>
                     
                     <div>
-                        <p className="text-white font-medium mb-2">
+                        <p className="text-[var(--color-text)] font-medium mb-2">
                             {dragActive ? 'فایل‌ها را اینجا رها کنید' : 'فایل‌ها را اینجا بکشید یا کلیک کنید'}
                         </p>
-                        <p className="text-gray-400 text-sm">
+                        <p className="text-[var(--color-text-muted)] text-sm">
                             PNG, JPG, GIF تا 5MB (حداکثر {maxFiles} فایل)
                         </p>
                     </div>
@@ -156,16 +156,16 @@ function FileUpload({
             {files.length > 0 && (
                 <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-white font-medium">فایل‌های انتخاب شده ({files.length})</h3>
+                        <h3 className="text-[var(--color-text)] font-medium">فایل‌های انتخاب شده ({files.length})</h3>
                         {files.length >= maxFiles && (
-                            <span className="text-orange-400 text-sm">حداکثر تعداد فایل رسیده</span>
+                            <span className="text-orange-600 text-sm">حداکثر تعداد فایل رسیده</span>
                         )}
                     </div>
                     
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         {files.map((fileObj) => (
                             <div key={fileObj.id} className="relative group">
-                                <div className="aspect-square bg-gray-800 rounded-lg overflow-hidden border border-white/10">
+                                <div className="aspect-square bg-[var(--color-surface-alt)] rounded-lg overflow-hidden border border-[var(--color-border-subtle)]">
                                     <img
                                         src={fileObj.preview || fileObj.url || fileObj.image_url}
                                         alt="Preview"
@@ -189,7 +189,7 @@ function FileUpload({
                                         e.stopPropagation();
                                         removeFile(fileObj.id);
                                     }}
-                                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-200"
+                                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-[var(--color-text)] rounded-full flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-200"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -198,11 +198,11 @@ function FileUpload({
                                 
                                 {/* File Info */}
                                 <div className="mt-2 text-center">
-                                    <p className="text-white text-xs truncate">
+                                    <p className="text-[var(--color-text)] text-xs truncate">
                                         {fileObj.file?.name || 'فایل موجود'}
                                     </p>
                                     {fileObj.file && (
-                                        <p className="text-gray-400 text-xs">
+                                        <p className="text-[var(--color-text-muted)] text-xs">
                                             {(fileObj.file.size / 1024 / 1024).toFixed(1)} MB
                                         </p>
                                     )}

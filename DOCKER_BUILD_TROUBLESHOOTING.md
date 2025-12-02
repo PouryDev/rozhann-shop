@@ -147,7 +147,7 @@ docker system prune -f
 docker compose build --no-cache php
 
 # Check if image was created
-docker images | grep jemeh-shop-php
+docker images | grep rozhann-php
 
 # Start services
 docker compose up -d
@@ -160,17 +160,17 @@ If all else fails:
 1. **Build on a machine with stable internet:**
 
     ```bash
-    docker build -t jemeh-shop-php:prod .
-    docker save jemeh-shop-php:prod > jemeh-shop-php.tar
+    docker build -t rozhann-php:prod .
+    docker save rozhann-php:prod > rozhann-php.tar
     ```
 
 2. **Transfer to production server:**
-   `scp jemeh-shop-php.tar user@production-server:/tmp/`
+   `scp rozhann-php.tar user@production-server:/tmp/`
 
 3. **Load on production:**
     ```bash
-    docker load < /tmp/jemeh-shop-php.tar
-    docker tag jemeh-shop-php:prod jemeh-shop-php:prod
+    docker load < /tmp/rozhann-php.tar
+    docker tag rozhann-php:prod rozhann-php:prod
     docker compose up -d
     ```
 

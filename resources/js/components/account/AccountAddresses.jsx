@@ -98,11 +98,11 @@ function AccountAddresses() {
         return (
             <div className="max-w-4xl mx-auto">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-white mb-2">آدرس‌های من</h1>
-                    <p className="text-gray-400">مدیریت آدرس‌های ذخیره شده</p>
+                    <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">آدرس‌های من</h1>
+                    <p className="text-[var(--color-text-muted)]">مدیریت آدرس‌های ذخیره شده</p>
                 </div>
                 <div className="flex items-center justify-center py-20">
-                    <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <div className="w-8 h-8 border-2 border-[var(--color-primary))/30 border-t-[var(--color-primary)) rounded-full animate-spin"></div>
                 </div>
             </div>
         );
@@ -112,15 +112,15 @@ function AccountAddresses() {
         <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">آدرس‌های من</h1>
-                <p className="text-gray-400">مدیریت آدرس‌های ذخیره شده</p>
+                <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">آدرس‌های من</h1>
+                <p className="text-[var(--color-text-muted)]">مدیریت آدرس‌های ذخیره شده</p>
             </div>
 
             {/* Add Address Button */}
             <div className="mb-6">
                 <button
                     onClick={handleAddNew}
-                    className="bg-gradient-to-r from-cherry-500 to-cherry-600 hover:from-cherry-600 hover:to-cherry-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg flex items-center space-x-2 space-x-reverse"
+                    className="bg-gradient-to-r from-cherry-500 to-cherry-600 hover:from-cherry-600 hover:to-cherry-700 text-[var(--color-text)] font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg flex items-center space-x-2 space-x-reverse"
                 >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -131,18 +131,18 @@ function AccountAddresses() {
 
             {/* Addresses List */}
             {addresses.length === 0 ? (
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-12 text-center">
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-lg p-12 text-center">
                     <div className="w-20 h-20 bg-gray-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-10 h-10 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </div>
-                    <h3 className="text-white text-xl font-semibold mb-2">هنوز آدرسی اضافه نکرده‌اید</h3>
-                    <p className="text-gray-400 mb-6">اولین آدرس خود را اضافه کنید</p>
+                    <h3 className="text-[var(--color-text)] text-xl font-semibold mb-2">هنوز آدرسی اضافه نکرده‌اید</h3>
+                    <p className="text-[var(--color-text-muted)] mb-6">اولین آدرس خود را اضافه کنید</p>
                     <button
                         onClick={handleAddNew}
-                        className="bg-gradient-to-r from-cherry-500 to-cherry-600 hover:from-cherry-600 hover:to-cherry-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg"
+                        className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         افزودن آدرس
                     </button>
@@ -152,28 +152,28 @@ function AccountAddresses() {
                     {addresses.map((address) => (
                         <div
                             key={address.id}
-                            className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6 hover:shadow-3xl transition-all duration-200"
+                            className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-lg p-6 hover:shadow-xl transition-all duration-200"
                         >
                             {/* Address Header */}
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center space-x-3 space-x-reverse">
-                                    <div className="w-10 h-10 bg-cherry-500/20 rounded-xl flex items-center justify-center">
-                                        <svg className="w-5 h-5 text-cherry-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(244, 172, 63, 0.1)', color: 'var(--color-primary)' }}>
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 className="text-white font-semibold text-lg">{address.title}</h3>
+                                        <h3 className="text-[var(--color-text)] font-semibold text-lg">{address.title}</h3>
                                         {address.is_default && (
-                                            <span className="text-cherry-400 text-sm font-medium">آدرس پیش‌فرض</span>
+                                            <span className="text-[var(--color-primary-strong)] text-sm font-medium">آدرس پیش‌فرض</span>
                                         )}
                                     </div>
                                 </div>
                                 <div className="flex space-x-2 space-x-reverse">
                                     <button
                                         onClick={() => handleEdit(address)}
-                                        className="text-gray-400 hover:text-white transition-colors p-2"
+                                        className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors p-2"
                                         title="ویرایش"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,7 +182,7 @@ function AccountAddresses() {
                                     </button>
                                     <button
                                         onClick={() => handleDelete(address.id)}
-                                        className="text-red-400 hover:text-red-300 transition-colors p-2"
+                                        className="text-red-600 hover:text-red-700 transition-colors p-2"
                                         title="حذف"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,36 +194,36 @@ function AccountAddresses() {
 
                             {/* Address Details */}
                             <div className="space-y-3 mb-6">
-                                <div className="bg-white/5 rounded-xl p-4">
-                                    <h4 className="text-white font-medium mb-2">آدرس</h4>
-                                    <p className="text-gray-300 text-sm leading-relaxed">{address.address}</p>
+                                <div className="bg-[var(--color-surface-alt)] rounded-xl p-4">
+                                    <h4 className="text-[var(--color-text)] font-medium mb-2">آدرس</h4>
+                                    <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">{address.address}</p>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-white/5 rounded-xl p-3">
-                                        <h4 className="text-white font-medium text-sm mb-1">شهر</h4>
-                                        <p className="text-gray-300 text-sm">{address.city}</p>
+                                    <div className="bg-[var(--color-surface-alt)] rounded-xl p-3">
+                                        <h4 className="text-[var(--color-text)] font-medium text-sm mb-1">شهر</h4>
+                                        <p className="text-[var(--color-text-muted)] text-sm">{address.city}</p>
                                     </div>
-                                    <div className="bg-white/5 rounded-xl p-3">
-                                        <h4 className="text-white font-medium text-sm mb-1">استان</h4>
-                                        <p className="text-gray-300 text-sm">{address.province}</p>
+                                    <div className="bg-[var(--color-surface-alt)] rounded-xl p-3">
+                                        <h4 className="text-[var(--color-text)] font-medium text-sm mb-1">استان</h4>
+                                        <p className="text-[var(--color-text-muted)] text-sm">{address.province}</p>
                                     </div>
                                 </div>
 
-                                <div className="bg-white/5 rounded-xl p-3">
-                                    <h4 className="text-white font-medium text-sm mb-1">کد پستی</h4>
-                                    <p className="text-gray-300 text-sm">{address.postal_code}</p>
+                                <div className="bg-[var(--color-surface-alt)] rounded-xl p-3">
+                                    <h4 className="text-[var(--color-text)] font-medium text-sm mb-1">کد پستی</h4>
+                                    <p className="text-[var(--color-text-muted)] text-sm">{address.postal_code}</p>
                                 </div>
 
                                 {(address.recipient_name || address.recipient_phone) && (
-                                    <div className="bg-white/5 rounded-xl p-3">
-                                        <h4 className="text-white font-medium text-sm mb-2">اطلاعات گیرنده</h4>
+                                    <div className="bg-[var(--color-surface-alt)] rounded-xl p-3">
+                                        <h4 className="text-[var(--color-text)] font-medium text-sm mb-2">اطلاعات گیرنده</h4>
                                         <div className="space-y-1 text-sm">
                                             {address.recipient_name && (
-                                                <p className="text-gray-300">نام: {address.recipient_name}</p>
+                                                <p className="text-[var(--color-text-muted)]">نام: {address.recipient_name}</p>
                                             )}
                                             {address.recipient_phone && (
-                                                <p className="text-gray-300">تلفن: {address.recipient_phone}</p>
+                                                <p className="text-[var(--color-text-muted)]">تلفن: {address.recipient_phone}</p>
                                             )}
                                         </div>
                                     </div>
@@ -235,7 +235,7 @@ function AccountAddresses() {
                                 {!address.is_default && (
                                     <button
                                         onClick={() => handleSetDefault(address.id)}
-                                        className="flex-1 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-lg transition-colors duration-200 text-sm font-medium"
+                                        className="flex-1 bg-[var(--color-surface-alt)] hover:bg-white/20 text-[var(--color-text)] py-2 px-4 rounded-lg transition-colors duration-200 text-sm font-medium"
                                     >
                                         تنظیم به عنوان پیش‌فرض
                                     </button>

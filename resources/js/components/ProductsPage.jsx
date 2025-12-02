@@ -118,19 +118,24 @@ function ProductsPage() {
 
     const SortButton = ({ value, label }) => (
         <button
-            className={`px-3 py-1.5 rounded-full text-sm font-medium border ${sort === value ? 'bg-cherry-600 text-white border-cherry-500' : 'bg-white/5 text-gray-200 border-white/10'}`}
+            className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                sort === value 
+                    ? 'text-white border-[var(--color-primary)]' 
+                    : 'bg-[var(--color-surface-alt)] text-[var(--color-text-muted)] border-[var(--color-border-subtle)] hover:bg-[var(--color-surface-alt-hover)] hover:text-[var(--color-text)]'
+            }`}
+            style={sort === value ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
             onClick={() => updateParam('sort', value)}
         >{label}</button>
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text)]">
             {/* Sticky mobile header */}
-            <div className="sticky top-0 z-30 bg-black/40 backdrop-blur border-b border-white/10">
+            <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-[var(--color-border-subtle)] shadow-sm">
                 <div className="px-4 h-14 flex items-center justify-between">
-                    <button onClick={() => navigate(-1)} className="text-gray-300">✕</button>
-                    <div className="font-bold">محصولات</div>
-                    <button onClick={() => setFiltersOpen(true)} className="text-cherry-400">فیلترها</button>
+                    <button onClick={() => navigate(-1)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">✕</button>
+                    <div className="font-bold text-[var(--color-text)]">محصولات</div>
+                    <button onClick={() => setFiltersOpen(true)} className="text-[var(--color-primary-strong)] hover:opacity-80 transition-colors">فیلترها</button>
                 </div>
                 {/* Sort segmented */}
                 <div className="px-4 pb-3">
@@ -146,13 +151,22 @@ function ProductsPage() {
                     <div className="px-4 pb-3">
                         <div className="flex gap-2 overflow-x-auto overflow-y-hidden no-scrollbar [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-x] touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
                             <button
-                                className={`px-3 py-1 rounded-full text-sm border ${!categoryId ? 'bg-white/10 border-white/20' : 'border-white/10'}`}
+                                className={`px-3 py-1 rounded-full text-sm border transition-colors ${
+                                    !categoryId 
+                                        ? 'bg-[var(--color-primary)]/10 text-[var(--color-primary-strong)] border-[var(--color-primary)]/30' 
+                                        : 'bg-[var(--color-surface-alt)] text-[var(--color-text-muted)] border-[var(--color-border-subtle)] hover:bg-[var(--color-surface-alt-hover)] hover:text-[var(--color-text)]'
+                                }`}
                                 onClick={() => updateParam('category_id', '')}
                             >همه</button>
                             {categories.map(cat => (
                                 <button
                                     key={cat.id}
-                                    className={`px-3 py-1 rounded-full text-sm border whitespace-nowrap ${String(categoryId) === String(cat.id) ? 'bg-cherry-600 text-white border-cherry-500' : 'bg-white/5 text-gray-200 border-white/10'}`}
+                                    className={`px-3 py-1 rounded-full text-sm border whitespace-nowrap transition-colors ${
+                                        String(categoryId) === String(cat.id) 
+                                            ? 'text-white border-[var(--color-primary)]' 
+                                            : 'bg-[var(--color-surface-alt)] text-[var(--color-text-muted)] border-[var(--color-border-subtle)] hover:bg-[var(--color-surface-alt-hover)] hover:text-[var(--color-text)]'
+                                    }`}
+                                    style={String(categoryId) === String(cat.id) ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
                                     onClick={() => updateParam('category_id', String(cat.id))}
                                 >{cat.name}</button>
                             ))}
@@ -167,7 +181,7 @@ function ProductsPage() {
                     {loading && products.length === 0 ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-5">
                             {Array.from({ length: 8 }).map((_, i) => (
-                                <div key={i} className="h-64 rounded-2xl bg-white/5 animate-pulse" />
+                                <div key={i} className="h-64 rounded-2xl bg-[var(--color-surface-alt)] animate-pulse" />
                             ))}
                         </div>
                     ) : (
@@ -190,30 +204,41 @@ function ProductsPage() {
             {/* Bottom sheet filters */}
             {filtersOpen && (
                 <div className="fixed inset-0 z-40">
-                    <div className="absolute inset-0 bg-black/40" onClick={() => setFiltersOpen(false)} />
-                    <div className="absolute inset-x-0 bottom-0 bg-[#0f1118] border-t border-white/10 rounded-t-2xl p-4 max-h-[80vh] overflow-y-auto">
-                        <div className="h-1 w-12 bg-white/20 rounded-full mx-auto mb-4" />
+                    <div className="absolute inset-0 bg-black/50" onClick={() => setFiltersOpen(false)} />
+                    <div className="absolute inset-x-0 bottom-0 bg-white border-t border-[var(--color-border-subtle)] rounded-t-2xl p-4 max-h-[80vh] overflow-y-auto shadow-2xl">
+                        <div className="h-1 w-12 bg-[var(--color-border-subtle)] rounded-full mx-auto mb-4" />
                         <div className="flex items-center justify-between mb-3">
-                            <div className="font-bold">فیلترها</div>
-                            <button className="text-cherry-400" onClick={() => { setFiltersOpen(false); }}>اعمال</button>
+                            <div className="font-bold text-[var(--color-text)]">فیلترها</div>
+                            <button className="text-[var(--color-primary-strong)] hover:opacity-80 transition-colors" onClick={() => { setFiltersOpen(false); }}>اعمال</button>
                         </div>
 
                         {/* Price */}
                         <div className="mb-4">
-                            <div className="text-sm text-gray-300 mb-2">محدوده قیمت (تومان)</div>
+                            <div className="text-sm text-[var(--color-text-muted)] mb-2">محدوده قیمت (تومان)</div>
                             <div className="flex items-center gap-2">
-                                <input type="number" inputMode="numeric" className="w-1/2 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm" placeholder="حداقل" value={minPrice} onChange={e => updateParam('min_price', e.target.value)} />
-                                <input type="number" inputMode="numeric" className="w-1/2 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm" placeholder="حداکثر" value={maxPrice} onChange={e => updateParam('max_price', e.target.value)} />
+                                <input type="number" inputMode="numeric" className="w-1/2 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]" placeholder="حداقل" value={minPrice} onChange={e => updateParam('min_price', e.target.value)} />
+                                <input type="number" inputMode="numeric" className="w-1/2 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]" placeholder="حداکثر" value={maxPrice} onChange={e => updateParam('max_price', e.target.value)} />
                             </div>
                         </div>
 
                         {/* Colors */}
                         {colors.length > 0 && (
                             <div className="mb-4">
-                                <div className="text-sm text-gray-300 mb-2">رنگ</div>
+                                <div className="text-sm text-[var(--color-text-muted)] mb-2">رنگ</div>
                                 <div className="flex gap-2 flex-wrap">
                                     {colors.map(c => (
-                                        <button key={c.id} onClick={() => toggleMultiParam('colors', c.id)} className={`px-2.5 py-1.5 rounded-full text-xs border ${selectedColors.includes(String(c.id)) ? 'bg-cherry-600 text-white border-cherry-500' : 'bg-white/5 text-gray-200 border-white/10'}`}>{c.name}</button>
+                                        <button 
+                                            key={c.id} 
+                                            onClick={() => toggleMultiParam('colors', c.id)} 
+                                            className={`px-2.5 py-1.5 rounded-full text-xs border transition-colors ${
+                                                selectedColors.includes(String(c.id)) 
+                                                    ? 'text-white border-[var(--color-primary)]' 
+                                                    : 'bg-[var(--color-surface-alt)] text-[var(--color-text-muted)] border-[var(--color-border-subtle)] hover:bg-[var(--color-surface-alt-hover)] hover:text-[var(--color-text)]'
+                                            }`}
+                                            style={selectedColors.includes(String(c.id)) ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
+                                        >
+                                            {c.name}
+                                        </button>
                                     ))}
                                 </div>
                             </div>
@@ -222,10 +247,21 @@ function ProductsPage() {
                         {/* Sizes */}
                         {sizes.length > 0 && (
                             <div className="mb-2">
-                                <div className="text-sm text-gray-300 mb-2">سایز</div>
+                                <div className="text-sm text-[var(--color-text-muted)] mb-2">سایز</div>
                                 <div className="flex gap-2 flex-wrap">
                                     {sizes.map(s => (
-                                        <button key={s.id} onClick={() => toggleMultiParam('sizes', s.id)} className={`px-2.5 py-1.5 rounded-full text-xs border ${selectedSizes.includes(String(s.id)) ? 'bg-cherry-600 text-white border-cherry-500' : 'bg-white/5 text-gray-200 border-white/10'}`}>{s.name}</button>
+                                        <button 
+                                            key={s.id} 
+                                            onClick={() => toggleMultiParam('sizes', s.id)} 
+                                            className={`px-2.5 py-1.5 rounded-full text-xs border transition-colors ${
+                                                selectedSizes.includes(String(s.id)) 
+                                                    ? 'text-white border-[var(--color-primary)]' 
+                                                    : 'bg-[var(--color-surface-alt)] text-[var(--color-text-muted)] border-[var(--color-border-subtle)] hover:bg-[var(--color-surface-alt-hover)] hover:text-[var(--color-text)]'
+                                            }`}
+                                            style={selectedSizes.includes(String(s.id)) ? { background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' } : {}}
+                                        >
+                                            {s.name}
+                                        </button>
                                     ))}
                                 </div>
                             </div>

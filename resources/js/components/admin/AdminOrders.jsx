@@ -3,8 +3,8 @@ import React from 'react';
 function AdminOrders() {
     return (
         <div>
-            <h2 className="text-2xl font-bold text-white mb-6">مدیریت سفارشات</h2>
-            <p className="text-gray-300">این صفحه در حال توسعه است...</p>
+            <h2 className="text-2xl font-bold text-[var(--color-text)] mb-6">مدیریت سفارشات</h2>
+            <p className="text-[var(--color-text-muted)]">این صفحه در حال توسعه است...</p>
         </div>
     );
 }

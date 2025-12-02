@@ -102,7 +102,7 @@ docker compose exec lego ls -la /etc/letsencrypt/certificates/
 Or verify from host:
 
 ```bash
-docker volume inspect jemeh-shop_certs
+docker volume inspect rozhann_certs
 ```
 
 ### 4. Start Full Stack
@@ -183,14 +183,14 @@ You can set up a cron job on your host to renew certificates automatically:
 ```bash
 # Add to crontab (crontab -e)
 # Renew certificates every 60 days at 3 AM
-0 3 */60 * * cd /path/to/jemeh-shop && docker compose stop nginx && docker compose up -d lego && sleep 60 && docker compose stop lego && docker compose start nginx && docker compose restart nginx
+0 3 */60 * * cd /path/to/rozhann && docker compose stop nginx && docker compose up -d lego && sleep 60 && docker compose stop lego && docker compose start nginx && docker compose restart nginx
 ```
 
 Or create a renewal script:
 
 ```bash
 #!/bin/bash
-cd /path/to/jemeh-shop
+cd /path/to/rozhann
 docker compose stop nginx
 docker compose up -d lego
 sleep 120  # Wait for renewal
@@ -305,8 +305,8 @@ Required environment variables (in `.env.docker`):
 
 ```bash
 # Database
-DB_DATABASE=jemeh_shop_db
-DB_USERNAME=jemeh
+DB_DATABASE=rozhann_shop_db
+DB_USERNAME=rozhann
 DB_PASSWORD=your_secure_password
 DB_ROOT_PASSWORD=your_root_password
 

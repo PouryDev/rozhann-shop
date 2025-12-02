@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FileUpload from './FileUpload';
 import ModernSelect from './ModernSelect';
 import ModernCheckbox from './ModernCheckbox';
+import AutocompleteSelect from './AutocompleteSelect';
 import { apiRequest, debugTokenStatus } from '../../utils/sanctumAuth';
 import { showToast } from '../../utils/toast';
 import { scrollToTop } from '../../utils/scrollToTop';
@@ -86,7 +87,16 @@ function AdminProductForm() {
                                 preview: img.url
                             }));
                             setImages(existingImages);
-                            setVariants(product.variants || []);
+                            // Normalize variant values: convert to new format with color/size objects
+                            const normalizedVariants = (product.variants || []).map(variant => ({
+                                ...variant,
+                                color: variant.color ? { id: variant.color.id } : (variant.color_id ? { id: variant.color_id } : null),
+                                size: variant.size ? { id: variant.size.id } : (variant.size_id ? { id: variant.size_id } : null),
+                                color_hex_code: variant.color?.hex_code || '',
+                                price: variant.price && variant.price !== 0 ? variant.price : '',
+                                stock: variant.stock && variant.stock !== 0 ? variant.stock : ''
+                            }));
+                            setVariants(normalizedVariants);
                         }
                     }
                 }
@@ -131,10 +141,11 @@ function AdminProductForm() {
 
     const addVariant = () => {
         setVariants(prev => [...prev, {
-            color_id: '',
-            size_id: '',
-            price: form.price,
-            stock: form.stock,
+            color: null,
+            size: null,
+            color_hex_code: '',
+            price: form.price && form.price !== 0 ? form.price : '',
+            stock: form.stock && form.stock !== 0 ? form.stock : '',
             isNew: true
         }]);
     };
@@ -207,8 +218,23 @@ function AdminProductForm() {
 
             // Add variants
             variants.forEach((variant, index) => {
-                formData.append(`variants[${index}][color_id]`, variant.color_id || '');
-                formData.append(`variants[${index}][size_id]`, variant.size_id || '');
+                // Color: send id if exists, otherwise send name and hex_code
+                if (variant.color?.id) {
+                    formData.append(`variants[${index}][color_id]`, variant.color.id);
+                } else if (variant.color?.name) {
+                    formData.append(`variants[${index}][color_name]`, variant.color.name);
+                    if (variant.color_hex_code) {
+                        formData.append(`variants[${index}][color_hex_code]`, variant.color_hex_code);
+                    }
+                }
+                
+                // Size: send id if exists, otherwise send name
+                if (variant.size?.id) {
+                    formData.append(`variants[${index}][size_id]`, variant.size.id);
+                } else if (variant.size?.name) {
+                    formData.append(`variants[${index}][size_name]`, variant.size.name);
+                }
+                
                 formData.append(`variants[${index}][price]`, variant.price || '0');
                 formData.append(`variants[${index}][stock]`, variant.stock || '0');
             });
@@ -257,9 +283,43 @@ function AdminProductForm() {
                             preview: img.url || (img.path ? (img.path.startsWith('http') ? img.path : `/storage/${img.path}`) : '')
                         }));
                         setImages(existingImages);
-                        setVariants(product.variants || []);
+                        // Refresh colors and sizes after successful save
+                        const [colorsRes, sizesRes] = await Promise.all([
+                            apiRequest('/api/admin/colors'),
+                            apiRequest('/api/admin/sizes')
+                        ]);
+                        if (colorsRes.ok) {
+                            const colorsData = await colorsRes.json();
+                            if (colorsData.success) setColors(colorsData.data);
+                        }
+                        if (sizesRes.ok) {
+                            const sizesData = await sizesRes.json();
+                            if (sizesData.success) setSizes(sizesData.data);
+                        }
+                        // Normalize variants to new format
+                        const normalizedVariants = (product.variants || []).map(variant => ({
+                            ...variant,
+                            color: variant.color ? { id: variant.color.id } : (variant.color_id ? { id: variant.color_id } : null),
+                            size: variant.size ? { id: variant.size.id } : (variant.size_id ? { id: variant.size_id } : null),
+                            color_hex_code: variant.color?.hex_code || '',
+                            price: variant.price && variant.price !== 0 ? variant.price : '',
+                            stock: variant.stock && variant.stock !== 0 ? variant.stock : ''
+                        }));
+                        setVariants(normalizedVariants);
                     } else {
-                        // For create, redirect back to list
+                        // For create, refresh colors and sizes then redirect
+                        const [colorsRes, sizesRes] = await Promise.all([
+                            apiRequest('/api/admin/colors'),
+                            apiRequest('/api/admin/sizes')
+                        ]);
+                        if (colorsRes.ok) {
+                            const colorsData = await colorsRes.json();
+                            if (colorsData.success) setColors(colorsData.data);
+                        }
+                        if (sizesRes.ok) {
+                            const sizesData = await sizesRes.json();
+                            if (sizesData.success) setSizes(sizesData.data);
+                        }
                         navigate('/admin/products');
                         scrollToTop();
                     }
@@ -294,8 +354,8 @@ function AdminProductForm() {
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center justify-center min-h-96">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400">در حال بارگذاری...</p>
+                        <div className="w-12 h-12 border-4 border-[var(--color-primary)]/30 border-t-[var(--color-primary)] rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-[var(--color-text-muted)]">در حال بارگذاری...</p>
                     </div>
                 </div>
             </div>
@@ -306,35 +366,35 @@ function AdminProductForm() {
         <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
                     {isEdit ? 'ویرایش محصول' : 'محصول جدید'}
                 </h1>
-                <p className="text-gray-400">
+                <p className="text-[var(--color-text-muted)]">
                     {isEdit ? 'اطلاعات محصول را ویرایش کنید' : 'اطلاعات محصول جدید را وارد کنید'}
                 </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Basic Information */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6">
-                    <h2 className="text-xl font-bold text-white mb-6">اطلاعات پایه</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">اطلاعات پایه</h2>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-white font-medium mb-2">عنوان محصول</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">عنوان محصول</label>
                             <input
                                 type="text"
                                 name="title"
                                 value={form.title}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="عنوان محصول را وارد کنید"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">دسته‌بندی</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">دسته‌بندی</label>
                             <ModernSelect
                                 name="category_id"
                                 options={[
@@ -350,7 +410,7 @@ function AdminProductForm() {
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">قیمت (تومان)</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">قیمت (تومان)</label>
                             <input
                                 type="number"
                                 name="price"
@@ -358,13 +418,13 @@ function AdminProductForm() {
                                 onChange={handleInputChange}
                                 required
                                 min="0"
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="قیمت محصول"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">موجودی</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">موجودی</label>
                             <input
                                 type="number"
                                 name="stock"
@@ -372,20 +432,20 @@ function AdminProductForm() {
                                 onChange={handleInputChange}
                                 required
                                 min="0"
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="تعداد موجودی"
                             />
                         </div>
                     </div>
 
                     <div className="mt-6">
-                        <label className="block text-white font-medium mb-2">توضیحات</label>
+                        <label className="block text-[var(--color-text)] font-medium mb-2">توضیحات</label>
                         <textarea
                             name="description"
                             value={form.description}
                             onChange={handleInputChange}
                             rows="4"
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                             placeholder="توضیحات محصول را وارد کنید"
                         />
                     </div>
@@ -422,8 +482,8 @@ function AdminProductForm() {
                 </div>
 
                 {/* Images */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6">
-                    <h2 className="text-xl font-bold text-white mb-6">تصاویر محصول</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">تصاویر محصول</h2>
                     
                     <FileUpload
                         files={images}
@@ -437,13 +497,13 @@ function AdminProductForm() {
 
                 {/* Variants */}
                 {form.has_variants && (
-                    <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6">
+                    <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-xl font-bold text-white">تنوع محصول</h2>
+                            <h2 className="text-xl font-bold text-[var(--color-text)]">تنوع محصول</h2>
                             <button
                                 type="button"
                                 onClick={addVariant}
-                                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105"
+                                className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105"
                             >
                                 افزودن تنوع
                             </button>
@@ -451,68 +511,77 @@ function AdminProductForm() {
 
                         <div className="space-y-4">
                             {variants.map((variant, index) => (
-                                <div key={index} className="bg-white/5 rounded-lg p-4">
+                                <div key={index} className="bg-[var(--color-surface-alt)] rounded-lg p-4">
                                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                         <div>
-                                            <label className="block text-white font-medium mb-2">رنگ</label>
-                                            <ModernSelect
-                                                name={`variants[${index}][color_id]`}
-                                                options={[
-                                                    { value: '', label: 'انتخاب رنگ' },
-                                                    ...colors.map(color => ({
-                                                        value: color.id,
-                                                        label: color.name
-                                                    }))
-                                                ]}
-                                                value={variant.color_id}
-                                                onChange={(value) => updateVariant(index, 'color_id', value)}
+                                            <label className="block text-[var(--color-text)] font-medium mb-2">رنگ</label>
+                                            <AutocompleteSelect
+                                                options={colors.map(color => ({ id: color.id, name: color.name }))}
+                                                value={variant.color}
+                                                onChange={(value) => updateVariant(index, 'color', value)}
+                                                placeholder="نام رنگ را تایپ کنید..."
+                                            />
+                                            {variant.color && (
+                                                <div className="mt-2">
+                                                    <label className="block text-[var(--color-text)] text-sm font-medium mb-1">کد رنگ (Hex)</label>
+                                                    <div className="flex gap-2">
+                                                        <input
+                                                            type="text"
+                                                            placeholder="#FF0000"
+                                                            value={variant.color_hex_code || ''}
+                                                            onChange={(e) => updateVariant(index, 'color_hex_code', e.target.value)}
+                                                            pattern="^#[0-9A-Fa-f]{6}$"
+                                                            className="flex-1 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] text-sm"
+                                                        />
+                                                        {variant.color_hex_code && (
+                                                            <div 
+                                                                className="w-10 h-10 rounded border border-[var(--color-border-subtle)]"
+                                                                style={{ backgroundColor: variant.color_hex_code }}
+                                                            />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-[var(--color-text)] font-medium mb-2">سایز</label>
+                                            <AutocompleteSelect
+                                                options={sizes.map(size => ({ id: size.id, name: size.name }))}
+                                                value={variant.size}
+                                                onChange={(value) => updateVariant(index, 'size', value)}
+                                                placeholder="نام سایز را تایپ کنید..."
                                             />
                                         </div>
 
                                         <div>
-                                            <label className="block text-white font-medium mb-2">سایز</label>
-                                            <ModernSelect
-                                                name={`variants[${index}][size_id]`}
-                                                options={[
-                                                    { value: '', label: 'انتخاب سایز' },
-                                                    ...sizes.map(size => ({
-                                                        value: size.id,
-                                                        label: size.name
-                                                    }))
-                                                ]}
-                                                value={variant.size_id}
-                                                onChange={(value) => updateVariant(index, 'size_id', value)}
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className="block text-white font-medium mb-2">قیمت</label>
+                                            <label className="block text-[var(--color-text)] font-medium mb-2">قیمت</label>
                                             <input
                                                 type="number"
                                                 name={`variants[${index}][price]`}
-                                                value={variant.price}
+                                                value={variant.price || ''}
                                                 onChange={(e) => updateVariant(index, 'price', e.target.value)}
                                                 min="0"
-                                                className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                                             />
                                         </div>
 
                                         <div className="flex items-end gap-2">
                                             <div className="flex-1">
-                                                <label className="block text-white font-medium mb-2">موجودی</label>
+                                                <label className="block text-[var(--color-text)] font-medium mb-2">موجودی</label>
                                                 <input
                                                     type="number"
                                                     name={`variants[${index}][stock]`}
                                                     value={variant.stock}
                                                     onChange={(e) => updateVariant(index, 'stock', e.target.value)}
                                                     min="0"
-                                                    className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                                    className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-lg px-3 py-2 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                                                 />
                                             </div>
                                             <button
                                                 type="button"
                                                 onClick={() => removeVariant(index)}
-                                                className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition-colors"
+                                                className="bg-red-500 hover:bg-red-600 text-[var(--color-text)] px-3 py-2 rounded-lg transition-colors"
                                             >
                                                 حذف
                                             </button>
@@ -532,14 +601,15 @@ function AdminProductForm() {
                             navigate('/admin/products');
                             scrollToTop();
                         }}
-                        className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200"
+                        className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt-hover)] text-[var(--color-text)] font-semibold py-4 px-6 rounded-xl transition-all duration-200 border border-[var(--color-border-subtle)]"
                     >
                         انصراف
                     </button>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        className="flex-1 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         {loading ? (
                             <div className="flex items-center justify-center space-x-2 space-x-reverse">

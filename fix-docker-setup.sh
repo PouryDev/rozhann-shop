@@ -4,11 +4,11 @@ echo "🔧 Fixing APP_KEY issue for Docker..."
 
 # Create .env.docker with proper APP_KEY
 cat > .env.docker << 'EOF'
-APP_NAME="جمه شاپ"
+APP_NAME="روژان"
 APP_ENV=production
 APP_KEY=
 APP_DEBUG=false
-APP_URL=https://jemehshop.ir
+APP_URL=https://rozhann.ir
 
 LOG_CHANNEL=stack
 LOG_DEPRECATIONS_CHANNEL=null
@@ -17,8 +17,8 @@ LOG_LEVEL=debug
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=jemeh_shop_db
-DB_USERNAME=jemeh
+DB_DATABASE=rozhann_shop_db
+DB_USERNAME=rozhann
 DB_PASSWORD=secret
 DB_ROOT_PASSWORD=rootpass
 

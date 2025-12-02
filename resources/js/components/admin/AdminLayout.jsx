@@ -188,25 +188,25 @@ function AdminLayout() {
     }, [sidebarOpen]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text)]">
             {/* Mobile Header */}
-            <div className="lg:hidden bg-gradient-to-r from-purple-600 to-purple-700 px-4 py-4 sticky top-0 z-50">
+            <div className="lg:hidden px-4 py-4 sticky top-0 z-50 shadow-sm" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
                 <div className="flex items-center justify-between">
                     <button
                         onClick={openSidebar}
-                        className="text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+                        className="text-[var(--color-text)] p-2 rounded-lg hover:bg-white/20 transition-colors"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <h1 className="text-white font-bold text-lg">پنل ادمین</h1>
+                    <h1 className="text-[var(--color-text)] font-bold text-lg">پنل ادمین</h1>
                     
                     {/* User Menu Dropdown */}
                     <div className="relative">
                         <button 
                             onClick={() => setUserMenuOpen(!userMenuOpen)} 
-                            className="text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+                            className="text-[var(--color-text)] p-2 rounded-lg hover:bg-white/20 transition-colors"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -214,8 +214,8 @@ function AdminLayout() {
                         </button>
                         
                         {userMenuOpen && (
-                            <div className="absolute left-0 mt-2 w-48 bg-[#0d0d14]/95 border border-white/10 rounded-xl shadow-2xl p-2 z-[100]">
-                                <div className="px-3 py-2 text-sm text-gray-300 border-b border-white/10 mb-2">
+                            <div className="absolute left-0 mt-2 w-48 bg-white border border-[var(--color-border-subtle)] rounded-xl shadow-2xl p-2 z-[100]">
+                                <div className="px-3 py-2 text-sm text-[var(--color-text)] border-b border-[var(--color-border-subtle)] mb-2">
                                     {user?.name || 'ادمین'}
                                 </div>
                                 <button
@@ -223,7 +223,7 @@ function AdminLayout() {
                                         navigate('/account');
                                         setUserMenuOpen(false);
                                     }}
-                                    className="w-full text-right px-3 py-2 rounded hover:bg-white/5 text-sm"
+                                    className="w-full text-right px-3 py-2 rounded hover:bg-[var(--color-surface-alt)] text-sm text-[var(--color-text)]"
                                 >
                                     پنل کاربری
                                 </button>
@@ -232,7 +232,7 @@ function AdminLayout() {
                                         navigate('/');
                                         setUserMenuOpen(false);
                                     }}
-                                    className="w-full text-right px-3 py-2 rounded hover:bg-white/5 text-sm"
+                                    className="w-full text-right px-3 py-2 rounded hover:bg-[var(--color-surface-alt)] text-sm text-[var(--color-text)]"
                                 >
                                     فروشگاه
                                 </button>
@@ -241,7 +241,7 @@ function AdminLayout() {
                                         await handleLogout();
                                         setUserMenuOpen(false);
                                     }}
-                                    className="w-full text-right px-3 py-2 rounded hover:bg-white/5 text-sm text-red-300"
+                                    className="w-full text-right px-3 py-2 rounded hover:bg-red-50 text-sm text-red-600"
                                 >
                                     خروج
                                 </button>
@@ -262,7 +262,7 @@ function AdminLayout() {
                         onClick={closeSidebar}
                     ></div>
                     <div 
-                        className="fixed right-0 top-0 h-full w-80 bg-gradient-to-b from-gray-800 to-gray-900 shadow-2xl transition-transform duration-300 ease-out overflow-y-auto"
+                        className="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transition-transform duration-300 ease-out overflow-y-auto"
                         style={{
                             transform: sidebarAnimating ? 'translateX(0)' : 'translateX(100%)'
                         }}
@@ -272,7 +272,7 @@ function AdminLayout() {
                             <div className="flex justify-end mb-6">
                                 <button
                                     onClick={closeSidebar}
-                                    className="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+                                    className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors p-2 rounded-lg hover:bg-[var(--color-surface-alt)]"
                                 >
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -282,13 +282,13 @@ function AdminLayout() {
 
                             {/* Admin Info */}
                             <div className="text-center mb-8">
-                                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 transform hover:scale-110 transition-transform duration-200">
-                                    <span className="text-white text-2xl font-bold">
+                                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 transform hover:scale-110 transition-transform duration-200" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
+                                    <span className="text-[var(--color-text)] text-2xl font-bold">
                                         {user?.name?.charAt(0) || 'A'}
                                     </span>
                                 </div>
-                                <h2 className="text-white text-xl font-semibold">{user?.name || 'ادمین'}</h2>
-                                <p className="text-purple-400 text-sm">مدیر سیستم</p>
+                                <h2 className="text-[var(--color-text)] text-xl font-semibold">{user?.name || 'ادمین'}</h2>
+                                <p className="text-[var(--color-primary-strong)] text-sm">مدیر سیستم</p>
                             </div>
 
                             {/* Menu Items */}
@@ -305,9 +305,13 @@ function AdminLayout() {
                                             }}
                                             className={`w-full flex items-center space-x-3 space-x-reverse p-4 rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg ${
                                                 isActive
-                                                    ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30 shadow-purple-500/20'
-                                                    : 'text-gray-300 hover:bg-white/5 hover:text-white hover:shadow-white/10'
+                                                    ? 'text-[var(--color-text)] shadow-md border'
+                                                    : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface-alt)] hover:text-[var(--color-text)]'
                                             }`}
+                                            style={isActive ? {
+                                                background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))',
+                                                borderColor: 'var(--color-primary)'
+                                            } : {}}
                                         >
                                             {item.icon}
                                             <span className="font-medium">{item.title}</span>
@@ -319,7 +323,7 @@ function AdminLayout() {
                             {/* Logout Button */}
                             <button
                                 onClick={handleLogout}
-                                className="w-full mt-8 flex items-center space-x-3 space-x-reverse p-4 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/20"
+                                className="w-full mt-8 flex items-center space-x-3 space-x-reverse p-4 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-200 transform hover:scale-105"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -333,17 +337,17 @@ function AdminLayout() {
 
             <div className="flex">
                 {/* Desktop Sidebar */}
-                <div className="hidden lg:block w-80 bg-gradient-to-b from-gray-800 to-gray-900 min-h-screen sticky top-0">
+                <div className="hidden lg:block w-80 bg-white min-h-screen sticky top-0 border-r border-[var(--color-border-subtle)] shadow-lg">
                     <div className="p-8">
                         {/* Admin Info */}
                         <div className="text-center mb-8">
-                            <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <span className="text-white text-3xl font-bold">
+                            <div className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
+                                <span className="text-[var(--color-text)] text-3xl font-bold">
                                     {user?.name?.charAt(0) || 'A'}
                                 </span>
                             </div>
-                            <h2 className="text-white text-2xl font-bold mb-2">{user?.name || 'ادمین'}</h2>
-                            <p className="text-purple-400">مدیر سیستم</p>
+                            <h2 className="text-[var(--color-text)] text-2xl font-bold mb-2">{user?.name || 'ادمین'}</h2>
+                            <p className="text-[var(--color-primary-strong)]">مدیر سیستم</p>
                         </div>
 
                         {/* Menu Items */}
@@ -357,9 +361,13 @@ function AdminLayout() {
                                         onClick={() => navigate(item.path)}
                                         className={`w-full flex items-center space-x-4 space-x-reverse p-4 rounded-xl transition-all duration-200 ${
                                             isActive
-                                                ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                                                : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                                                ? 'text-[var(--color-text)] shadow-md border'
+                                                : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface-alt)] hover:text-[var(--color-text)]'
                                         }`}
+                                        style={isActive ? {
+                                            background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))',
+                                            borderColor: 'var(--color-primary)'
+                                        } : {}}
                                     >
                                         {item.icon}
                                         <span className="font-medium text-lg">{item.title}</span>
@@ -369,18 +377,18 @@ function AdminLayout() {
                         </nav>
 
                         {/* Quick Actions */}
-                        <div className="mt-8 p-4 bg-white/5 rounded-xl">
-                            <h3 className="text-white font-semibold mb-3">دسترسی سریع</h3>
+                        <div className="mt-8 p-4 bg-[var(--color-surface-alt)] rounded-xl border border-[var(--color-border-subtle)]">
+                            <h3 className="text-[var(--color-text)] font-semibold mb-3">دسترسی سریع</h3>
                             <div className="space-y-2">
                                 <button
                                     onClick={() => navigate('/')}
-                                    className="w-full text-right px-3 py-2 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white transition-colors text-sm"
+                                    className="w-full text-right px-3 py-2 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-surface-alt)]/80 hover:text-[var(--color-text)] transition-colors text-sm"
                                 >
                                     🏪 فروشگاه
                                 </button>
                                 <button
                                     onClick={() => navigate('/account')}
-                                    className="w-full text-right px-3 py-2 rounded-lg text-gray-300 hover:bg-white/5 hover:text-white transition-colors text-sm"
+                                    className="w-full text-right px-3 py-2 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-surface-alt)]/80 hover:text-[var(--color-text)] transition-colors text-sm"
                                 >
                                     👤 پنل کاربری
                                 </button>
@@ -390,7 +398,7 @@ function AdminLayout() {
                         {/* Logout Button */}
                         <button
                             onClick={handleLogout}
-                            className="w-full mt-8 flex items-center space-x-4 space-x-reverse p-4 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200"
+                            className="w-full mt-8 flex items-center space-x-4 space-x-reverse p-4 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-200"
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

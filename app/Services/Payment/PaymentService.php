@@ -12,7 +12,6 @@ use App\Models\Transaction;
 use App\Services\Payment\PaymentGatewayFactory;
 use App\Services\CampaignService;
 use App\Services\DiscountCodeService;
-use App\Services\Telegram\Client as TelegramClient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -184,7 +183,7 @@ class PaymentService
                         'discount_code' => $orderData['discount_code'],
                         'discount_amount' => $orderData['discount_amount'],
                         'final_amount' => $orderData['final_amount'],
-                        'status' => 'confirmed', // Order is confirmed after payment verification
+                        'status' => 'pending', // Order starts as pending after payment verification
                         'receipt_path' => $orderData['receipt_path'],
                     ]);
 
@@ -272,18 +271,7 @@ class PaymentService
                 // Clear cart after successful payment verification and order creation
                 Session::forget('cart');
 
-                // Send Telegram notification to admins
-                try {
-                    $order = $invoice->fresh()->order;
-                    if ($order) {
-                        $this->sendOrderNotification($order);
-                    }
-                } catch (\Exception $e) {
-                    Log::error('Failed to send order notification', [
-                        'error' => $e->getMessage(),
-                        'invoice_id' => $invoice->id,
-                    ]);
-                }
+                // Notification will be sent from Thanks page when user visits it
 
                 return [
                     'success' => true,
@@ -383,67 +371,7 @@ class PaymentService
      */
     public function getActiveGateways()
     {
-        return PaymentGateway::active()->ordered()->get();
-    }
-
-    /**
-     * Send Telegram notification when a new order is created
-     */
-    private function sendOrderNotification(Order $order): void
-    {
-        $adminChatId = config('telegram.admin_chat_id');
-        
-        if (!$adminChatId) {
-            Log::warning('[TELEGRAM] Admin chat ID not configured, skipping notification');
-            return;
-        }
-
-        try {
-            // Load order relationships for message formatting
-            $order->load(['items.product', 'invoice']);
-            
-            // Format message in Persian
-            $itemsCount = $order->items->count();
-            $totalAmount = number_format($order->total_amount) . ' تومان';
-            $invoiceNumber = $order->invoice->invoice_number ?? 'N/A';
-            
-            $message = "🛒 سفارش جدید ثبت شد\n\n";
-            $message .= "📋 شماره سفارش: #{$order->id}\n";
-            $message .= "🧾 شماره فاکتور: {$invoiceNumber}\n";
-            $message .= "👤 نام مشتری: {$order->customer_name}\n";
-            $message .= "📞 تلفن: {$order->customer_phone}\n";
-            $message .= "📍 آدرس: {$order->customer_address}\n";
-            $message .= "📦 تعداد اقلام: {$itemsCount}\n";
-            $message .= "💰 مبلغ کل: {$totalAmount}\n";
-            $message .= "📊 وضعیت: " . $this->getStatusLabel($order->status) . "\n";
-            
-            if ($order->receipt_path) {
-                $message .= "📎 فایل رسید: دارد\n";
-            }
-
-            $telegramClient = new TelegramClient();
-            $telegramClient->sendMessage((int) $adminChatId, $message);
-        } catch (\Exception $e) {
-            // Log error but don't fail order creation
-            Log::error('[PaymentService][sendOrderNotification][TELEGRAM] Failed to send order notification', [
-                'order_id' => $order->id,
-                'error' => $e->getMessage(),
-            ]);
-        }
-    }
-
-    /**
-     * Get Persian label for order status
-     */
-    private function getStatusLabel(string $status): string
-    {
-        return match ($status) {
-            'pending' => 'در انتظار',
-            'confirmed' => 'تایید شده',
-            'shipped' => 'ارسال شده',
-            'cancelled' => 'لغو شده',
-            default => $status,
-        };
+return PaymentGateway::active()->ordered()->get();
     }
 }
 

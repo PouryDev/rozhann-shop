@@ -1,4 +1,4 @@
-<x-layouts.app :title="'جمه‌شاپ - اکسسوری‌های خاص و ترند'">
+<x-layouts.app :title="'روژان - اکسسوری‌های خاص و ترند'">
     <!-- Simple Search -->
     <form class="w-full" id="search-form">
         <input name="q" value="{{ request('q') }}" placeholder="جستجوی محصول" class="w-full bg-white/5 border border-white/10 rounded-lg py-2.5 px-3 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-600" id="search-input" />

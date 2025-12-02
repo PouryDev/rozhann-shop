@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { apiRequest } from '../utils/sanctumAuth';
-import ProductCard from './ProductCard';
-import LoadingSpinner from './LoadingSpinner';
-import { useSeo } from '../hooks/useSeo';
+import React, { useState, useEffect, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { apiRequest } from "../utils/sanctumAuth";
+import ProductCard from "./ProductCard";
+import LoadingSpinner from "./LoadingSpinner";
+import { useSeo } from "../hooks/useSeo";
 
 function CategoryPage() {
     const { id } = useParams();
@@ -16,56 +16,67 @@ function CategoryPage() {
 
     // SEO
     useSeo({
-        title: category ? `${category.name} - جمه` : 'دسته‌بندی محصولات - جمه',
-        description: category ? `خرید ${category.name} با کیفیت از فروشگاه جمه. لباس‌های مینیمال و کاربردی با قیمت مناسب.` : 'دسته‌بندی محصولات فروشگاه جمه',
-        keywords: category ? `${category.name}, لباس, جمه, خرید آنلاین` : 'دسته‌بندی محصولات, لباس, جمه',
-        image: '/images/logo.png',
-        canonical: window.location.origin + `/categories/${id}`
+        title: category
+            ? `${category.name} - روژان`
+            : "دسته‌بندی محصولات - روژان",
+        description: category
+            ? `خرید ${category.name} با کیفیت از فروشگاه روژان. لباس‌های مینیمال و کاربردی با قیمت مناسب.`
+            : "دسته‌بندی محصولات فروشگاه روژان",
+        keywords: category
+            ? `${category.name}, لباس, روژان, خرید آنلاین`
+            : "دسته‌بندی محصولات, لباس, روژان",
+        image: "/images/logo.png",
+        canonical: window.location.origin + `/categories/${id}`,
     });
 
     const fetchCategory = useCallback(async () => {
         try {
-            const res = await apiRequest('/api/categories');
-            if (!res.ok) throw new Error('failed');
+            const res = await apiRequest("/api/categories");
+            if (!res.ok) throw new Error("failed");
             const data = await res.json();
-            const cat = data.data?.find(c => c.id === Number(id));
+            const cat = data.data?.find((c) => c.id === Number(id));
             if (!cat) {
-                navigate('/404', { replace: true });
+                navigate("/404", { replace: true });
                 return;
             }
             setCategory(cat);
         } catch (e) {
-            navigate('/404', { replace: true });
+            navigate("/404", { replace: true });
         }
     }, [id, navigate]);
 
-    const fetchProducts = useCallback(async (page = 1, append = false) => {
-        setLoading(true);
-        try {
-            const params = new URLSearchParams();
-            params.set('category_id', id);
-            if (page > 1) params.set('page', page);
-            
-            const res = await apiRequest(`/api/products?${params.toString()}`);
-            
-            if (!res.ok) throw new Error('failed');
-            const data = await res.json();
-            
-            if (data.success) {
-                if (append) {
-                    setProducts(prev => [...prev, ...data.data]);
-                } else {
-                    setProducts(data.data);
+    const fetchProducts = useCallback(
+        async (page = 1, append = false) => {
+            setLoading(true);
+            try {
+                const params = new URLSearchParams();
+                params.set("category_id", id);
+                if (page > 1) params.set("page", page);
+
+                const res = await apiRequest(
+                    `/api/products?${params.toString()}`
+                );
+
+                if (!res.ok) throw new Error("failed");
+                const data = await res.json();
+
+                if (data.success) {
+                    if (append) {
+                        setProducts((prev) => [...prev, ...data.data]);
+                    } else {
+                        setProducts(data.data);
+                    }
+                    setHasMorePages(data.pagination.has_more_pages);
+                    setCurrentPage(page);
                 }
-                setHasMorePages(data.pagination.has_more_pages);
-                setCurrentPage(page);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setLoading(false);
             }
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setLoading(false);
-        }
-    }, [id]);
+        },
+        [id]
+    );
 
     useEffect(() => {
         fetchCategory();
@@ -79,10 +90,16 @@ function CategoryPage() {
     };
 
     useSeo({
-        title: category ? `${category.name} - فروشگاه جمه` : 'دسته‌بندی - جمه',
-        description: category ? `مشاهده و خرید ${category.name} با بهترین قیمت` : 'دسته‌بندی محصولات',
-        keywords: category ? `${category.name}, خرید ${category.name}, خرید آنلاین` : '',
-        canonical: window.location.origin + window.location.pathname
+        title: category
+            ? `${category.name} - فروشگاه روژان`
+            : "دسته‌بندی - روژان",
+        description: category
+            ? `مشاهده و خرید ${category.name} با بهترین قیمت`
+            : "دسته‌بندی محصولات",
+        keywords: category
+            ? `${category.name}, خرید ${category.name}, خرید آنلاین`
+            : "",
+        canonical: window.location.origin + window.location.pathname,
     });
 
     return (
@@ -91,17 +108,38 @@ function CategoryPage() {
             <section className="relative py-10 md:py-14 px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="rounded-2xl glass-card soft-shadow p-5 md:p-7 border border-white/10">
-                        <button onClick={() => navigate(-1)} className="text-cherry-400 hover:text-cherry-300 text-sm mb-3 flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
+                        <button
+                            onClick={() => navigate(-1)}
+                            className="text-cherry-400 hover:text-cherry-300 text-sm mb-3 flex items-center gap-1"
+                        >
+                            <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 19l-7-7 7-7"
+                                />
+                            </svg>
                             بازگشت
                         </button>
                         {category ? (
                             <>
-                                <h1 className="text-2xl md:text-3xl font-extrabold text-white">{category.name}</h1>
-                                <p className="text-sm text-gray-300 mt-1">مشاهده همه محصولات</p>
+                                <h1 className="text-2xl md:text-3xl font-extrabold text-white">
+                                    {category.name}
+                                </h1>
+                                <p className="text-sm text-gray-300 mt-1">
+                                    مشاهده همه محصولات
+                                </p>
                             </>
                         ) : (
-                            <div className="text-gray-300">در حال بارگذاری...</div>
+                            <div className="text-gray-300">
+                                در حال بارگذاری...
+                            </div>
                         )}
                     </div>
                 </div>
@@ -117,14 +155,22 @@ function CategoryPage() {
                     ) : products.length === 0 ? (
                         <div className="text-center py-12">
                             <div className="text-6xl mb-4">📦</div>
-                            <h3 className="text-xl font-semibold text-white mb-2">محصولی یافت نشد</h3>
-                            <p className="text-gray-400">در این دسته‌بندی محصولی وجود ندارد</p>
+                            <h3 className="text-xl font-semibold text-white mb-2">
+                                محصولی یافت نشد
+                            </h3>
+                            <p className="text-gray-400">
+                                در این دسته‌بندی محصولی وجود ندارد
+                            </p>
                         </div>
                     ) : (
                         <>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
                                 {products.map((product, index) => (
-                                    <ProductCard key={product.id} product={product} index={index} />
+                                    <ProductCard
+                                        key={product.id}
+                                        product={product}
+                                        index={index}
+                                    />
                                 ))}
                             </div>
 
@@ -141,7 +187,7 @@ function CategoryPage() {
                                                 <span>در حال بارگذاری...</span>
                                             </span>
                                         ) : (
-                                            'مشاهده بیشتر'
+                                            "مشاهده بیشتر"
                                         )}
                                     </button>
                                 </div>
@@ -155,4 +201,3 @@ function CategoryPage() {
 }
 
 export default CategoryPage;
-

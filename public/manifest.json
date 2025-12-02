@@ -1,7 +1,7 @@
 {
-  "name": "جمه - فروشگاه آنلاین لباس",
-  "short_name": "جمه",
-  "description": "فروشگاه آنلاین لباس جمه با تمرکز روی کیفیت، طراحی مینیمال و تجربه خرید آسان",
+  "name": "روژان - فروشگاه آنلاین لباس",
+  "short_name": "روژان",
+  "description": "فروشگاه آنلاین لباس روژان با تمرکز روی کیفیت، طراحی مینیمال و تجربه خرید آسان",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1f2937",
@@ -99,7 +99,7 @@
   "related_applications": [
     {
       "platform": "webapp",
-      "url": "https://jeme.shop/manifest.json"
+      "url": "https://rozhann.shop/manifest.json"
     }
   ],
   "prefer_related_applications": false,
@@ -113,7 +113,7 @@
   "capture_links": "new-client",
   "protocol_handlers": [
     {
-      "protocol": "web+jeme",
+      "protocol": "web+rozhann",
       "url": "/?q=%s"
     }
   ],
@@ -146,6 +146,6 @@
     "standalone",
     "minimal-ui"
   ],
-  "id": "jeme-shop-pwa",
+  "id": "rozhann-pwa",
   "version": "1.0.0"
 }

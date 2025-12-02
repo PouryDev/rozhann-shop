@@ -1,7 +1,8 @@
-import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { apiRequest } from '../utils/sanctumAuth';
-import { useSeo } from '../hooks/useSeo';
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { apiRequest } from "../utils/sanctumAuth";
+import { calculateCampaignPrice } from "../utils/pricing";
+import { useSeo } from "../hooks/useSeo";
 
 function ProductPage() {
     const { slug } = useParams();
@@ -20,11 +21,17 @@ function ProductPage() {
 
     // SEO
     useSeo({
-        title: product ? `${product.title} - جمه` : 'محصول - جمه',
-        description: product ? `${product.title} - ${product.description?.substring(0, 150)}...` : 'محصول با کیفیت از فروشگاه جمه',
-        keywords: product ? `${product.title}, لباس, جمه, خرید آنلاین` : 'لباس, خرید آنلاین',
-        image: product?.images?.[0]?.path ? resolveImageUrl(product.images[0].path) : '/images/logo.png',
-        canonical: window.location.origin + `/products/${slug}`
+        title: product ? `${product.title} - روژان` : "محصول - روژان",
+        description: product
+            ? `${product.title} - ${product.description?.substring(0, 150)}...`
+            : "محصول با کیفیت از فروشگاه روژان",
+        keywords: product
+            ? `${product.title}, لباس, روژان, خرید آنلاین`
+            : "لباس, خرید آنلاین",
+        image: product?.images?.[0]?.path
+            ? resolveImageUrl(product.images[0].path)
+            : "/images/logo.png",
+        canonical: window.location.origin + `/products/${slug}`,
     });
 
     function resolveImageUrl(path) {
@@ -32,7 +39,7 @@ function ProductPage() {
         // If already an absolute URL, return as-is
         if (/^https?:\/\//i.test(path)) return path;
         // Normalize leading slashes
-        if (path.startsWith('/')) path = path.slice(1);
+        if (path.startsWith("/")) path = path.slice(1);
         return `/storage/${path}`;
     }
 
@@ -42,17 +49,19 @@ function ProductPage() {
         apiRequest(`/api/products/${slug}`)
             .then(async (res) => {
                 if (res.status === 404) {
-                    navigate('/404', { replace: true });
-                    return Promise.reject(new Error('not-found'));
+                    navigate("/404", { replace: true });
+                    return Promise.reject(new Error("not-found"));
                 }
-                if (!res.ok) throw new Error('failed');
+                if (!res.ok) throw new Error("failed");
                 const data = await res.json();
-                if (!data?.success) throw new Error('failed');
+                if (!data?.success) throw new Error("failed");
                 return data.data;
             })
             .then((p) => {
                 setProduct(p);
-                const firstImage = p?.images?.[0]?.path ? resolveImageUrl(p.images[0].path) : null;
+                const firstImage = p?.images?.[0]?.path
+                    ? resolveImageUrl(p.images[0].path)
+                    : null;
                 setMainImage(firstImage);
                 if (p?.has_colors) {
                     const firstColor = uniqueColors(p)?.[0];
@@ -64,7 +73,7 @@ function ProductPage() {
                 }
                 setDisplayPrice(calculateBasePrice(p, null, null));
             })
-            .catch(() => setError('خطا در بارگذاری محصول'))
+            .catch(() => setError("خطا در بارگذاری محصول"))
             .finally(() => setLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]);
@@ -92,9 +101,13 @@ function ProductPage() {
     function filteredSizes() {
         if (!product?.has_sizes) return [];
         if (!selectedColorId) return uniqueSizes(product);
-        const variants = product?.active_variants || product?.activeVariants || [];
+        const variants =
+            product?.active_variants || product?.activeVariants || [];
         const sizes = variants
-            .filter((v) => v.color && v.color.id === Number(selectedColorId) && v.size)
+            .filter(
+                (v) =>
+                    v.color && v.color.id === Number(selectedColorId) && v.size
+            )
             .map((v) => v.size);
         const map = new Map();
         sizes.forEach((s) => {
@@ -103,14 +116,15 @@ function ProductPage() {
         return Array.from(map.values());
     }
 
-    
-
     function filteredColors() {
         if (!product?.has_colors) return [];
         if (!selectedSizeId) return uniqueColors(product);
-        const variants = product?.active_variants || product?.activeVariants || [];
+        const variants =
+            product?.active_variants || product?.activeVariants || [];
         const colors = variants
-            .filter((v) => v.size && v.size.id === Number(selectedSizeId) && v.color)
+            .filter(
+                (v) => v.size && v.size.id === Number(selectedSizeId) && v.color
+            )
             .map((v) => v.color);
         const map = new Map();
         colors.forEach((c) => {
@@ -121,7 +135,7 @@ function ProductPage() {
 
     function formatPrice(value) {
         try {
-            return Number(value || 0).toLocaleString('fa-IR');
+            return Number(value || 0).toLocaleString("fa-IR");
         } catch {
             return value;
         }
@@ -129,10 +143,11 @@ function ProductPage() {
 
     function findVariant(p, colorId, sizeId) {
         const variants = p?.active_variants || p?.activeVariants || [];
-        return variants.find((v) => (
-            (colorId ? v.color_id === Number(colorId) : !v.color_id) &&
-            (sizeId ? v.size_id === Number(sizeId) : !v.size_id)
-        ));
+        return variants.find(
+            (v) =>
+                (colorId ? v.color_id === Number(colorId) : !v.color_id) &&
+                (sizeId ? v.size_id === Number(sizeId) : !v.size_id)
+        );
     }
 
     function calculateBasePrice(p, colorId, sizeId) {
@@ -141,32 +156,19 @@ function ProductPage() {
     }
 
     function getActiveCampaign(p) {
-        return Array.isArray(p?.campaigns) && p.campaigns.length > 0 ? p.campaigns[0] : null;
-    }
-
-    function calculateCampaignPrice(basePrice, p) {
-        const campaign = getActiveCampaign(p);
-        if (!campaign) return { finalPrice: basePrice, originalPrice: null, discountAmount: 0 };
-        let finalPrice = basePrice;
-        if (campaign.type === 'percentage') {
-            const raw = Math.round(basePrice * (1 - (campaign.discount_value || 0) / 100));
-            finalPrice = raw;
-        } else if (campaign.type === 'fixed') {
-            finalPrice = Math.max(0, basePrice - (campaign.discount_value || 0));
-        }
-        if (typeof campaign.max_discount_amount === 'number' && campaign.type === 'percentage') {
-            const discount = basePrice - finalPrice;
-            if (discount > campaign.max_discount_amount) {
-                finalPrice = basePrice - campaign.max_discount_amount;
-            }
-        }
-        return { finalPrice, originalPrice: basePrice, discountAmount: basePrice - finalPrice };
+        return Array.isArray(p?.campaigns) && p.campaigns.length > 0
+            ? p.campaigns[0]
+            : null;
     }
 
     // Update price when selection changes
     React.useEffect(() => {
         if (!product) return;
-        const base = calculateBasePrice(product, selectedColorId, selectedSizeId);
+        const base = calculateBasePrice(
+            product,
+            selectedColorId,
+            selectedSizeId
+        );
         setDisplayPrice(base);
     }, [product, selectedColorId, selectedSizeId]);
 
@@ -176,9 +178,9 @@ function ProductPage() {
         setAddStatus(null);
         try {
             const res = await apiRequest(`/api/cart/add/${product.slug}`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     quantity: Number(quantity) || 1,
@@ -186,17 +188,24 @@ function ProductPage() {
                     size_id: selectedSizeId || null,
                 }),
             });
-            if (!res.ok) throw new Error('failed');
+            if (!res.ok) throw new Error("failed");
             const payload = await res.json();
-            if (!payload?.ok) throw new Error('failed');
-            setAddStatus('محصول به سبد اضافه شد');
+            if (!payload?.ok) throw new Error("failed");
+            setAddStatus("محصول به سبد اضافه شد");
             try {
-                localStorage.setItem('cart', JSON.stringify(payload.items || []));
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(payload.items || [])
+                );
             } catch {}
-            window.dispatchEvent(new Event('cart:update'));
-            window.dispatchEvent(new CustomEvent('toast:show', { detail: { type: 'success', message: 'به سبد اضافه شد' } }));
+            window.dispatchEvent(new Event("cart:update"));
+            window.dispatchEvent(
+                new CustomEvent("toast:show", {
+                    detail: { type: "success", message: "به سبد اضافه شد" },
+                })
+            );
         } catch (e) {
-            setAddStatus('خطا در افزودن به سبد');
+            setAddStatus("خطا در افزودن به سبد");
         } finally {
             setAdding(false);
         }
@@ -216,8 +225,15 @@ function ProductPage() {
         return (
             <div className="min-h-screen py-12">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="text-red-400">{error || 'محصول یافت نشد'}</div>
-                    <button onClick={() => navigate(-1)} className="mt-4 text-cherry-400 hover:text-cherry-300">بازگشت</button>
+                    <div className="text-red-400">
+                        {error || "محصول یافت نشد"}
+                    </div>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="mt-4 text-cherry-400 hover:text-cherry-300"
+                    >
+                        بازگشت
+                    </button>
                 </div>
             </div>
         );
@@ -233,37 +249,75 @@ function ProductPage() {
                     <div>
                         <div className="bg-black/30 rounded-lg p-4 border border-white/10">
                             {mainImage ? (
-                                <img src={mainImage} alt={product.title} className="w-full h-auto rounded" onError={(e) => {
-                                    const img = e.currentTarget;
-                                    if (img.src.includes('/images/placeholder.jpg') || img.dataset.placeholderTried === 'true') {
-                                        img.style.display = 'none';
-                                        return;
-                                    }
-                                    img.dataset.placeholderTried = 'true';
-                                    img.src = '/images/placeholder.jpg';
-                                }} />
+                                <img
+                                    src={mainImage}
+                                    alt={product.title}
+                                    className="w-full h-auto rounded"
+                                    onError={(e) => {
+                                        const img = e.currentTarget;
+                                        if (
+                                            img.src.includes(
+                                                "/images/placeholder.jpg"
+                                            ) ||
+                                            img.dataset.placeholderTried ===
+                                                "true"
+                                        ) {
+                                            img.style.display = "none";
+                                            return;
+                                        }
+                                        img.dataset.placeholderTried = "true";
+                                        img.src = "/images/placeholder.jpg";
+                                    }}
+                                />
                             ) : (
                                 <div className="w-full aspect-[4/3] bg-gray-800 rounded" />
                             )}
                         </div>
                         {product?.images?.length > 1 && (
                             <div className="mt-4">
-                                <div className="flex md:hidden gap-3 overflow-x-auto overflow-y-hidden pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-x] touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+                                <div
+                                    className="flex md:hidden gap-3 overflow-x-auto overflow-y-hidden pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [touch-action:pan-x] touch-pan-x"
+                                    style={{ WebkitOverflowScrolling: "touch" }}
+                                >
                                     {product.images.map((img, idx) => (
                                         <button
                                             key={idx}
-                                            onClick={() => setMainImage(resolveImageUrl(img.path))}
-                                            className={`flex-shrink-0 bg-black/30 rounded border ${mainImage === resolveImageUrl(img.path) ? 'border-cherry-500' : 'border-white/10'} p-1`}
+                                            onClick={() =>
+                                                setMainImage(
+                                                    resolveImageUrl(img.path)
+                                                )
+                                            }
+                                            className={`flex-shrink-0 bg-black/30 rounded border ${
+                                                mainImage ===
+                                                resolveImageUrl(img.path)
+                                                    ? "border-cherry-500"
+                                                    : "border-white/10"
+                                            } p-1`}
                                         >
-                                            <img src={resolveImageUrl(img.path)} alt={product.title} className="w-16 h-16 object-cover rounded" onError={(e) => {
-                                                const img = e.currentTarget;
-                                                if (img.src.includes('/images/placeholder.jpg') || img.dataset.placeholderTried === 'true') {
-                                                    img.style.display = 'none';
-                                                    return;
-                                                }
-                                                img.dataset.placeholderTried = 'true';
-                                                img.src = '/images/placeholder.jpg';
-                                            }} />
+                                            <img
+                                                src={resolveImageUrl(img.path)}
+                                                alt={product.title}
+                                                className="w-16 h-16 object-cover rounded"
+                                                onError={(e) => {
+                                                    const img = e.currentTarget;
+                                                    if (
+                                                        img.src.includes(
+                                                            "/images/placeholder.jpg"
+                                                        ) ||
+                                                        img.dataset
+                                                            .placeholderTried ===
+                                                            "true"
+                                                    ) {
+                                                        img.style.display =
+                                                            "none";
+                                                        return;
+                                                    }
+                                                    img.dataset.placeholderTried =
+                                                        "true";
+                                                    img.src =
+                                                        "/images/placeholder.jpg";
+                                                }}
+                                            />
                                         </button>
                                     ))}
                                 </div>
@@ -271,18 +325,42 @@ function ProductPage() {
                                     {product.images.map((img, idx) => (
                                         <button
                                             key={idx}
-                                            onClick={() => setMainImage(resolveImageUrl(img.path))}
-                                            className={`bg-black/30 rounded border ${mainImage === resolveImageUrl(img.path) ? 'border-cherry-500' : 'border-white/10'} p-1`}
+                                            onClick={() =>
+                                                setMainImage(
+                                                    resolveImageUrl(img.path)
+                                                )
+                                            }
+                                            className={`bg-black/30 rounded border ${
+                                                mainImage ===
+                                                resolveImageUrl(img.path)
+                                                    ? "border-cherry-500"
+                                                    : "border-white/10"
+                                            } p-1`}
                                         >
-                                            <img src={resolveImageUrl(img.path)} alt={product.title} className="w-full h-16 object-cover rounded" onError={(e) => {
-                                                const img = e.currentTarget;
-                                                if (img.src.includes('/images/placeholder.jpg') || img.dataset.placeholderTried === 'true') {
-                                                    img.style.display = 'none';
-                                                    return;
-                                                }
-                                                img.dataset.placeholderTried = 'true';
-                                                img.src = '/images/placeholder.jpg';
-                                            }} />
+                                            <img
+                                                src={resolveImageUrl(img.path)}
+                                                alt={product.title}
+                                                className="w-full h-16 object-cover rounded"
+                                                onError={(e) => {
+                                                    const img = e.currentTarget;
+                                                    if (
+                                                        img.src.includes(
+                                                            "/images/placeholder.jpg"
+                                                        ) ||
+                                                        img.dataset
+                                                            .placeholderTried ===
+                                                            "true"
+                                                    ) {
+                                                        img.style.display =
+                                                            "none";
+                                                        return;
+                                                    }
+                                                    img.dataset.placeholderTried =
+                                                        "true";
+                                                    img.src =
+                                                        "/images/placeholder.jpg";
+                                                }}
+                                            />
                                         </button>
                                     ))}
                                 </div>
@@ -291,52 +369,93 @@ function ProductPage() {
                     </div>
 
                     <div className="text-white">
-                        <h1 className="text-2xl md:text-3xl font-bold mb-4">{product.title}</h1>
+                        <h1 className="text-2xl md:text-3xl font-bold mb-4">
+                            {product.title}
+                        </h1>
                         <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-6">
                             {(() => {
                                 const base = displayPrice ?? product.price;
-                                const { finalPrice, originalPrice } = calculateCampaignPrice(base, product);
+                                const activeCampaign = getActiveCampaign(product);
+                                const { finalPrice, originalPrice } =
+                                    calculateCampaignPrice(base, activeCampaign);
                                 return (
                                     <>
-                                        {originalPrice && originalPrice !== finalPrice ? (
+                                        {activeCampaign &&
+                                        originalPrice !== finalPrice ? (
                                             <>
-                                                <span className="text-gray-400 line-through">{formatPrice(originalPrice)} تومان</span>
-                                                <span className="text-xl md:text-2xl font-extrabold">{formatPrice(finalPrice)} تومان</span>
+                                                <span className="text-gray-400 line-through">
+                                                    {formatPrice(originalPrice)}{" "}
+                                                    تومان
+                                                </span>
+                                                <span className="text-xl md:text-2xl font-extrabold">
+                                                    {formatPrice(finalPrice)}{" "}
+                                                    تومان
+                                                </span>
                                             </>
                                         ) : (
-                                            <span className="text-xl md:text-2xl font-extrabold">{formatPrice(base)} تومان</span>
+                                            <span className="text-xl md:text-2xl font-extrabold">
+                                                {formatPrice(base)} تومان
+                                            </span>
                                         )}
                                     </>
                                 );
                             })()}
                             {getActiveCampaign(product) && (
                                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gradient-to-r from-cherry-600/20 to-pink-600/20 text-cherry-200 border border-cherry-500/30 text-xs md:text-sm backdrop-blur">
-                                    <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                    <span className="font-medium truncate max-w-[160px] md:max-w-xs">{getActiveCampaign(product).name}</span>
+                                    <svg
+                                        className="w-3.5 h-3.5 md:w-4 md:h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                                        />
+                                    </svg>
+                                    <span className="font-medium truncate max-w-[160px] md:max-w-xs">
+                                        {getActiveCampaign(product).name}
+                                    </span>
                                 </span>
                             )}
                         </div>
 
                         {product.description && (
-                            <p className="text-gray-300 leading-7 mb-6">{product.description}</p>
+                            <p className="text-gray-300 leading-7 mb-6">
+                                {product.description}
+                            </p>
                         )}
 
                         <div className="space-y-4">
                             {product.has_colors && (
                                 <div>
-                                    <label className="block text-sm text-gray-300 mb-2">رنگ</label>
+                                    <label className="block text-sm text-gray-300 mb-2">
+                                        رنگ
+                                    </label>
                                     <div className="flex flex-wrap gap-2">
                                         {colors.length === 0 ? (
-                                            <span className="text-xs text-gray-400">ناموجود</span>
+                                            <span className="text-xs text-gray-400">
+                                                ناموجود
+                                            </span>
                                         ) : (
                                             colors.map((c) => (
                                                 <button
                                                     key={c.id}
-                                                    onClick={() => setSelectedColorId(c.id)}
+                                                    onClick={() =>
+                                                        setSelectedColorId(c.id)
+                                                    }
                                                     className={`w-9 h-9 rounded-full border-2 transition ${
-                                                        selectedColorId === c.id ? 'border-white ring-2 ring-cherry-500' : 'border-white/20'
+                                                        selectedColorId === c.id
+                                                            ? "border-white ring-2 ring-cherry-500"
+                                                            : "border-white/20"
                                                     }`}
-                                                    style={{ backgroundColor: c.hex_code || '#777' }}
+                                                    style={{
+                                                        backgroundColor:
+                                                            c.hex_code ||
+                                                            "#777",
+                                                    }}
                                                     aria-label={c.name}
                                                     title={c.name}
                                                 />
@@ -348,17 +467,25 @@ function ProductPage() {
 
                             {product.has_sizes && (
                                 <div>
-                                    <label className="block text-sm text-gray-300 mb-2">سایز</label>
+                                    <label className="block text-sm text-gray-300 mb-2">
+                                        سایز
+                                    </label>
                                     <div className="flex flex-wrap gap-2">
                                         {sizes.length === 0 ? (
-                                            <span className="text-xs text-gray-400">ناموجود</span>
+                                            <span className="text-xs text-gray-400">
+                                                ناموجود
+                                            </span>
                                         ) : (
                                             sizes.map((s) => (
                                                 <button
                                                     key={s.id}
-                                                    onClick={() => setSelectedSizeId(s.id)}
+                                                    onClick={() =>
+                                                        setSelectedSizeId(s.id)
+                                                    }
                                                     className={`px-3 py-1.5 rounded border text-sm transition ${
-                                                        selectedSizeId === s.id ? 'border-white bg-white/10' : 'border-white/20 bg-white/5'
+                                                        selectedSizeId === s.id
+                                                            ? "border-white bg-white/10"
+                                                            : "border-white/20 bg-white/5"
                                                     }`}
                                                     title={s.name}
                                                 >
@@ -371,12 +498,18 @@ function ProductPage() {
                             )}
 
                             <div>
-                                <label className="block text-sm text-gray-300 mb-2">تعداد</label>
+                                <label className="block text-sm text-gray-300 mb-2">
+                                    تعداد
+                                </label>
                                 <input
                                     type="number"
                                     min={1}
                                     value={quantity}
-                                    onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+                                    onChange={(e) =>
+                                        setQuantity(
+                                            Math.max(1, Number(e.target.value))
+                                        )
+                                    }
                                     className="bg-black/40 border border-white/10 rounded px-3 py-2 w-28 text-white"
                                 />
                             </div>
@@ -387,41 +520,69 @@ function ProductPage() {
                                     disabled={adding}
                                     className="bg-cherry-600 hover:bg-cherry-500 disabled:opacity-60 disabled:cursor-not-allowed transition-colors text-white px-6 py-3 rounded-lg"
                                 >
-                                    {adding ? 'در حال افزودن...' : 'افزودن به سبد خرید'}
+                                    {adding
+                                        ? "در حال افزودن..."
+                                        : "افزودن به سبد خرید"}
                                 </button>
                                 {addStatus && (
-                                    <span className="ml-4 text-sm text-gray-300">{addStatus}</span>
+                                    <span className="ml-4 text-sm text-gray-300">
+                                        {addStatus}
+                                    </span>
                                 )}
                             </div>
                         </div>
                         {/* Benefit Cards */}
                         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
                             <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-start gap-2">
-                                <span className="text-cherry-400 mt-0.5">🚚</span>
+                                <span className="text-cherry-400 mt-0.5">
+                                    🚚
+                                </span>
                                 <div>
-                                    <div className="text-white font-semibold">ارسال سریع</div>
-                                    <div className="text-gray-400 text-xs">تحویل 2 تا 4 روز کاری</div>
+                                    <div className="text-white font-semibold">
+                                        ارسال سریع
+                                    </div>
+                                    <div className="text-gray-400 text-xs">
+                                        تحویل 2 تا 4 روز کاری
+                                    </div>
                                 </div>
                             </div>
                             <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-start gap-2">
-                                <span className="text-cherry-400 mt-0.5">🔄</span>
+                                <span className="text-cherry-400 mt-0.5">
+                                    🔄
+                                </span>
                                 <div>
-                                    <div className="text-white font-semibold">مرجوع آسان</div>
-                                    <div className="text-gray-400 text-xs">تا 7 روز پس از دریافت</div>
+                                    <div className="text-white font-semibold">
+                                        مرجوع آسان
+                                    </div>
+                                    <div className="text-gray-400 text-xs">
+                                        تا 7 روز پس از دریافت
+                                    </div>
                                 </div>
                             </div>
                             <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-start gap-2">
-                                <span className="text-cherry-400 mt-0.5">💳</span>
+                                <span className="text-cherry-400 mt-0.5">
+                                    💳
+                                </span>
                                 <div>
-                                    <div className="text-white font-semibold">پرداخت امن</div>
-                                    <div className="text-gray-400 text-xs">از طریق درگاه شتاب</div>
+                                    <div className="text-white font-semibold">
+                                        پرداخت امن
+                                    </div>
+                                    <div className="text-gray-400 text-xs">
+                                        از طریق درگاه شتاب
+                                    </div>
                                 </div>
                             </div>
                             <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex items-start gap-2">
-                                <span className="text-cherry-400 mt-0.5">🎁</span>
+                                <span className="text-cherry-400 mt-0.5">
+                                    🎁
+                                </span>
                                 <div>
-                                    <div className="text-white font-semibold">بسته‌بندی شیک</div>
-                                    <div className="text-gray-400 text-xs">مناسب هدیه دادن</div>
+                                    <div className="text-white font-semibold">
+                                        بسته‌بندی شیک
+                                    </div>
+                                    <div className="text-gray-400 text-xs">
+                                        مناسب هدیه دادن
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -436,12 +597,24 @@ function ProductPage() {
                             <div className="text-xs text-gray-300">قیمت</div>
                             {(() => {
                                 const base = displayPrice ?? product.price;
-                                const { finalPrice } = calculateCampaignPrice(base, product);
-                                return <div className="text-white font-extrabold">{formatPrice(finalPrice)} تومان</div>;
+                                const activeCampaign = getActiveCampaign(product);
+                                const { finalPrice } = calculateCampaignPrice(
+                                    base,
+                                    activeCampaign
+                                );
+                                return (
+                                    <div className="text-white font-extrabold">
+                                        {formatPrice(finalPrice)} تومان
+                                    </div>
+                                );
                             })()}
                         </div>
-                        <button onClick={handleAddToCart} disabled={adding} className="flex-1 text-center bg-cherry-600 hover:bg-cherry-500 text-white rounded-lg py-2">
-                            {adding ? 'در حال افزودن...' : 'افزودن به سبد'}
+                        <button
+                            onClick={handleAddToCart}
+                            disabled={adding}
+                            className="flex-1 text-center bg-cherry-600 hover:bg-cherry-500 text-white rounded-lg py-2"
+                        >
+                            {adding ? "در حال افزودن..." : "افزودن به سبد"}
                         </button>
                     </div>
                 </div>

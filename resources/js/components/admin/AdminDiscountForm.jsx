@@ -124,8 +124,8 @@ function AdminDiscountForm() {
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center justify-center min-h-96">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-400">در حال بارگذاری...</p>
+                        <div className="w-12 h-12 border-4 border-[var(--color-primary)]/30 border-t-[var(--color-primary)] rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-[var(--color-text-muted)]">در حال بارگذاری...</p>
                     </div>
                 </div>
             </div>
@@ -136,40 +136,40 @@ function AdminDiscountForm() {
         <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-[var(--color-text)] mb-2">
                     {isEdit ? 'ویرایش کد تخفیف' : 'کد تخفیف جدید'}
                 </h1>
-                <p className="text-gray-400">
+                <p className="text-[var(--color-text-muted)]">
                     {isEdit ? 'اطلاعات کد تخفیف را ویرایش کنید' : 'اطلاعات کد تخفیف جدید را وارد کنید'}
                 </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Basic Information */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6">
-                    <h2 className="text-xl font-bold text-white mb-6">اطلاعات پایه</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">اطلاعات پایه</h2>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-white font-medium mb-2">کد تخفیف</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">کد تخفیف</label>
                             <input
                                 type="text"
                                 name="code"
                                 value={form.code}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="مثال: WELCOME20"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">نوع تخفیف</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">نوع تخفیف</label>
                             <select
                                 name="type"
                                 value={form.type}
                                 onChange={handleInputChange}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                             >
                                 <option value="percentage">درصدی</option>
                                 <option value="fixed">مبلغی</option>
@@ -177,7 +177,7 @@ function AdminDiscountForm() {
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">
+                            <label className="block text-[var(--color-text)] font-medium mb-2">
                                 مقدار تخفیف {form.type === 'percentage' ? '(درصد)' : '(تومان)'}
                             </label>
                             <input
@@ -188,26 +188,26 @@ function AdminDiscountForm() {
                                 required
                                 min="0"
                                 max={form.type === 'percentage' ? 100 : undefined}
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder={form.type === 'percentage' ? '20' : '50000'}
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">حداقل مبلغ خرید (تومان)</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">حداقل مبلغ خرید (تومان)</label>
                             <input
                                 type="number"
                                 name="minimum_amount"
                                 value={form.minimum_amount}
                                 onChange={handleInputChange}
                                 min="0"
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="100000"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">تاریخ شروع</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">تاریخ شروع</label>
                             <PersianDatePicker
                                 value={form.starts_at}
                                 onChange={(value) => setForm(prev => ({ ...prev, starts_at: value }))}
@@ -216,7 +216,7 @@ function AdminDiscountForm() {
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">تاریخ انقضا</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">تاریخ انقضا</label>
                             <PersianDatePicker
                                 value={form.expires_at}
                                 onChange={(value) => setForm(prev => ({ ...prev, expires_at: value }))}
@@ -225,14 +225,14 @@ function AdminDiscountForm() {
                         </div>
 
                         <div>
-                            <label className="block text-white font-medium mb-2">حد مجاز استفاده</label>
+                            <label className="block text-[var(--color-text)] font-medium mb-2">حد مجاز استفاده</label>
                             <input
                                 type="number"
                                 name="usage_limit"
                                 value={form.usage_limit}
                                 onChange={handleInputChange}
                                 min="1"
-                                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                                className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                                 placeholder="100"
                             />
                         </div>
@@ -247,29 +247,29 @@ function AdminDiscountForm() {
                     </div>
 
                     <div className="mt-6">
-                        <label className="block text-white font-medium mb-2">توضیحات</label>
+                        <label className="block text-[var(--color-text)] font-medium mb-2">توضیحات</label>
                         <textarea
                             name="description"
                             value={form.description}
                             onChange={handleInputChange}
                             rows="3"
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                            className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-xl px-4 py-3 text-[var(--color-text)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all duration-200"
                             placeholder="توضیحات کد تخفیف (اختیاری)"
                         />
                     </div>
                 </div>
 
                 {/* Preview */}
-                <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-6">
-                    <h2 className="text-xl font-bold text-white mb-6">پیش‌نمایش</h2>
+                <div className="bg-white rounded-2xl border border-[var(--color-border-subtle)] shadow-2xl p-6">
+                    <h2 className="text-xl font-bold text-[var(--color-text)] mb-6">پیش‌نمایش</h2>
                     
-                    <div className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-xl p-6 border border-purple-500/30">
+                    <div className="bg-[var(--color-primary)]/10 rounded-xl p-6 border border-[var(--color-primary)]/30">
                         <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-white font-bold text-xl">{form.code || 'کد تخفیف'}</h3>
+                            <h3 className="text-[var(--color-text)] font-bold text-xl">{form.code || 'کد تخفیف'}</h3>
                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                                 form.is_active 
-                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                                    : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                                    ? 'bg-green-50 text-green-600 border border-green-500/30' 
+                                    : 'bg-red-500/20 text-red-600 border border-red-500/30'
                             }`}>
                                 {form.is_active ? 'فعال' : 'غیرفعال'}
                             </span>
@@ -277,14 +277,14 @@ function AdminDiscountForm() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                             <div>
-                                <p className="text-gray-400">نوع تخفیف:</p>
-                                <p className="text-white font-medium">
+                                <p className="text-[var(--color-text-muted)]">نوع تخفیف:</p>
+                                <p className="text-[var(--color-text)] font-medium">
                                     {form.type === 'percentage' ? 'درصدی' : 'مبلغی'}
                                 </p>
                             </div>
                             <div>
-                                <p className="text-gray-400">مقدار تخفیف:</p>
-                                <p className="text-white font-medium">
+                                <p className="text-[var(--color-text-muted)]">مقدار تخفیف:</p>
+                                <p className="text-[var(--color-text)] font-medium">
                                     {form.value ? (
                                         form.type === 'percentage' 
                                             ? `${form.value}%` 
@@ -293,8 +293,8 @@ function AdminDiscountForm() {
                                 </p>
                             </div>
                             <div>
-                                <p className="text-gray-400">حداقل خرید:</p>
-                                <p className="text-white font-medium">
+                                <p className="text-[var(--color-text-muted)]">حداقل خرید:</p>
+                                <p className="text-[var(--color-text)] font-medium">
                                     {form.minimum_amount 
                                         ? `${Number(form.minimum_amount).toLocaleString('fa-IR')} تومان`
                                         : 'بدون محدودیت'
@@ -302,8 +302,8 @@ function AdminDiscountForm() {
                                 </p>
                             </div>
                             <div>
-                                <p className="text-gray-400">حد مجاز استفاده:</p>
-                                <p className="text-white font-medium">
+                                <p className="text-[var(--color-text-muted)]">حد مجاز استفاده:</p>
+                                <p className="text-[var(--color-text)] font-medium">
                                     {form.usage_limit || 'نامحدود'}
                                 </p>
                             </div>
@@ -311,8 +311,8 @@ function AdminDiscountForm() {
 
                         {form.description && (
                             <div className="mt-4">
-                                <p className="text-gray-400 text-sm">توضیحات:</p>
-                                <p className="text-white">{form.description}</p>
+                                <p className="text-[var(--color-text-muted)] text-sm">توضیحات:</p>
+                                <p className="text-[var(--color-text)]">{form.description}</p>
                             </div>
                         )}
                     </div>
@@ -326,14 +326,15 @@ function AdminDiscountForm() {
                             navigate('/admin/discounts');
                             scrollToTop();
                         }}
-                        className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200"
+                        className="flex-1 bg-[var(--color-surface-alt)] hover:bg-[var(--color-surface-alt-hover)] text-[var(--color-text)] font-semibold py-4 px-6 rounded-xl transition-all duration-200 border border-[var(--color-border-subtle)]"
                     >
                         انصراف
                     </button>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        className="flex-1 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         {loading ? (
                             <div className="flex items-center justify-center space-x-2 space-x-reverse">

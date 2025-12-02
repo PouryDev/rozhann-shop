@@ -1,5 +1,5 @@
-// Service Worker for Jemeh Shop PWA
-const CACHE_NAME = 'jemeh-shop-v1';
+// Service Worker for Rozhann PWA
+const CACHE_NAME = 'rozhann-v1';
 const urlsToCache = [
     '/',
     '/css/app.css',
@@ -67,7 +67,7 @@ function doBackgroundSync() {
 // Push notifications
 self.addEventListener('push', (event) => {
     const options = {
-        body: event.data ? event.data.text() : 'به‌روزرسانی جدید از جمه شاپ',
+        body: event.data ? event.data.text() : 'به‌روزرسانی جدید از روژان',
         icon: '/images/logo.png',
         badge: '/images/favicon.ico',
         vibrate: [100, 50, 100],
@@ -90,7 +90,7 @@ self.addEventListener('push', (event) => {
     };
 
     event.waitUntil(
-        self.registration.showNotification('جمه شاپ', options)
+        self.registration.showNotification('روژان', options)
     );
 });
 

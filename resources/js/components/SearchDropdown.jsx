@@ -15,10 +15,77 @@ function SearchDropdown({ onSearch, initialQuery = '' }) {
     const dropdownRef = useRef(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 'auto' });
 
     useEffect(() => {
         setQuery(initialQuery);
     }, [initialQuery]);
+
+    // Calculate dropdown position
+    useEffect(() => {
+        if (showDropdown && inputRef.current) {
+            const updatePosition = () => {
+                if (!inputRef.current) return;
+
+                const rect = inputRef.current.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const viewportWidth = window.innerWidth;
+                const dropdownMaxHeight = 320; // max-h-80 = 20rem = 320px
+                const spacing = 4; // 4px spacing from input
+                
+                // Calculate available space below and above
+                const spaceBelow = viewportHeight - rect.bottom;
+                const spaceAbove = rect.top;
+                
+                let top;
+                let left = rect.left;
+                let width = rect.width;
+                
+                // Check if dropdown should appear above input
+                if (spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow) {
+                    // Position above input
+                    top = rect.top - dropdownMaxHeight - spacing;
+                } else {
+                    // Position below input (default)
+                    top = rect.bottom + spacing;
+                }
+                
+                // Ensure dropdown doesn't go outside viewport
+                if (top < 0) {
+                    top = spacing;
+                }
+                if (top + dropdownMaxHeight > viewportHeight) {
+                    top = Math.max(spacing, viewportHeight - dropdownMaxHeight - spacing);
+                }
+                
+                // Ensure dropdown doesn't overflow horizontally
+                if (left + width > viewportWidth) {
+                    left = Math.max(0, viewportWidth - width);
+                }
+                if (left < 0) {
+                    left = spacing;
+                    width = Math.min(width, viewportWidth - spacing * 2);
+                }
+                
+                setDropdownPosition({
+                    top,
+                    left,
+                    width: Math.max(width, 300) // minWidth: 300px
+                });
+            };
+
+            updatePosition();
+            
+            // Update position on scroll and resize
+            window.addEventListener('scroll', updatePosition, true);
+            window.addEventListener('resize', updatePosition);
+            
+            return () => {
+                window.removeEventListener('scroll', updatePosition, true);
+                window.removeEventListener('resize', updatePosition);
+            };
+        }
+    }, [showDropdown, results]);
 
     // Handle click outside to close dropdown
     useEffect(() => {
@@ -143,11 +210,11 @@ function SearchDropdown({ onSearch, initialQuery = '' }) {
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
                         placeholder="جستجوی محصول، مثل: دستبند نقره"
-                        className="w-full bg-white/5 border border-white/10 rounded-lg py-2.5 px-3 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cherry-600 text-white"
+                        className="w-full bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-lg py-2.5 px-3 text-sm placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] text-[var(--color-text)]"
                     />
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]">
                         {loading ? (
-                            <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                            <div className="w-4 h-4 border-2 border-[var(--color-primary)]/30 border-t-[var(--color-primary)] rounded-full animate-spin"></div>
                         ) : (
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -162,35 +229,35 @@ function SearchDropdown({ onSearch, initialQuery = '' }) {
                 createPortal(
                     <div 
                         ref={dropdownRef}
-                        className="fixed bg-[#0d0d14]/95 border border-white/10 rounded-xl shadow-2xl backdrop-blur-sm max-h-80 overflow-y-auto"
+                        className="fixed bg-white border border-[var(--color-border-subtle)] rounded-xl shadow-2xl max-h-80 overflow-y-auto"
                         style={{ 
                             zIndex: 99999,
-                            top: inputRef.current ? inputRef.current.getBoundingClientRect().bottom + window.scrollY + 4 : 0,
-                            left: inputRef.current ? inputRef.current.getBoundingClientRect().left + window.scrollX : 0,
-                            width: inputRef.current ? inputRef.current.getBoundingClientRect().width : 'auto',
+                            top: `${dropdownPosition.top}px`,
+                            left: `${dropdownPosition.left}px`,
+                            width: typeof dropdownPosition.width === 'number' ? `${dropdownPosition.width}px` : dropdownPosition.width,
                             minWidth: '300px'
                         }}
                     >
                         {/* Categories */}
                         {results.categories.length > 0 && (
                             <div className="p-2">
-                                <div className="text-xs text-gray-400 px-2 py-1 mb-1">دسته‌بندی‌ها</div>
+                                <div className="text-xs text-[var(--color-text-muted)] px-2 py-1 mb-1">دسته‌بندی‌ها</div>
                                 {results.categories.map((category) => (
                                     <button
                                         key={`category-${category.id}`}
                                         onClick={() => handleResultClick(category)}
-                                        className="w-full text-right px-3 py-2 rounded-lg hover:bg-white/5 text-sm flex items-center gap-3 group"
+                                        className="w-full text-right px-3 py-2 rounded-lg hover:bg-[var(--color-surface-alt)] text-sm flex items-center gap-3 group transition-colors"
                                     >
-                                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cherry-600/25 to-pink-600/15 flex items-center justify-center text-white text-xs ring-1 ring-white/10">
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
                                             {category.name.charAt(0)}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-white font-medium truncate">{category.name}</div>
+                                            <div className="text-[var(--color-text)] font-medium truncate">{category.name}</div>
                                             {category.description && (
-                                                <div className="text-gray-400 text-xs truncate">{category.description}</div>
+                                                <div className="text-[var(--color-text-muted)] text-xs truncate">{category.description}</div>
                                             )}
                                         </div>
-                                        <svg className="w-4 h-4 text-gray-400 group-hover:text-cherry-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-primary-strong)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>
                                         </svg>
                                     </button>
@@ -201,15 +268,15 @@ function SearchDropdown({ onSearch, initialQuery = '' }) {
                         {/* Products */}
                         {results.products.length > 0 && (
                             <div className="p-2">
-                                {results.categories.length > 0 && <div className="border-t border-white/10 my-2"></div>}
-                                <div className="text-xs text-gray-400 px-2 py-1 mb-1">محصولات</div>
+                                {results.categories.length > 0 && <div className="border-t border-[var(--color-border-subtle)] my-2"></div>}
+                                <div className="text-xs text-[var(--color-text-muted)] px-2 py-1 mb-1">محصولات</div>
                                 {results.products.map((product) => (
                                     <button
                                         key={`product-${product.id}`}
                                         onClick={() => handleResultClick(product)}
-                                        className="w-full text-right px-3 py-2 rounded-lg hover:bg-white/5 text-sm flex items-center gap-3 group"
+                                        className="w-full text-right px-3 py-2 rounded-lg hover:bg-[var(--color-surface-alt)] text-sm flex items-center gap-3 group transition-colors"
                                     >
-                                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-white/5 ring-1 ring-white/10">
+                                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)]">
                                             <img 
                                                 src={product.image} 
                                                 alt={product.title}
@@ -226,10 +293,10 @@ function SearchDropdown({ onSearch, initialQuery = '' }) {
                                             />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="text-white font-medium truncate">{product.title}</div>
-                                            <div className="text-cherry-400 text-xs">{formatPrice(product.price)} تومان</div>
+                                            <div className="text-[var(--color-text)] font-medium truncate">{product.title}</div>
+                                            <div className="text-[var(--color-primary-strong)] text-xs">{formatPrice(product.price)} تومان</div>
                                         </div>
-                                        <svg className="w-4 h-4 text-gray-400 group-hover:text-cherry-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-primary-strong)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>
                                         </svg>
                                     </button>
@@ -239,13 +306,13 @@ function SearchDropdown({ onSearch, initialQuery = '' }) {
 
                         {/* View All Results */}
                         {query.trim() && (
-                            <div className="border-t border-white/10 p-2">
+                            <div className="border-t border-[var(--color-border-subtle)] p-2">
                                 <button
                                     onClick={() => {
                                         navigate(`/products?q=${encodeURIComponent(query)}`);
                                         setShowDropdown(false);
                                     }}
-                                    className="w-full text-center px-3 py-2 rounded-lg hover:bg-white/5 text-sm text-cherry-400 hover:text-cherry-300"
+                                    className="w-full text-center px-3 py-2 rounded-lg hover:bg-[var(--color-surface-alt)] text-sm text-[var(--color-primary-strong)] hover:opacity-80 transition-colors"
                                 >
                                     مشاهده همه نتایج برای "{query}"
                                 </button>
