@@ -205,8 +205,8 @@ function HeroSlider() {
                             <div
                                 key={slide.id}
                                 className={`absolute inset-0 ${
-                                    isActive 
-                                        ? `opacity-100 z-10 ${direction === 1 ? 'slide-active-right' : 'slide-active-left'}` 
+                                    isActive
+                                        ? `opacity-100 z-10 ${direction === 1 ? 'slide-active-right' : 'slide-active-left'}`
                                         : 'opacity-0 z-0'
                                 }`}
                             >
@@ -220,7 +220,7 @@ function HeroSlider() {
                                         transform: isActive ? 'scale(1)' : 'scale(1.1)',
                                     }}
                                 >
-                                    <div 
+                                    <div
                                         className={`absolute inset-0 bg-gradient-to-t from-white/95 via-white/30 to-transparent transition-opacity duration-1000 ${
                                             isActive ? 'opacity-100' : 'opacity-0'
                                         }`}
@@ -229,21 +229,21 @@ function HeroSlider() {
                                     <div className="relative z-20 h-full flex flex-col justify-end items-center text-center px-4 pb-16 md:pb-12" style={{paddingBottom: '40px'}}>
                                         <div key={`content-${slide.id}-${currentIndex}`} className="max-w-2xl mx-auto px-4 py-4">
                                             {slide.title && (
-                                                <h2 className={`text-3xl md:text-5xl font-bold text-white drop-shadow-[0_10px_25px_rgba(0,0,0,0.35)] mb-4 ${
+                                                <h2 className={`text-3xl md:text-5xl font-bold text-black drop-shadow-[0_10px_25px_rgba(0,0,0,0.35)] mb-4 ${
                                                     isActive ? 'content-animate-1' : 'opacity-0'
                                                 }`}>
                                                     {slide.title}
                                                 </h2>
                                             )}
                                             {slide.subtitle && (
-                                                <h3 className={`text-xl md:text-2xl text-white/80 drop-shadow mb-4 ${
+                                                <h3 className={`text-xl md:text-2xl text-black/80 drop-shadow mb-4 ${
                                                     isActive ? 'content-animate-2' : 'opacity-0'
                                                 }`}>
                                                     {slide.subtitle}
                                                 </h3>
                                             )}
                                             {slide.description && (
-                                                <p className={`text-base md:text-lg text-white/85 drop-shadow mb-6 ${
+                                                <p className={`text-base md:text-lg text-black/85 drop-shadow mb-6 ${
                                                     isActive ? 'content-animate-3' : 'opacity-0'
                                                 }`}>
                                                     {slide.description}
