@@ -29,12 +29,12 @@ function ContactPage(){
                             ایمیل: support@rozhann.shop
                         </a>
                         <a href="https://instagram.com/rozhan_shopp" target="_blank" rel="noopener noreferrer" className="block rounded-lg bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] p-3 hover:bg-[var(--color-surface-alt-hover)] transition text-[var(--color-text)]">
-                            اینستاگرام: @rozhann
+                            اینستاگرام: @rozhan_shopp
                         </a>
                     </div>
                 </section>
 
-                
+
             </div>
         </div>
     );
