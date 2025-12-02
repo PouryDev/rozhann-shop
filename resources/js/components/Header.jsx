@@ -40,9 +40,8 @@ function Header() {
                             <img
                                 src="/images/logo.png"
                                 alt="Logo"
-                                className="h-8 w-8"
+                                className="h-11 w-21"
                             />
-                            <span className="font-bold text-xl">روژان</span>
                         </Link>
 
                         {/* Desktop Navigation */}
