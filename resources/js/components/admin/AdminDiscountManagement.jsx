@@ -106,6 +106,7 @@ function AdminDiscountManagement() {
                     <button
                         onClick={() => navigate('/admin/discounts/create')}
                         className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg flex items-center space-x-2 space-x-reverse"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -191,23 +192,23 @@ function AdminDiscountManagement() {
                             <div className="flex flex-col sm:flex-row gap-2">
                                 <button
                                     onClick={() => navigate(`/admin/discounts/${discount.id}/edit`)}
-                                    className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-[var(--color-text)] font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 text-sm"
+                                    className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 text-sm"
                                 >
                                     ویرایش
                                 </button>
                                 <button
                                     onClick={() => toggleDiscountStatus(discount.id, discount.is_active)}
-                                    className={`font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 text-sm ${
+                                    className={`font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 text-sm text-white ${
                                         discount.is_active
-                                            ? 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-[var(--color-text)]'
-                                            : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-[var(--color-text)]'
+                                            ? 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700'
+                                            : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
                                     }`}
                                 >
                                     {discount.is_active ? 'غیرفعال کردن' : 'فعال کردن'}
                                 </button>
                                 <button
                                     onClick={() => handleDeleteDiscount(discount.id)}
-                                    className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-[var(--color-text)] font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 text-sm"
+                                    className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 text-sm"
                                 >
                                     حذف
                                 </button>
@@ -220,7 +221,7 @@ function AdminDiscountManagement() {
             {/* Empty State */}
             {discounts.length === 0 && !loading && (
                 <div className="text-center py-12">
-                    <div className="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-24 h-24 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg className="w-12 h-12 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
@@ -230,6 +231,7 @@ function AdminDiscountManagement() {
                     <button
                         onClick={() => navigate('/admin/discounts/create')}
                         className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         اولین کد تخفیف را ایجاد کنید
                     </button>

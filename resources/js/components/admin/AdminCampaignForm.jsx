@@ -299,7 +299,7 @@ function AdminCampaignForm() {
                                                     className="w-10 h-10 object-cover rounded"
                                                 />
                                             ) : (
-                                                <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs">📦</div>
+                                                <div className="w-10 h-10 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded flex items-center justify-center text-xs">📦</div>
                                             )}
                                             <span className="text-[var(--color-text)] text-sm font-medium truncate">{product.title}</span>
                                         </div>
@@ -333,7 +333,7 @@ function AdminCampaignForm() {
                                                     className="w-10 h-10 object-cover rounded"
                                                 />
                                             ) : (
-                                                <div className="w-10 h-10 bg-gray-600 rounded flex items-center justify-center text-xs">📦</div>
+                                                <div className="w-10 h-10 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded flex items-center justify-center text-xs">📦</div>
                                             )}
                                             <div>
                                                 <span className="text-[var(--color-text)] text-sm font-medium">{product.title}</span>
@@ -343,7 +343,8 @@ function AdminCampaignForm() {
                                         <button
                                             type="button"
                                             onClick={() => addProduct(product)}
-                                            className="bg-purple-500 hover:bg-purple-600 text-[var(--color-text)] px-3 py-1 rounded text-sm transition-colors"
+                                            className="text-white px-3 py-1 rounded text-sm transition-colors"
+                                            style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                                         >
                                             افزودن
                                         </button>
@@ -355,7 +356,7 @@ function AdminCampaignForm() {
 
                     {!searchTerm && (
                         <div className="text-center py-8">
-                            <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="w-16 h-16 bg-[var(--color-surface-alt)] border border-[var(--color-border-subtle)] rounded-full flex items-center justify-center mx-auto mb-4">
                                 <svg className="w-8 h-8 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
