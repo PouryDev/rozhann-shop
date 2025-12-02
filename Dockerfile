@@ -47,7 +47,7 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 # Generate APP_KEY if not exists
 RUN echo "APP_NAME=\"روژان\"" > .env && \
     echo "APP_ENV=production" >> .env && \
-    echo "APP_KEY=" >> .env && \
+    echo "APP_KEY=base64:b6gmSvdF15BB+47Qjc9qceNLbNMBcgk6p/RBKXy6Z78=" >> .env && \
     echo "APP_DEBUG=false" >> .env && \
     echo "APP_URL=https://rozhann.ir" >> .env && \
     echo "" >> .env && \
