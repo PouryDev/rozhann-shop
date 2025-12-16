@@ -47,7 +47,7 @@ function AuthModal({ open, onClose, onSuccess, initialTab = 'login' }) {
             
             if (res.status === 422) {
                 setErrors(data.errors || {});
-                setError('لطفا فیلدها را بررسی کنید');
+                setError(data.message || 'لطفا فیلدها را بررسی کنید');
             } else if (!res.ok || !data?.success) {
                 setError(data?.message || 'ورود ناموفق بود. لطفا اطلاعات را بررسی کنید.');
             } else {
@@ -56,7 +56,8 @@ function AuthModal({ open, onClose, onSuccess, initialTab = 'login' }) {
                 onClose?.();
             }
         } catch (e) {
-            setError('ورود ناموفق بود. لطفا اطلاعات را بررسی کنید.');
+            const errorMessage = e?.response?.data?.message || e?.message || 'ورود ناموفق بود. لطفا اطلاعات را بررسی کنید.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -88,7 +89,7 @@ function AuthModal({ open, onClose, onSuccess, initialTab = 'login' }) {
             
             if (res.status === 422) {
                 setErrors(data.errors || {});
-                setError('لطفا فیلدها را بررسی کنید');
+                setError(data.message || 'لطفا فیلدها را بررسی کنید');
             } else if (!res.ok || !data?.success) {
                 setError(data?.message || 'ثبت‌نام ناموفق بود.');
             } else {
@@ -97,7 +98,8 @@ function AuthModal({ open, onClose, onSuccess, initialTab = 'login' }) {
                 onClose?.();
             }
         } catch (e) {
-            setError('ثبت‌نام ناموفق بود.');
+            const errorMessage = e?.response?.data?.message || e?.message || 'ثبت‌نام ناموفق بود.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

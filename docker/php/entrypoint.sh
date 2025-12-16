@@ -14,14 +14,22 @@ if [ ! -d "vendor" ]; then
   fi
 fi
 
-# Build frontend assets if missing
-if [ -f "package.json" ]; then
-  if [ ! -d "node_modules" ]; then
-    npm ci --no-audit --no-fund --quiet || npm install --no-audit --no-fund --quiet || true
-  fi
-  # If using Laravel Vite plugin, built assets go to public/build
-  if [ ! -d "public/build" ]; then
-    npm run build || true
+# Build frontend assets if missing (skip for queue workers)
+# Skip build if SKIP_FRONTEND_BUILD is set or if running queue:work command
+SKIP_BUILD=false
+if [ -n "${SKIP_FRONTEND_BUILD:-}" ]; then
+  SKIP_BUILD=true
+fi
+
+if [ "$SKIP_BUILD" = "false" ]; then
+  if [ -f "package.json" ]; then
+    if [ ! -d "node_modules" ]; then
+      npm ci --no-audit --no-fund --quiet || npm install --no-audit --no-fund --quiet || true
+    fi
+    # If using Laravel Vite plugin, built assets go to public/build
+    if [ ! -d "public/build" ]; then
+      npm run build || true
+    fi
   fi
 fi
 

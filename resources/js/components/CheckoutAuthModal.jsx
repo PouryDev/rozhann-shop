@@ -27,12 +27,19 @@ function CheckoutAuthModal({ open, onClose, onSuccess }) {
                 body: JSON.stringify(loginForm),
             });
             const data = await res.json();
-            if (!res.ok || !data?.success) throw new Error(data?.message || 'login-failed');
-            await login(data.user);
-            onSuccess?.(data.user);
-            onClose?.();
+            
+            if (res.status === 422) {
+                setError(data.message || 'لطفا فیلدها را بررسی کنید');
+            } else if (!res.ok || !data?.success) {
+                setError(data?.message || 'ورود ناموفق بود. لطفا اطلاعات را بررسی کنید.');
+            } else {
+                await login(data.user);
+                onSuccess?.(data.user);
+                onClose?.();
+            }
         } catch (e) {
-            setError('ورود ناموفق بود. لطفا اطلاعات را بررسی کنید.');
+            const errorMessage = e?.response?.data?.message || e?.message || 'ورود ناموفق بود. لطفا اطلاعات را بررسی کنید.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -55,12 +62,19 @@ function CheckoutAuthModal({ open, onClose, onSuccess }) {
                 }),
             });
             const data = await res.json();
-            if (!res.ok || !data?.success) throw new Error(data?.message || 'register-failed');
-            await login(data.user);
-            onSuccess?.(data.user);
-            onClose?.();
+            
+            if (res.status === 422) {
+                setError(data.message || 'لطفا فیلدها را بررسی کنید');
+            } else if (!res.ok || !data?.success) {
+                setError(data?.message || 'ثبت‌نام ناموفق بود.');
+            } else {
+                await login(data.user);
+                onSuccess?.(data.user);
+                onClose?.();
+            }
         } catch (e) {
-            setError('ثبت‌نام ناموفق بود.');
+            const errorMessage = e?.response?.data?.message || e?.message || 'ثبت‌نام ناموفق بود.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -69,7 +83,7 @@ function CheckoutAuthModal({ open, onClose, onSuccess }) {
     const inputClass = 'w-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] rounded-xl px-3 py-2 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:ring-2 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)] transition';
 
     return (
-        <div className={`fixed inset-0 z-50 ${open ? '' : 'hidden'}`} aria-hidden={!open}>
+        <div className={`fixed inset-0 z-[100000] ${open ? '' : 'hidden'}`} aria-hidden={!open}>
             <div className="absolute inset-0 bg-black/30 backdrop-blur" onClick={onClose} />
             <div className="absolute inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center p-4">
                 <div className="bg-white rounded-t-3xl md:rounded-3xl max-w-md w-full mx-auto shadow-[0_30px_80px_rgba(15,23,42,0.25)] text-[var(--color-text)]">
