@@ -134,7 +134,7 @@ function AddressModal({ open, onClose, onSave, address = null, loading = false }
                     {/* Title */}
                     <div>
                         <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
-                            نام آدرس (اختیاری)
+                            نام آدرس (اجباری)
                         </label>
                         <input
                             type="text"
