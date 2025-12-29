@@ -250,9 +250,15 @@ function AdminOrderDetail() {
                             <span className="text-[var(--color-text-muted)] text-sm">هزینه ارسال:</span>
                             <span className="text-[var(--color-text)] text-sm">{order.delivery_fee?.toLocaleString('fa-IR')} تومان</span>
                         </div>
+                        {order.delivery_method && (
+                            <div className="flex justify-between">
+                                <span className="text-[var(--color-text-muted)] text-sm">روش ارسال:</span>
+                                <span className="text-[var(--color-text)] text-sm">{order.delivery_method.title}</span>
+                            </div>
+                        )}
                         <div className="border-t border-[var(--color-border-subtle)] pt-2 mt-2">
                             <div className="flex justify-between text-base font-semibold">
-                                <span className="text-[var(--color-text)]">مجموع:</span>
+                                <span className="text-[var(--color-text)]">مبلغ پرداختی:</span>
                                 <span className="text-[var(--color-text)]">{order.final_amount?.toLocaleString('fa-IR')} تومان</span>
                             </div>
                         </div>

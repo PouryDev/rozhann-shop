@@ -306,7 +306,7 @@ function AccountOrderDetail() {
                         </div>
                     )}
                     <div className="border-t border-[var(--color-border-subtle)] pt-2 mt-2 flex justify-between text-[var(--color-text)] font-bold text-lg">
-                        <span>مبلغ نهایی:</span>
+                        <span>مبلغ پرداختی:</span>
                         <span className="text-[var(--color-primary-strong)]">
                             {formatPrice(order.final_amount)} تومان
                         </span>
@@ -318,7 +318,7 @@ function AccountOrderDetail() {
             {order.delivery_address && (
                 <div className="rounded-2xl bg-white shadow-lg p-5 border border-[var(--color-border-subtle)]">
                     <h3 className="text-lg font-bold text-[var(--color-text)] mb-4">
-                        آدرس تحویل
+                        اطلاعات ارسال
                     </h3>
                     <div className="flex items-start gap-3">
                         <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(244, 172, 63, 0.1)', color: 'var(--color-primary)' }}>
@@ -352,6 +352,11 @@ function AccountOrderDetail() {
                             <p className="text-sm text-[var(--color-text-muted)]">
                                 {order.customer_phone}
                             </p>
+                            {order.delivery_method && (
+                                <p className="text-sm text-[var(--color-text-muted)] mt-2">
+                                    روش ارسال: {order.delivery_method.title}
+                                </p>
+                            )}
                         </div>
                     </div>
                 </div>

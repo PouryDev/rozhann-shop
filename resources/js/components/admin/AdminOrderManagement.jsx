@@ -213,7 +213,7 @@ function AdminOrderManagement() {
                                     </div>
                                     <div>
                                         <p className="text-[var(--color-text-muted)] text-sm">روش ارسال</p>
-                                        <p className="text-[var(--color-text)] font-medium">{order.delivery_method?.name || 'نامشخص'}</p>
+                                        <p className="text-[var(--color-text)] font-medium">{order.delivery_method?.title || 'نامشخص'}</p>
                                     </div>
                                 </div>
 
