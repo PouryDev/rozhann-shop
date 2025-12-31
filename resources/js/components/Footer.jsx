@@ -18,11 +18,11 @@ function Footer() {
                         <div className="flex items-center space-x-2 mb-4">
                             <img src="/images/logo.png" alt="Logo" className="h-11 w-21"/>
                             <span className="font-bold text-xl">روژان</span>
-                            <a referrerPolicy='origin' target='_blank'
-                               href='https://trustseal.enamad.ir/?id=694869&Code=166I1OxC35qXk5Zi9blHVPciLamUaK54'><img
-                                referrerPolicy='origin'
-                                src='https://trustseal.enamad.ir/logo.aspx?id=694869&Code=166I1OxC35qXk5Zi9blHVPciLamUaK54'
-                                alt='' style='cursor:pointer' code='166I1OxC35qXk5Zi9blHVPciLamUaK54'/></a>
+                            <a referrerPolicy="origin" target="_blank"
+                               href="https://trustseal.enamad.ir/?id=694869&Code=166I1OxC35qXk5Zi9blHVPciLamUaK54"><img
+                                referrerPolicy="origin"
+                                src="https://trustseal.enamad.ir/logo.aspx?id=694869&Code=166I1OxC35qXk5Zi9blHVPciLamUaK54"
+                                alt="" style={{ cursor: 'pointer' }} code="166I1OxC35qXk5Zi9blHVPciLamUaK54"/></a>
                         </div>
                         <p className="text-sm text-[var(--color-text-muted)] mb-4">
                             فروشگاه آنلاین لباس با کیفیت و استایل مینیمال
