@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="enamad" content="64930557" />
 
-    <title>64930557</title>
+    <title>68095444</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
