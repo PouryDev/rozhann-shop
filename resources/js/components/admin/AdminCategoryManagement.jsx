@@ -131,6 +131,7 @@ function AdminCategoryManagement() {
                     <button
                         onClick={() => navigate('/admin/categories/create')}
                         className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg flex items-center justify-center space-x-2 space-x-reverse min-h-[44px]"
+                        style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -255,6 +256,7 @@ function AdminCategoryManagement() {
                         <button
                             onClick={() => navigate('/admin/categories/create')}
                             className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg min-h-[44px]"
+                            style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}
                         >
                             اولین دسته‌بندی را اضافه کنید
                         </button>

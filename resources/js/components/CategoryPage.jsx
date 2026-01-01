@@ -103,14 +103,14 @@ function CategoryPage() {
     });
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white anim-page">
+        <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text)]">
             {/* Header */}
             <section className="relative py-10 md:py-14 px-4">
                 <div className="max-w-7xl mx-auto">
-                    <div className="rounded-2xl glass-card soft-shadow p-5 md:p-7 border border-white/10">
+                    <div className="rounded-2xl bg-white shadow-lg p-5 md:p-7 border border-[var(--color-border-subtle)]">
                         <button
                             onClick={() => navigate(-1)}
-                            className="text-cherry-400 hover:text-cherry-300 text-sm mb-3 flex items-center gap-1"
+                            className="text-[var(--color-primary-strong)] hover:opacity-80 text-sm mb-3 flex items-center gap-1 transition-colors"
                         >
                             <svg
                                 className="w-4 h-4"
@@ -129,15 +129,15 @@ function CategoryPage() {
                         </button>
                         {category ? (
                             <>
-                                <h1 className="text-2xl md:text-3xl font-extrabold text-white">
+                                <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--color-text)]">
                                     {category.name}
                                 </h1>
-                                <p className="text-sm text-gray-300 mt-1">
+                                <p className="text-sm text-[var(--color-text-muted)] mt-1">
                                     مشاهده همه محصولات
                                 </p>
                             </>
                         ) : (
-                            <div className="text-gray-300">
+                            <div className="text-[var(--color-text-muted)]">
                                 در حال بارگذاری...
                             </div>
                         )}
@@ -155,10 +155,10 @@ function CategoryPage() {
                     ) : products.length === 0 ? (
                         <div className="text-center py-12">
                             <div className="text-6xl mb-4">📦</div>
-                            <h3 className="text-xl font-semibold text-white mb-2">
+                            <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">
                                 محصولی یافت نشد
                             </h3>
-                            <p className="text-gray-400">
+                            <p className="text-[var(--color-text-muted)]">
                                 در این دسته‌بندی محصولی وجود ندارد
                             </p>
                         </div>
@@ -179,7 +179,8 @@ function CategoryPage() {
                                     <button
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="bg-cherry-600 hover:bg-cherry-700 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                                        className="text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 disabled:opacity-50"
+                                        style={{ background: "linear-gradient(120deg, var(--color-primary), var(--color-accent))", boxShadow: "0 10px 25px rgba(244,172,63,0.35)" }}
                                     >
                                         {loading ? (
                                             <span className="flex items-center gap-2">

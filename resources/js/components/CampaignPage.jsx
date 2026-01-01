@@ -79,13 +79,13 @@ function CampaignPage() {
     });
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text)]">
             {/* Header */}
             <section className="relative py-6 md:py-10 px-4">
                 <div className="max-w-7xl mx-auto">
                     <button
                         onClick={() => navigate(-1)}
-                        className="text-cherry-400 hover:text-cherry-300 text-sm mb-3 flex items-center gap-1"
+                        className="text-[var(--color-primary-strong)] hover:opacity-80 text-sm mb-3 flex items-center gap-1 transition-colors"
                     >
                         <svg
                             className="w-4 h-4"
@@ -103,29 +103,27 @@ function CampaignPage() {
                         بازگشت
                     </button>
                     {campaign ? (
-                        <div className="rounded-2xl overflow-hidden glass-card soft-shadow border border-white/10">
-                            <div className="relative h-32 md:h-40 bg-gradient-to-br from-cherry-600/40 via-pink-600/30 to-purple-600/20 overflow-hidden">
-                                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30" />
+                        <div className="rounded-2xl overflow-hidden bg-white shadow-lg border border-[var(--color-border-subtle)]">
+                            <div className="relative h-32 md:h-40 overflow-hidden" style={{ background: "linear-gradient(120deg, rgba(255,238,209,0.9), rgba(232,246,238,0.9))" }}>
                                 <div className="absolute inset-0 flex items-center justify-center text-center px-4 z-10">
                                     <div>
-                                        <h1 className="text-xl md:text-3xl font-extrabold text-white mb-2">
+                                        <h1 className="text-xl md:text-3xl font-extrabold text-[var(--color-text)] mb-2">
                                             {campaign.name}
                                         </h1>
                                         {campaign.type === "percentage" && (
-                                            <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur text-white text-sm font-bold">
+                                            <div className="inline-block px-4 py-1.5 rounded-full text-white text-sm font-bold" style={{ background: "linear-gradient(120deg, var(--color-primary), var(--color-accent))" }}>
                                                 {campaign.discount_value}% تخفیف
                                             </div>
                                         )}
                                     </div>
                                 </div>
-                                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
                             </div>
                             {campaign.description && (
-                                <div className="p-4 md:p-5 bg-white/5">
-                                    <p className="text-gray-300 text-sm">
+                                <div className="p-4 md:p-5 bg-white">
+                                    <p className="text-[var(--color-text-muted)] text-sm">
                                         {campaign.description}
                                     </p>
-                                    <div className="text-xs text-gray-400 mt-2">
+                                    <div className="text-xs text-[var(--color-text-muted)] mt-2">
                                         تا{" "}
                                         {new Date(
                                             campaign.ends_at
@@ -135,8 +133,8 @@ function CampaignPage() {
                             )}
                         </div>
                     ) : (
-                        <div className="rounded-2xl glass-card soft-shadow p-5 border border-white/10">
-                            <div className="text-gray-300">
+                        <div className="rounded-2xl bg-white shadow-lg p-5 border border-[var(--color-border-subtle)]">
+                            <div className="text-[var(--color-text-muted)]">
                                 در حال بارگذاری...
                             </div>
                         </div>
@@ -154,10 +152,10 @@ function CampaignPage() {
                     ) : products.length === 0 ? (
                         <div className="text-center py-12">
                             <div className="text-6xl mb-4">🎯</div>
-                            <h3 className="text-xl font-semibold text-white mb-2">
+                            <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">
                                 محصولی یافت نشد
                             </h3>
-                            <p className="text-gray-400">
+                            <p className="text-[var(--color-text-muted)]">
                                 در این کمپین محصولی وجود ندارد
                             </p>
                         </div>
@@ -178,7 +176,8 @@ function CampaignPage() {
                                     <button
                                         onClick={loadMore}
                                         disabled={loading}
-                                        className="bg-cherry-600 hover:bg-cherry-700 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                                        className="text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 disabled:opacity-50"
+                                        style={{ background: "linear-gradient(120deg, var(--color-primary), var(--color-accent))", boxShadow: "0 10px 25px rgba(244,172,63,0.35)" }}
                                     >
                                         {loading ? (
                                             <span className="flex items-center gap-2">
