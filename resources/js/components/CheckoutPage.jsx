@@ -829,6 +829,7 @@ function CheckoutPage() {
                                 onClick={handleSubmit}
                                 disabled={submitting} 
                                 className="w-full disabled:opacity-60 text-white rounded-xl px-4 py-4 font-semibold text-lg transition-all duration-200 shadow-lg"
+                                style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))', boxShadow: '0 10px 25px rgba(244,172,63,0.35)' }}
                             >
                                 {submitting ? 'در حال ثبت...' : 'ثبت سفارش'}
                             </button>
@@ -1221,7 +1222,7 @@ function CheckoutPage() {
                                     </>
                                 )}
 
-                                <button type="submit" disabled={submitting} className="w-full disabled:opacity-60 text-white rounded-lg px-4 py-2.5" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))' }}>
+                                <button type="submit" disabled={submitting} className="w-full disabled:opacity-60 text-white rounded-lg px-4 py-2.5 font-semibold transition-all duration-200 shadow-lg" style={{ background: 'linear-gradient(120deg, var(--color-primary), var(--color-accent))', boxShadow: '0 10px 25px rgba(244,172,63,0.35)' }}>
                                     {submitting ? 'در حال ثبت...' : 'ثبت سفارش'}
                                 </button>
                             </form>
