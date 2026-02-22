@@ -266,7 +266,7 @@ export default function CroccinoPage() {
                         <div className="mt-4 grid gap-3 md:grid-cols-3">
                             <a href="tel:+989121234567" className="rounded-2xl border border-white/15 bg-white/5 p-4">
                                 <p className="text-xs text-zinc-400">تلفن</p>
-                                <p style={{direction: 'ltr'}} className="mt-1 font-bold">۰۹۱۲ ۱۲۳ ۴۵ ۶۷</p>
+                                <p style={{direction: 'ltr'}} className="mt-1 font-bold">۰۹۰۳ ۷۱۴ ۷۴۶۴</p>
                             </a>
                             <a href="https://instagram.com/prestige.barbershop" target="_blank" rel="noreferrer" className="rounded-2xl border border-white/15 bg-white/5 p-4">
                                 <p className="text-xs text-zinc-400">اینستاگرام</p>
@@ -274,7 +274,7 @@ export default function CroccinoPage() {
                             </a>
                             <div className="rounded-2xl border border-white/15 bg-white/5 p-4">
                                 <p className="text-xs text-zinc-400">آدرس</p>
-                                <p className="mt-1 font-bold">تهران، سعادت‌آباد، بلوار اصلی، پلاک ۲۵</p>
+                                <p className="mt-1 font-bold">جاده قدیم آمل بابل، روستای قمی کلا کوچه گلستان</p>
                             </div>
                         </div>
                         <div className="mt-4 rounded-2xl border border-dashed border-white/25 bg-white/5 p-4 text-sm text-zinc-400">محل قرارگیری نقشه / لوکیشن</div>
