@@ -207,8 +207,8 @@ export default function CroccinoPage() {
                         </div>
                         <div className="rounded-3xl border border-white/10 bg-black/25 p-3 shadow-[0_14px_38px_rgba(0,0,0,.35)]">
                             <div className="aspect-[4/5] rounded-2xl border border-dashed border-white/25 bg-zinc-900/60 p-4">
-                                <div className="flex h-full items-center justify-center text-center text-sm text-zinc-400">تصویر شاخص پرستیژ</div>
-                                {/* <img src="/images/prestige-hero.jpg" alt="نمای داخلی آرایشگاه مردانه پرستیژ" className="h-full w-full rounded-2xl object-cover" loading="eager" /> */}
+                                {/* <div className="flex h-full items-center justify-center text-center text-sm text-zinc-400">تصویر شاخص پرستیژ</div> */}
+                                <img src="/images/best-outside-template.png" alt="نمای داخلی آرایشگاه مردانه پرستیژ" className="h-full w-full rounded-2xl object-cover" loading="eager" />
                             </div>
                         </div>
                     </div>
@@ -253,8 +253,8 @@ export default function CroccinoPage() {
                                 className="reveal-on-scroll aspect-[4/3] overflow-hidden rounded-2xl border border-dashed border-white/20 bg-zinc-900 p-3 shadow-[0_12px_30px_rgba(0,0,0,.3)]"
                                 style={{ transitionDelay: `${index * 90}ms` }}
                             >
-                                <div className="flex h-full items-center justify-center rounded-xl bg-zinc-800 text-xs text-zinc-400">Placeholder تصویر {item}</div>
-                                {/* <img src={`/images/prestige-gallery-${item}.jpg`} alt={`نمونه کار آرایشگاه پرستیژ ${item}`} className="h-full w-full rounded-xl object-cover" loading="lazy" /> */}
+                                {/* <div className="flex h-full items-center justify-center rounded-xl bg-zinc-800 text-xs text-zinc-400">Placeholder تصویر {item}</div> */}
+                                <img src={`/images/best-inner-template-view-${item}.png`} alt={`نمونه کار آرایشگاه پرستیژ ${item}`} className="h-full w-full rounded-xl object-cover" loading="lazy" />
                             </div>
                         ))}
                     </div>
