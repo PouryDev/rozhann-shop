@@ -201,9 +201,9 @@ export default function CroccinoPage() {
                                 تجربه‌ای لوکس، سریع و حرفه‌ای.
                             </h1>
                             <p className="mt-4 text-sm leading-8 text-zinc-300 sm:text-base">
-                                این صفحه برای تبدیل بازدیدکننده به مشتری طراحی شده: پیام شفاف، خدمات دقیق، تجربه بصری قوی و مسیر تماس سریع.
-                                اگر دنبال ظاهری حرفه‌ای هستید، پرستیژ انتخابی است که در اولین نگاه تفاوتش دیده می‌شود.
-                            </p>
+ما در پرستیژ فقط مو کوتاه نمی‌کنیم.
+ما ظاهر شما را طوری می‌سازیم که در جلسه، قرار یا مهمانی
+با اعتمادبه‌نفس وارد شوید.                            </p>
                         </div>
                         <div className="rounded-3xl border border-white/10 bg-black/25 p-3 shadow-[0_14px_38px_rgba(0,0,0,.35)]">
                             <div className="aspect-[4/5] rounded-2xl border border-dashed border-white/25 bg-zinc-900/60 p-4">
@@ -266,11 +266,11 @@ export default function CroccinoPage() {
                         <div className="mt-4 grid gap-3 md:grid-cols-3">
                             <a href="tel:+989121234567" className="rounded-2xl border border-white/15 bg-white/5 p-4">
                                 <p className="text-xs text-zinc-400">تلفن</p>
-                                <p className="mt-1 font-bold">۰۹۱۲ ۱۲۳ ۴۵ ۶۷</p>
+                                <p style={{direction: 'ltr'}} className="mt-1 font-bold">۰۹۱۲ ۱۲۳ ۴۵ ۶۷</p>
                             </a>
                             <a href="https://instagram.com/prestige.barbershop" target="_blank" rel="noreferrer" className="rounded-2xl border border-white/15 bg-white/5 p-4">
                                 <p className="text-xs text-zinc-400">اینستاگرام</p>
-                                <p className="mt-1 font-bold">@prestige.barbershop</p>
+                                <p style={{direction: 'ltr'}} className="mt-1 font-bold">@prestige.barbershop</p>
                             </a>
                             <div className="rounded-2xl border border-white/15 bg-white/5 p-4">
                                 <p className="text-xs text-zinc-400">آدرس</p>
