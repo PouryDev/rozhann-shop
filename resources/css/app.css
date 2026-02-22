@@ -131,3 +131,81 @@ body {
 .product-modal-portal > * {
   pointer-events: auto;
 }
+
+.prestige-page {
+  scroll-behavior: smooth;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatY {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-fade-up {
+  animation: fadeUp .7s cubic-bezier(.22,1,.36,1) both;
+}
+
+.animate-float {
+  animation: floatY 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-float {
+    animation: none;
+  }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(22px) scale(.98);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+    margin-top: 0;
+    transition: none;
+  }
+}
+
+.smooth-expand {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: max-height .45s cubic-bezier(.22,1,.36,1), margin-top .32s ease, opacity .28s ease, transform .32s ease;
+}
+
+.smooth-expand.open {
+  max-height: 560px;
+  margin-top: .75rem;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smooth-expand,
+  .smooth-expand.open {
+    transition: none;
+    transform: none;
+    margin-top: 0;
+  }
+}
