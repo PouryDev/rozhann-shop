@@ -3,9 +3,17 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 
+const PRIMARY_DOMAIN = 'rozhann.ir';
+
+function isPrimaryDomain() {
+    if (typeof window === 'undefined') return true;
+    return window.location.hostname === PRIMARY_DOMAIN;
+}
+
 function Layout({ children }) {
     const location = useLocation();
-    const isStandalonePage = location.pathname === '/croccino';
+    const primaryDomain = isPrimaryDomain();
+    const isStandalonePage = !primaryDomain || location.pathname === '/croccino';
 
     return (
         <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text)]">
