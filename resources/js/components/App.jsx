@@ -41,6 +41,7 @@ import AboutPage from './AboutPage';
 import ContactPage from './ContactPage';
 import ShippingPage from './ShippingPage';
 import ReturnsPage from './ReturnsPage';
+import CroccinoPage from './CroccinoPage';
 
 function App() {
     return (
@@ -67,6 +68,7 @@ function App() {
                         <Route path="/contact" element={<ContactPage />} />
                         <Route path="/shipping" element={<ShippingPage />} />
                         <Route path="/returns" element={<ReturnsPage />} />
+                        <Route path="/croccino" element={<CroccinoPage />} />
                         
                         {/* Auth Routes */}
                         <Route path="/login" element={<LoginPage />} />
