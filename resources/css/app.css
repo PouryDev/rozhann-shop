@@ -178,21 +178,24 @@ body {
   .reveal-on-scroll.is-visible {
     opacity: 1;
     transform: none;
+    margin-top: 0;
     transition: none;
   }
 }
 
 .smooth-expand {
   max-height: 0;
+  margin-top: 0;
   opacity: 0;
   overflow: hidden;
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   pointer-events: none;
-  transition: max-height .38s cubic-bezier(.22,1,.36,1), opacity .24s ease, transform .3s ease;
+  transition: max-height .45s cubic-bezier(.22,1,.36,1), margin-top .32s ease, opacity .28s ease, transform .32s ease;
 }
 
 .smooth-expand.open {
-  max-height: 520px;
+  max-height: 560px;
+  margin-top: .75rem;
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
@@ -203,5 +206,6 @@ body {
   .smooth-expand.open {
     transition: none;
     transform: none;
+    margin-top: 0;
   }
 }

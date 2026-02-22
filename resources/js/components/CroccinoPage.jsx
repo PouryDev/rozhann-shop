@@ -138,7 +138,7 @@ export default function CroccinoPage() {
                         </button>
                     </div>
 
-                    <div className={`smooth-expand hidden md:block ${servicesMenuOpen ? 'open mt-3' : ''}`}>
+                    <div className={`smooth-expand hidden md:block ${servicesMenuOpen ? 'open' : ''}`}>
                         <div className="grid gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 sm:grid-cols-2">
                             {services.map((service) => (
                                 <button
@@ -153,7 +153,7 @@ export default function CroccinoPage() {
                         </div>
                     </div>
 
-                    <div className={`smooth-expand md:hidden ${mobileMenuOpen ? 'open mt-3' : ''}`}>
+                    <div className={`smooth-expand md:hidden ${mobileMenuOpen ? 'open' : ''}`}>
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
                             <button
                                 onClick={() => setServicesMenuOpen((v) => !v)}
@@ -162,7 +162,7 @@ export default function CroccinoPage() {
                                 زیرمنوی خدمات
                                 <Icon path="M7 10l5 5 5-5" className={`h-4 w-4 transition-transform duration-300 ${servicesMenuOpen ? 'rotate-180' : ''}`} />
                             </button>
-                            <div className={`smooth-expand ${servicesMenuOpen ? 'open mb-2' : ''}`}>
+                            <div className={`smooth-expand ${servicesMenuOpen ? 'open' : ''}`}>
                                 <div className="space-y-1 rounded-xl bg-black/30 p-2">
                                     {services.map((service) => (
                                         <button
