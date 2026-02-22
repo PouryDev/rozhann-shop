@@ -1,40 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSeo } from '../hooks/useSeo';
 
 const navItems = [
     { label: 'خدمات', target: 'services' },
-    { label: 'چرا پرستیژ', target: 'why-us' },
-    { label: 'نمونه‌کار', target: 'gallery' },
-    { label: 'تماس و لوکیشن', target: 'contact' },
+    { label: 'مزیت پرستیژ', target: 'why-us' },
+    { label: 'گالری', target: 'gallery' },
+    { label: 'تماس', target: 'contact' },
 ];
 
 const services = [
     {
-        title: 'اصلاح تخصصی و استایل کلاسیک',
-        description:
-            'با تکنیک‌های دقیق و توجه به فرم صورت، ظاهری مرتب، حرفه‌ای و ماندگار می‌سازیم تا در نگاه اول اعتماد ایجاد کنید.',
+        title: 'کراتینه مو',
+        description: 'صافی طبیعی، درخشندگی بالا و کاهش وز مو برای استایلی تمیز و حرفه‌ای در تمام طول روز.',
+        icon: 'M6 20c2-3 2-8 0-11m6 11c2-3 2-8 0-11m6 11c2-3 2-8 0-11M4 6c2 2 5 2 7 0s5-2 7 0 5 2 7 0',
+        accent: 'from-amber-100 to-orange-50',
     },
     {
-        title: 'فید حرفه‌ای و گریم ریش',
-        description:
-            'ترکیب فید تمیز با طراحی ریش متناسب با چهره؛ نتیجه‌ای که هم جذابیت بصری دارد و هم حس قدرت و آراستگی منتقل می‌کند.',
+        title: 'اصلاح صورت و مو',
+        description: 'اصلاح دقیق متناسب با فرم چهره برای ساختن اولین برداشت قدرتمند در قرارهای مهم کاری و اجتماعی.',
+        icon: 'M4 7h9m-9 4h6m7-4l-4 10m0 0l-2-2m2 2l2-2M16 4l4 4',
+        accent: 'from-sky-100 to-cyan-50',
     },
     {
-        title: 'پکیج دامادی و VIP',
-        description:
-            'برای روزهای مهم زندگی، تجربه‌ای آرام، لوکس و دقیق ارائه می‌دهیم تا با اعتماد کامل مقابل دوربین و جمع ظاهر شوید.',
+        title: 'وکس صورت',
+        description: 'پاکسازی سریع موهای زائد برای پوستی یکدست، مرتب و آماده‌ی نزدیک‌ترین نگاه‌ها.',
+        icon: 'M8 20c5-2 8-7 8-12 0-3-2-5-4-5-4 0-8 3-8 8 0 5 2 8 4 9zM9 9h.01M15 11h.01',
+        accent: 'from-rose-100 to-pink-50',
+    },
+    {
+        title: 'روتین پوستی آقایان',
+        description: 'آبرسانی، لایه‌برداری ملایم و مراقبت تخصصی برای پوستی سالم که جوانی و اعتماد‌به‌نفس را منتقل کند.',
+        icon: 'M12 3l2.4 4.8L20 9l-4 3.8L17 18l-5-2.7L7 18l1-5.2L4 9l5.6-1.2L12 3z',
+        accent: 'from-emerald-100 to-teal-50',
     },
 ];
 
 const stats = [
-    { value: '+۱۲۰۰', label: 'مشتری وفادار در محله' },
-    { value: '۹۶٪', label: 'نرخ رضایت ثبت‌شده' },
-    { value: '۷ روز', label: 'فعالیت در هفته با رزرو منعطف' },
+    { value: '+۱۴۰۰', label: 'مشتری راضی' },
+    { value: '۹۷٪', label: 'رضایت از استایل نهایی' },
+    { value: 'کمتر از ۵ دقیقه', label: 'زمان پاسخ برای رزرو' },
 ];
 
-function Icon({ path }) {
+function Icon({ path, className = 'h-5 w-5' }) {
     return (
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
             <path d={path} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
@@ -42,168 +51,188 @@ function Icon({ path }) {
 
 export default function CroccinoPage() {
     useSeo({
-        title: 'آرایشگاه مردانه پرستیژ | اصلاح حرفه‌ای، فید تخصصی و استایل VIP',
+        title: 'آرایشگاه مردانه پرستیژ | کراتینه، اصلاح حرفه‌ای، وکس صورت و روتین پوستی',
         description:
-            'آرایشگاه مردانه پرستیژ در مسیر /croccino با خدمات اصلاح تخصصی، فید حرفه‌ای، گریم ریش و پکیج VIP؛ تجربه‌ای لوکس برای آقایانی که ظاهر حرفه‌ای می‌خواهند.',
+            'پرستیژ در /croccino یک barbershop مدرن برای آقایان سخت‌پسند است: کراتینه مو، اصلاح صورت و مو، وکس صورت و روتین پوستی با تجربه VIP.',
         keywords:
-            'آرایشگاه مردانه پرستیژ, barbershop, اصلاح مردانه, فید حرفه‌ای, گریم ریش, پیرایش مردانه, آرایشگاه مردانه نزدیک من',
+            'آرایشگاه مردانه پرستیژ, کراتینه مو مردانه, اصلاح صورت و مو, وکس صورت آقایان, روتین پوستی مردانه, barbershop تهران',
         canonical: `${window.location.origin}/croccino`,
     });
+
+    useEffect(() => {
+        const items = document.querySelectorAll('.reveal-on-scroll');
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2, rootMargin: '0px 0px -8% 0px' }
+        );
+
+        items.forEach((item) => observer.observe(item));
+        return () => observer.disconnect();
+    }, []);
 
     const scrollToSection = (id) => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     return (
-        <div className="prestige-page relative overflow-hidden" dir="rtl">
-            <section className="mx-auto max-w-6xl px-4 pb-14 pt-8 sm:px-6 sm:pt-10 lg:px-8">
-                <div className="glass-card animate-fade-up rounded-3xl border border-white/60 bg-white/80 p-6 sm:p-10">
-                    <div className="flex flex-wrap items-center justify-between gap-4">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] bg-white/85 px-3 py-2 text-sm">
-                            <span className="text-[var(--color-primary-strong)]">
-                                <Icon path="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9L12 3z" />
-                            </span>
-                            <span>پرستیژ؛ انتخاب آقایانی که دیده می‌شوند</span>
+        <div className="prestige-page bg-[#0f1115] text-white" dir="rtl">
+            <div className="mx-auto max-w-6xl px-4 pb-24 pt-6 sm:px-6 lg:px-8">
+                <header className="reveal-on-scroll rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-900 to-zinc-800 p-5 shadow-[0_20px_80px_rgba(0,0,0,.45)] sm:p-8">
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/40 bg-amber-300/10 px-3 py-1.5 text-xs sm:text-sm">
+                            <Icon path="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9L12 3z" />
+                            پرستیژ Barbershop
                         </div>
-                        <nav className="flex flex-wrap gap-2">
-                            {navItems.map((item) => (
-                                <button
-                                    key={item.target}
-                                    onClick={() => scrollToSection(item.target)}
-                                    className="rounded-full border border-[var(--color-border-subtle)] bg-white px-4 py-2 text-sm transition hover:border-[var(--color-primary)] hover:text-[var(--color-primary-strong)]"
-                                >
-                                    {item.label}
-                                </button>
-                            ))}
-                        </nav>
+                        <button
+                            onClick={() => scrollToSection('contact')}
+                            className="rounded-full bg-white px-4 py-2 text-sm font-bold text-black transition hover:scale-[1.02]"
+                        >
+                            رزرو سریع
+                        </button>
                     </div>
 
-                    <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.2fr_.8fr]">
-                        <div className="space-y-5">
+                    <div className="mt-7 grid items-center gap-8 lg:grid-cols-[1.1fr_.9fr]">
+                        <div>
                             <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">
-                                آرایشگاه مردانه <span className="text-[var(--color-primary-strong)]">پرستیژ</span>
+                                آرایشگاه مردانه <span className="text-amber-300">پرستیژ</span>
                                 <br />
-                                جایی که استایل شما تبدیل به امضای شخصیت‌تان می‌شود.
+                                استایلی که کاری می‌کند بیشتر دیده شوید.
                             </h1>
-                            <p className="max-w-2xl text-[15px] leading-8 text-[var(--color-text-muted)] sm:text-lg">
-                                اگر دنبال یک <strong>barbershop حرفه‌ای</strong> هستید که علاوه بر اصلاح، اعتمادبه‌نفس و جذابیت شما را چند پله بالا ببرد،
-                                پرستیژ دقیقاً برای شماست. ما با طراحی چهره، اصلاح اختصاصی و تجربه VIP کمک می‌کنیم در جلسه کاری، قرار مهم یا مهمانی،
-                                اولین تأثیر را حرفه‌ای بسازید.
+                            <p className="mt-4 max-w-2xl text-sm leading-8 text-zinc-300 sm:text-base">
+                                ما صرفاً اصلاح انجام نمی‌دهیم؛ با ترکیب مهارت، نورومارکتینگ در پیام برند، و توجه به جزئیات چهره،
+                                کمک می‌کنیم ظاهر شما در ذهن بماند. اینجا هر سرویس برای افزایش جذابیت، اعتمادبه‌نفس و اثرگذاری شما طراحی شده.
                             </p>
-                            <div className="flex flex-wrap gap-3">
-                                <button
-                                    onClick={() => scrollToSection('contact')}
-                                    className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 font-semibold text-white transition hover:brightness-95"
-                                >
-                                    <Icon path="M7 10l5 5 5-5" />
-                                    مشاهده آدرس و تماس
-                                </button>
-                                <button
-                                    onClick={() => scrollToSection('services')}
-                                    className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-white px-5 py-3 font-semibold transition hover:border-[var(--color-primary)]"
-                                >
-                                    <Icon path="M5 12h14M12 5l7 7-7 7" />
-                                    بررسی خدمات تخصصی
-                                </button>
-                            </div>
+                            <nav className="mt-6 flex flex-wrap gap-2">
+                                {navItems.map((item) => (
+                                    <button
+                                        key={item.target}
+                                        onClick={() => scrollToSection(item.target)}
+                                        className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm transition hover:border-amber-300/60 hover:bg-amber-300/10"
+                                    >
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </nav>
                         </div>
-                        <div className="animate-float rounded-3xl border border-[var(--color-border-subtle)] bg-gradient-to-b from-white to-[var(--color-sand-100)] p-4">
-                            <div className="aspect-[4/5] rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-sand-50)] p-4">
-                                <div className="flex h-full items-center justify-center text-center text-sm leading-7 text-[var(--color-text-muted)]">
-                                    محل قرارگیری عکس شاخص آرایشگاه
-                                    <br />
-                                    (بهینه برای SEO و برندینگ)
+
+                        <div className="rounded-3xl border border-white/10 bg-black/20 p-3 shadow-[0_16px_44px_rgba(0,0,0,.35)]">
+                            <div className="aspect-[4/5] rounded-2xl border border-dashed border-white/25 bg-zinc-900/70 p-4">
+                                <div className="flex h-full items-center justify-center text-center text-sm text-zinc-400">
+                                    تصویر شاخص آرایشگاه پرستیژ
                                 </div>
                                 {/* <img src="/images/prestige-hero.jpg" alt="نمای داخلی آرایشگاه مردانه پرستیژ" className="h-full w-full rounded-2xl object-cover" loading="eager" /> */}
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </header>
 
-            <section id="services" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8">
-                <h2 className="text-2xl font-extrabold sm:text-3xl">خدمات کلیدی برای جذب نگاه اول</h2>
-                <p className="mt-3 max-w-3xl text-[var(--color-text-muted)]">
-                    متن خدمات بر اساس نورومارکتینگ نوشته شده تا مزیت‌ها شفاف باشد: نتیجه قابل دیدن، حس لوکس، و تصمیم سریع برای انتخاب شما.
-                </p>
-                <div className="mt-6 grid gap-4 md:grid-cols-3">
-                    {services.map((service, index) => (
-                        <article
-                            key={service.title}
-                            className="animate-fade-up rounded-2xl border border-[var(--color-border-subtle)] bg-white/90 p-5"
-                            style={{ animationDelay: `${index * 120}ms` }}
-                        >
-                            <h3 className="text-lg font-bold">{service.title}</h3>
-                            <p className="mt-2 text-sm leading-7 text-[var(--color-text-muted)]">{service.description}</p>
-                        </article>
-                    ))}
-                </div>
-            </section>
+                <section id="services" className="scroll-mt-24 pt-12">
+                    <div className="reveal-on-scroll flex items-center justify-between">
+                        <h2 className="text-2xl font-extrabold sm:text-3xl">خدمات تخصصی پرستیژ</h2>
+                    </div>
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                        {services.map((service, index) => (
+                            <article
+                                key={service.title}
+                                className={`reveal-on-scroll group rounded-2xl border border-white/10 bg-gradient-to-br ${service.accent} p-[1px] shadow-[0_16px_34px_rgba(0,0,0,.35)]`}
+                                style={{ transitionDelay: `${index * 80}ms` }}
+                            >
+                                <div className="h-full rounded-2xl bg-zinc-900/95 p-5">
+                                    <div className="flex items-start gap-4">
+                                        <div className="rounded-xl bg-white/10 p-3 text-amber-300">
+                                            <Icon path={service.icon} className="h-6 w-6" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-bold">{service.title}</h3>
+                                            <p className="mt-2 text-sm leading-7 text-zinc-300">{service.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </section>
 
-            <section id="why-us" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8">
-                <div className="rounded-3xl border border-[var(--color-border-subtle)] bg-white/85 p-6 sm:p-8">
-                    <h2 className="text-2xl font-extrabold sm:text-3xl">چرا «پرستیژ» انتخاب مطمئن آقایان سخت‌پسند است؟</h2>
-                    <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                        {stats.map((stat) => (
-                            <div key={stat.label} className="rounded-2xl bg-[var(--color-sand-50)] p-5 text-center">
-                                <p className="text-3xl font-extrabold text-[var(--color-primary-strong)]">{stat.value}</p>
-                                <p className="mt-2 text-sm text-[var(--color-text-muted)]">{stat.label}</p>
+                <section id="why-us" className="scroll-mt-24 pt-12">
+                    <div className="reveal-on-scroll rounded-3xl border border-white/10 bg-zinc-900/75 p-5 shadow-[0_16px_40px_rgba(0,0,0,.35)] sm:p-7">
+                        <h2 className="text-2xl font-extrabold sm:text-3xl">چرا پرستیژ؟</h2>
+                        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                            {stats.map((item, index) => (
+                                <div
+                                    key={item.label}
+                                    className="reveal-on-scroll rounded-2xl border border-white/10 bg-white/5 p-4 text-center"
+                                    style={{ transitionDelay: `${index * 90}ms` }}
+                                >
+                                    <p className="text-2xl font-extrabold text-amber-300">{item.value}</p>
+                                    <p className="mt-1 text-sm text-zinc-300">{item.label}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section id="gallery" className="scroll-mt-24 pt-12">
+                    <h2 className="reveal-on-scroll text-2xl font-extrabold sm:text-3xl">نمونه‌کارها</h2>
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {[1, 2, 3].map((item, index) => (
+                            <div
+                                key={item}
+                                className="reveal-on-scroll aspect-[4/3] overflow-hidden rounded-2xl border border-dashed border-white/20 bg-zinc-900 p-3 shadow-[0_12px_32px_rgba(0,0,0,.3)]"
+                                style={{ transitionDelay: `${index * 90}ms` }}
+                            >
+                                <div className="flex h-full items-center justify-center rounded-xl bg-zinc-800 text-center text-xs text-zinc-400">
+                                    Placeholder تصویر {item}
+                                </div>
+                                {/* <img src={`/images/prestige-gallery-${item}.jpg`} alt={`نمونه اصلاح پرستیژ ${item}`} className="h-full w-full rounded-xl object-cover" loading="lazy" /> */}
                             </div>
                         ))}
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <section id="gallery" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8">
-                <h2 className="text-2xl font-extrabold sm:text-3xl">نمونه‌کارها و فضای آرایشگاه</h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {[1, 2, 3].map((item) => (
-                        <div key={item} className="aspect-[4/3] overflow-hidden rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-white p-3">
-                            <div className="flex h-full items-center justify-center rounded-xl bg-[var(--color-sand-50)] text-center text-xs leading-6 text-[var(--color-text-muted)]">
-                                Placeholder تصویر شماره {item}
+                <section id="contact" className="scroll-mt-24 pt-12">
+                    <div className="reveal-on-scroll rounded-3xl border border-amber-300/20 bg-gradient-to-br from-zinc-900 to-black p-6 shadow-[0_20px_55px_rgba(0,0,0,.5)]">
+                        <h2 className="text-2xl font-extrabold sm:text-3xl">تماس و لوکیشن</h2>
+                        <div className="mt-5 grid gap-3 md:grid-cols-3">
+                            <a href="tel:+989121234567" className="rounded-2xl border border-white/15 bg-white/5 p-4 hover:bg-white/10">
+                                <p className="text-xs text-zinc-400">تلفن</p>
+                                <p className="mt-1 font-bold">۰۹۱۲ ۱۲۳ ۴۵ ۶۷</p>
+                            </a>
+                            <a href="https://instagram.com/prestige.barbershop" target="_blank" rel="noreferrer" className="rounded-2xl border border-white/15 bg-white/5 p-4 hover:bg-white/10">
+                                <p className="text-xs text-zinc-400">اینستاگرام</p>
+                                <p className="mt-1 font-bold">@prestige.barbershop</p>
+                            </a>
+                            <div className="rounded-2xl border border-white/15 bg-white/5 p-4">
+                                <p className="text-xs text-zinc-400">آدرس</p>
+                                <p className="mt-1 font-bold">تهران، سعادت‌آباد، بلوار اصلی، پلاک ۲۵</p>
                             </div>
-                            {/* <img src={`/images/prestige-gallery-${item}.jpg`} alt={`نمونه اصلاح در آرایشگاه پرستیژ ${item}`} className="h-full w-full rounded-xl object-cover" loading="lazy" /> */}
                         </div>
+                        <div className="mt-4 rounded-2xl border border-dashed border-white/25 bg-white/5 p-4 text-sm text-zinc-400">
+                            محل قرارگیری نقشه/لوکیشن
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div className="fixed inset-x-0 bottom-4 z-20 mx-auto w-[calc(100%-1.25rem)] max-w-md px-1 sm:hidden">
+                <div className="flex items-center justify-between rounded-full border border-white/15 bg-zinc-900/90 p-2 shadow-[0_14px_38px_rgba(0,0,0,.45)] backdrop-blur">
+                    {navItems.map((item) => (
+                        <button
+                            key={item.target}
+                            onClick={() => scrollToSection(item.target)}
+                            className="rounded-full px-3 py-1.5 text-xs text-zinc-200"
+                        >
+                            {item.label}
+                        </button>
                     ))}
                 </div>
-            </section>
-
-            <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-16 pt-12 sm:px-6 lg:px-8">
-                <div className="rounded-3xl border border-[var(--color-border-subtle)] bg-[var(--color-ink-800)] p-6 text-white sm:p-8">
-                    <h2 className="text-2xl font-extrabold sm:text-3xl">ارتباط سریع با پرستیژ</h2>
-                    <p className="mt-2 text-sm text-white/80 sm:text-base">برای هماهنگی، مشاوره استایل یا ثبت لوکیشن دقیق، اطلاعات زیر را استفاده کنید.</p>
-
-                    <div className="mt-6 grid gap-4 md:grid-cols-3">
-                        <a href="tel:+989121234567" className="rounded-2xl border border-white/20 bg-white/5 p-4 transition hover:bg-white/10">
-                            <div className="mb-2 inline-flex rounded-full bg-white/15 p-2">
-                                <Icon path="M5 4h3l2 5-2 1a15 15 0 007 7l1-2 5 2v3a2 2 0 01-2 2A17 17 0 013 7a2 2 0 012-3z" />
-                            </div>
-                            <p className="text-sm text-white/70">تلفن</p>
-                            <p className="font-bold">۰۹۱۲ ۱۲۳ ۴۵ ۶۷</p>
-                        </a>
-
-                        <a href="https://instagram.com/prestige.barbershop" target="_blank" rel="noreferrer" className="rounded-2xl border border-white/20 bg-white/5 p-4 transition hover:bg-white/10">
-                            <div className="mb-2 inline-flex rounded-full bg-white/15 p-2">
-                                <Icon path="M16 3H8a5 5 0 00-5 5v8a5 5 0 005 5h8a5 5 0 005-5V8a5 5 0 00-5-5zm-4 13a4 4 0 110-8 4 4 0 010 8zm5-9h.01" />
-                            </div>
-                            <p className="text-sm text-white/70">اینستاگرام</p>
-                            <p className="font-bold">@prestige.barbershop</p>
-                        </a>
-
-                        <div className="rounded-2xl border border-white/20 bg-white/5 p-4">
-                            <div className="mb-2 inline-flex rounded-full bg-white/15 p-2">
-                                <Icon path="M12 21s7-5.4 7-11a7 7 0 10-14 0c0 5.6 7 11 7 11zM12 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
-                            </div>
-                            <p className="text-sm text-white/70">آدرس</p>
-                            <p className="font-bold leading-7">تهران، سعادت‌آباد، بلوار اصلی، پلاک ۲۵</p>
-                        </div>
-                    </div>
-
-                    <div className="mt-5 rounded-2xl border border-dashed border-white/35 bg-white/5 p-4 text-sm text-white/80">
-                        محل قرارگیری نقشه/لوکیشن (Google Map یا نشان)
-                    </div>
-                </div>
-            </section>
+            </div>
         </div>
     );
 }
