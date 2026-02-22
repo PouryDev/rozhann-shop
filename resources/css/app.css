@@ -183,17 +183,25 @@ body {
 }
 
 .smooth-expand {
-  display: grid;
-  grid-template-rows: 0fr;
+  max-height: 0;
   opacity: 0;
-  transition: grid-template-rows .35s cubic-bezier(.22,1,.36,1), opacity .3s ease;
-}
-
-.smooth-expand > * {
   overflow: hidden;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: max-height .38s cubic-bezier(.22,1,.36,1), opacity .24s ease, transform .3s ease;
 }
 
 .smooth-expand.open {
-  grid-template-rows: 1fr;
+  max-height: 520px;
   opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smooth-expand,
+  .smooth-expand.open {
+    transition: none;
+    transform: none;
+  }
 }
