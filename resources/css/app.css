@@ -181,3 +181,19 @@ body {
     transition: none;
   }
 }
+
+.smooth-expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .35s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+}
+
+.smooth-expand > * {
+  overflow: hidden;
+}
+
+.smooth-expand.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
